@@ -6,6 +6,11 @@ const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
+import { Inter } from "next/font/google";
+const inter = Inter({
+  subsets: ["latin"],
+});
+
 const Faq = () => {
   return (
     <Flex

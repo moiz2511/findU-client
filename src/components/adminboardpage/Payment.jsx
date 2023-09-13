@@ -20,7 +20,7 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const AdminBoard = () => {
+const Payment = () => {
   return (
     <Flex>
       <Flex
@@ -100,15 +100,8 @@ const AdminBoard = () => {
             gap="8px"
             alignSelf="stretch"
             borderRadius="8px"
-            background="#DEECFC"
           >
-            <Flex
-              padding="0px 8px"
-              alignItems="center"
-              gap="8px"
-              flex="1 0 0"
-              borderLeft="2px solid var(--Primary, #277DE3)"
-            >
+            <Flex padding="0px 8px" alignItems="center" gap="8px" flex="1 0 0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="14"
@@ -118,11 +111,12 @@ const AdminBoard = () => {
               >
                 <path
                   d="M6.57348 8.24534C7.63229 8.24534 8.54916 7.86556 9.29831 7.11628C10.0475 6.36716 10.4272 5.45054 10.4272 4.3916C10.4272 3.33298 10.0475 2.41627 9.29819 1.66686C8.54891 0.917834 7.63216 0.538086 6.57348 0.538086C5.51451 0.538086 4.59786 0.917834 3.84874 1.66699C3.09962 2.41614 2.71971 3.33289 2.71971 4.3916C2.71971 5.45054 3.09958 6.36728 3.84886 7.11644C4.59814 7.86546 5.51489 8.24534 6.57348 8.24534ZM13.3165 12.8413C13.2949 12.5295 13.2512 12.1894 13.1868 11.8303C13.1219 11.4684 13.0383 11.1264 12.9382 10.8138C12.8348 10.4907 12.6942 10.1716 12.5204 9.8658C12.3399 9.54843 12.128 9.27205 11.8902 9.04465C11.6416 8.80674 11.3371 8.61546 10.9851 8.4759C10.6342 8.33715 10.2454 8.26684 9.82956 8.26684C9.66621 8.26684 9.50828 8.33384 9.20322 8.53246C8.98637 8.67366 8.76888 8.81387 8.55075 8.95308C8.34116 9.08665 8.05722 9.21177 7.7065 9.32505C7.36435 9.43577 7.01694 9.49193 6.67404 9.49193C6.33117 9.49193 5.98385 9.43577 5.64132 9.32505C5.29101 9.21186 5.00708 9.08677 4.7977 8.95321C4.55489 8.79805 4.3352 8.65646 4.14464 8.5323C3.83996 8.33371 3.68186 8.26668 3.51855 8.26668C3.10252 8.26668 2.71387 8.33712 2.36315 8.47606C2.01134 8.61534 1.70678 8.80662 1.45787 9.04477C1.22022 9.2723 1.00819 9.54852 0.828 9.8658C0.654313 10.1716 0.513688 10.4905 0.410158 10.8139C0.310158 11.1265 0.226565 11.4684 0.161627 11.8303C0.0972838 12.1889 0.0535965 12.5291 0.0319715 12.8416C0.0104598 13.1561 -0.000202754 13.4712 2.91917e-06 13.7864C2.91917e-06 14.6217 0.265502 15.2978 0.789062 15.7964C1.30615 16.2885 1.99034 16.5381 2.82237 16.5381H10.5265C11.3585 16.5381 12.0424 16.2886 12.5596 15.7965C13.0833 15.2982 13.3488 14.6219 13.3488 13.7863C13.3487 13.4639 13.3379 13.1459 13.3165 12.8413Z"
-                  fill="#277DE3"
+                  fill="#A0A5B9"
                 />
               </svg>
+
               <Text
-                color=" #000"
+                color="#A0A5B9"
                 className={plus_jakarta?.className}
                 fontSize="14px"
                 fontStyle="normal"
@@ -140,9 +134,16 @@ const AdminBoard = () => {
             alignItems="center"
             gap="8px"
             alignSelf="stretch"
+            background="#DEECFC"
             borderRadius="8px"
           >
-            <Flex padding="0px 8px" alignItems="center" gap="8px" flex="1 0 0">
+            <Flex
+              padding="0px 8px"
+              alignItems="center"
+              gap="8px"
+              flex="1 0 0"
+              borderLeft="2px solid  #277DE3"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="14"
@@ -152,11 +153,11 @@ const AdminBoard = () => {
               >
                 <path
                   d="M6.57348 8.24534C7.63229 8.24534 8.54916 7.86556 9.29831 7.11628C10.0475 6.36716 10.4272 5.45054 10.4272 4.3916C10.4272 3.33298 10.0475 2.41627 9.29819 1.66686C8.54891 0.917834 7.63216 0.538086 6.57348 0.538086C5.51451 0.538086 4.59786 0.917834 3.84874 1.66699C3.09962 2.41614 2.71971 3.33289 2.71971 4.3916C2.71971 5.45054 3.09958 6.36728 3.84886 7.11644C4.59814 7.86546 5.51489 8.24534 6.57348 8.24534ZM13.3165 12.8413C13.2949 12.5295 13.2512 12.1894 13.1868 11.8303C13.1219 11.4684 13.0383 11.1264 12.9382 10.8138C12.8348 10.4907 12.6942 10.1716 12.5204 9.8658C12.3399 9.54843 12.128 9.27205 11.8902 9.04465C11.6416 8.80674 11.3371 8.61546 10.9851 8.4759C10.6342 8.33715 10.2454 8.26684 9.82956 8.26684C9.66621 8.26684 9.50828 8.33384 9.20322 8.53246C8.98637 8.67366 8.76888 8.81387 8.55075 8.95308C8.34116 9.08665 8.05722 9.21177 7.7065 9.32505C7.36435 9.43577 7.01694 9.49193 6.67404 9.49193C6.33117 9.49193 5.98385 9.43577 5.64132 9.32505C5.29101 9.21186 5.00708 9.08677 4.7977 8.95321C4.55489 8.79805 4.3352 8.65646 4.14464 8.5323C3.83996 8.33371 3.68186 8.26668 3.51855 8.26668C3.10252 8.26668 2.71387 8.33712 2.36315 8.47606C2.01134 8.61534 1.70678 8.80662 1.45787 9.04477C1.22022 9.2723 1.00819 9.54852 0.828 9.8658C0.654313 10.1716 0.513688 10.4905 0.410158 10.8139C0.310158 11.1265 0.226565 11.4684 0.161627 11.8303C0.0972838 12.1889 0.0535965 12.5291 0.0319715 12.8416C0.0104598 13.1561 -0.000202754 13.4712 2.91917e-06 13.7864C2.91917e-06 14.6217 0.265502 15.2978 0.789062 15.7964C1.30615 16.2885 1.99034 16.5381 2.82237 16.5381H10.5265C11.3585 16.5381 12.0424 16.2886 12.5596 15.7965C13.0833 15.2982 13.3488 14.6219 13.3488 13.7863C13.3487 13.4639 13.3379 13.1459 13.3165 12.8413Z"
-                  fill="#A0A5B9"
+                  fill="#277DE3"
                 />
               </svg>
               <Text
-                color="#A0A5B9"
+                color={"#000"}
                 className={plus_jakarta?.className}
                 fontSize="14px"
                 fontStyle="normal"
@@ -306,9 +307,8 @@ const AdminBoard = () => {
             <Flex
               width="95%"
               padding="16px"
-              flexDirection="column"
-              justifyContent="center"
-              alignItems="flex-start"
+              justifyContent="space-between"
+              alignItems="center"
               gap="8px"
               borderRadius="16px"
               background="#FFF"
@@ -368,6 +368,41 @@ const AdminBoard = () => {
                     Users
                   </Text>
                 </Flex>
+              </Flex>
+
+              <Flex
+                height="48px"
+                padding="8px 24px"
+                justifyContent="center"
+                alignItems="center"
+                gap="12px"
+                borderRadius="12px"
+                background=" #277DE3"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path d="M10.2857 0H13.7143V24H10.2857V0Z" fill="white" />
+                  <path
+                    d="M24 10.2857V13.7143L0 13.7143L1.49868e-07 10.2857L24 10.2857Z"
+                    fill="white"
+                  />
+                </svg>
+                <Text
+                  color="#FFF"
+                  className={plus_jakarta?.className}
+                  fontSize="16px"
+                  fontStyle="normal"
+                  fontWeight="600"
+                  lineHeight="24px"
+                  letterSpacing="0.15px"
+                >
+                  Add payment
+                </Text>
               </Flex>
             </Flex>
             <Flex
@@ -607,7 +642,7 @@ const AdminBoard = () => {
                           background="#F9FAFB"
                           boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
                         >
-                          Email
+                          Payment
                         </Th>
                         <Th
                           className={plus_jakarta?.className}
@@ -618,7 +653,7 @@ const AdminBoard = () => {
                           background="#F9FAFB"
                           boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
                         >
-                          Subscription
+                          Date of chat
                         </Th>
                         <Th
                           className={plus_jakarta?.className}
@@ -637,8 +672,8 @@ const AdminBoard = () => {
                       <Tr>
                         <Td>1</Td>
                         <Td>Liam</Td>
-                        <Td>info@steelcraft-industries.ae</Td>
-                        <Td>Premium</Td>
+                        <Td>$34</Td>
+                        <Td>09-Nov-2023</Td>
                         <Td display={"flex"} gap={"12px"} alignItems={"center"}>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -795,7 +830,231 @@ const AdminBoard = () => {
           </Flex>
         </Flex>
       </Flex>
-    </Flex>
+      {/* Add payment */}
+        {/* <Flex
+        width="419px"
+        padding="40px 32px"
+        flexDirection="column"
+        alignItems="center"
+        gap="24px"
+        borderRadius="16px"
+        background="#FFF"
+      >
+        <Text
+          color=" #000"
+          className={plus_jakarta?.className}
+          fontSize="14px"
+          fontStyle="normal"
+          fontWeight="600"
+          lineHeight="150%"
+        >
+          Add Payment
+        </Text>
+
+        <Flex
+          flexDirection="column"
+          alignItems="flex-start"
+          gap="16px"
+          alignSelf="stretch"
+        >
+          <Flex
+            flexDirection="column"
+            alignItems="flex-start"
+            gap="6px"
+            alignSelf="stretch"
+          >
+            <Text
+              color=" #344054)"
+              className={plus_jakarta?.className}
+              fontSize="14px"
+              fontStyle="normal"
+              fontWeight="500"
+              lineHeight="20px"
+            >
+              User name
+            </Text>
+            <Flex
+              padding="8px 12px"
+              alignItems="center"
+              gap="8px"
+              alignSelf="stretch"
+              borderRadius="8px"
+              border="1px solid  #D0D5DD"
+              background=" #FFF"
+              boxShadow="0px 1px 2px 0px rgba(16, 24, 40, 0.05)"
+              flex={"1 0 0"}
+              justifyContent={"space-between"}
+            >
+              <Text
+                color="#808CA5"
+                className={inter?.className}
+                fontSize="14px"
+                fontStyle="normal"
+                fontWeight="400"
+                lineHeight="24px"
+              >
+                Choose User
+              </Text>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                  d="M11.7166 5.23204C11.858 5.08339 12.049 5 12.248 5C12.4471 5 12.6381 5.08339 12.7795 5.23204C12.8493 5.30503 12.9048 5.39204 12.9427 5.48799C12.9805 5.58395 13 5.68694 13 5.79097C13 5.895 12.9805 5.99799 12.9427 6.09395C12.9048 6.18991 12.8493 6.27691 12.7795 6.34991L8.53202 10.7683C8.39026 10.9168 8.19913 11 8 11C7.80087 11 7.60974 10.9168 7.46798 10.7683L3.22049 6.34991C3.15065 6.27691 3.0952 6.18991 3.05735 6.09395C3.01949 5.99799 3 5.895 3 5.79097C3 5.68694 3.01949 5.58395 3.05735 5.48799C3.0952 5.39204 3.15065 5.30503 3.22049 5.23204C3.36192 5.08339 3.55292 5 3.75197 5C3.95101 5 4.14201 5.08339 4.28345 5.23204L8.00163 8.8556L11.7166 5.23204Z"
+                  fill="#303030"
+                />
+              </svg>
+            </Flex>
+          </Flex>
+
+          <Flex
+            flexDirection="column"
+            alignItems="flex-start"
+            gap="6px"
+            alignSelf="stretch"
+          >
+            <Text
+              color=" #344054)"
+              className={plus_jakarta?.className}
+              fontSize="14px"
+              fontStyle="normal"
+              fontWeight="500"
+              lineHeight="20px"
+            >
+              Amount
+            </Text>
+            <Flex
+              padding="8px 12px"
+              alignItems="center"
+              gap="8px"
+              alignSelf="stretch"
+              borderRadius="8px"
+              border="1px solid  #D0D5DD"
+              background=" #FFF"
+              boxShadow="0px 1px 2px 0px rgba(16, 24, 40, 0.05)"
+              flex={"1 0 0"}
+            >
+              <Text
+                color="#808CA5"
+                className={inter?.className}
+                fontSize="14rpx"
+                fontStyle="normal"
+                fontWeight="400"
+                lineHeight="24px"
+              >
+                Enter amount
+              </Text>
+            </Flex>
+          </Flex>
+
+          <Flex
+            flexDirection="column"
+            alignItems="flex-start"
+            gap="6px"
+            alignSelf="stretch"
+            
+          >
+            <Text
+              color=" #344054)"
+              className={plus_jakarta?.className}
+              fontSize="14px"
+              fontStyle="normal"
+              fontWeight="500"
+              lineHeight="20px"
+            >
+              Date
+            </Text>
+            <Flex
+              padding="8px 12px"
+              alignItems="center"
+              gap="8px"
+              alignSelf="stretch"
+              borderRadius="8px"
+              border="1px solid  #D0D5DD"
+              background=" #FFF"
+              boxShadow="0px 1px 2px 0px rgba(16, 24, 40, 0.05)"
+              flex={"1 0 0"}
+              justifyContent={"space-between"}
+            >
+              <Text
+                color="#808CA5"
+                className={inter?.className}
+                fontSize="14rpx"
+                fontStyle="normal"
+                fontWeight="400"
+                lineHeight="24px"
+              >
+                Enter date
+              </Text>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+              >
+                <path
+                  d="M8.3298 13.678H9.66248M12.3356 13.678H13.6683M4.33172 13.678H5.6644M8.3298 9.67797H9.66248M12.3356 9.67797H13.6683M4.33172 9.67797H5.6644M1 6.33332H17M13.0019 4.33332V1M4.99808 4.33332V1M3.67309 17H14.3269C15.8032 17 17 15.8026 17 14.3256V5.00773C17 3.53071 15.8032 2.33332 14.3269 2.33332H3.67309C2.19678 2.33332 1 3.53071 1 5.00773V14.3256C1 15.8026 2.19678 17 3.67309 17Z"
+                  stroke="#98A2B3"
+                  stroke-width="1.5"
+                  stroke-miterlimit="10"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </Flex>
+          </Flex>
+        </Flex>
+
+        <Flex alignItems="flex-start" gap="16px" alignSelf="stretch">
+          <Flex
+            padding="12px 16px"
+            justifyContent="center"
+            alignItems="center"
+            flex="1 0 0"
+            borderRadius="8px"
+            border="1px solid  #E5E7EB"
+            background=" #FFF"
+            boxShadow="0px 0px 4px 0px rgba(229, 231, 235, 0.50)"
+          >
+            <Text
+              color=" #374151"
+              className={plus_jakarta?.className}
+              fontSize="16px"
+              fontStyle="normal"
+              fontWeight="600"
+              lineHeight="150%"
+            >
+              Discard
+            </Text>
+          </Flex>
+          <Flex
+            padding="12px 16px"
+            justifyContent="center"
+            alignItems="center"
+            flex="1 0 0"
+            borderRadius="8px"
+            border="1rpx solid  #E5E7EB"
+            background=" #277DE3"
+            boxShadow="0px 0px 4px 0px rgba(229, 231, 235, 0.50)"
+          >
+            <Text
+              color=" #fff"
+              className={plus_jakarta?.className}
+              fontSize="16px"
+              fontStyle="normal"
+              fontWeight="600"
+              lineHeight="150%"
+            >
+              Save
+            </Text>
+          </Flex>
+        </Flex>
+      </Flex>*/}
+  </Flex>
   );
 };
-export default AdminBoard;
+export default Payment;
