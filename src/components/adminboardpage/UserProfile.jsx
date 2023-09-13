@@ -20,7 +20,7 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const Payment = () => {
+const UserProfile = () => {
   return (
     <Flex>
       <Flex
@@ -31,8 +31,7 @@ const Payment = () => {
         alignItems="flex-start"
         gap="32px"
         flexShrink="0"
-        background="var(--colors-white, #FFF)"
-        overflow={"hidden"}
+        background=" #FFF"
       >
         <Flex
           padding="24px"
@@ -100,8 +99,15 @@ const Payment = () => {
             gap="8px"
             alignSelf="stretch"
             borderRadius="8px"
+            background="#DEECFC"
           >
-            <Flex padding="0px 8px" alignItems="center" gap="8px" flex="1 0 0">
+            <Flex
+              padding="0px 8px"
+              alignItems="center"
+              gap="8px"
+              flex="1 0 0"
+              borderLeft="2px solid var(--Primary, #277DE3)"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="14"
@@ -111,12 +117,11 @@ const Payment = () => {
               >
                 <path
                   d="M6.57348 8.24534C7.63229 8.24534 8.54916 7.86556 9.29831 7.11628C10.0475 6.36716 10.4272 5.45054 10.4272 4.3916C10.4272 3.33298 10.0475 2.41627 9.29819 1.66686C8.54891 0.917834 7.63216 0.538086 6.57348 0.538086C5.51451 0.538086 4.59786 0.917834 3.84874 1.66699C3.09962 2.41614 2.71971 3.33289 2.71971 4.3916C2.71971 5.45054 3.09958 6.36728 3.84886 7.11644C4.59814 7.86546 5.51489 8.24534 6.57348 8.24534ZM13.3165 12.8413C13.2949 12.5295 13.2512 12.1894 13.1868 11.8303C13.1219 11.4684 13.0383 11.1264 12.9382 10.8138C12.8348 10.4907 12.6942 10.1716 12.5204 9.8658C12.3399 9.54843 12.128 9.27205 11.8902 9.04465C11.6416 8.80674 11.3371 8.61546 10.9851 8.4759C10.6342 8.33715 10.2454 8.26684 9.82956 8.26684C9.66621 8.26684 9.50828 8.33384 9.20322 8.53246C8.98637 8.67366 8.76888 8.81387 8.55075 8.95308C8.34116 9.08665 8.05722 9.21177 7.7065 9.32505C7.36435 9.43577 7.01694 9.49193 6.67404 9.49193C6.33117 9.49193 5.98385 9.43577 5.64132 9.32505C5.29101 9.21186 5.00708 9.08677 4.7977 8.95321C4.55489 8.79805 4.3352 8.65646 4.14464 8.5323C3.83996 8.33371 3.68186 8.26668 3.51855 8.26668C3.10252 8.26668 2.71387 8.33712 2.36315 8.47606C2.01134 8.61534 1.70678 8.80662 1.45787 9.04477C1.22022 9.2723 1.00819 9.54852 0.828 9.8658C0.654313 10.1716 0.513688 10.4905 0.410158 10.8139C0.310158 11.1265 0.226565 11.4684 0.161627 11.8303C0.0972838 12.1889 0.0535965 12.5291 0.0319715 12.8416C0.0104598 13.1561 -0.000202754 13.4712 2.91917e-06 13.7864C2.91917e-06 14.6217 0.265502 15.2978 0.789062 15.7964C1.30615 16.2885 1.99034 16.5381 2.82237 16.5381H10.5265C11.3585 16.5381 12.0424 16.2886 12.5596 15.7965C13.0833 15.2982 13.3488 14.6219 13.3488 13.7863C13.3487 13.4639 13.3379 13.1459 13.3165 12.8413Z"
-                  fill="#A0A5B9"
+                  fill="#277DE3"
                 />
               </svg>
-
               <Text
-                color="#A0A5B9"
+                color=" #000"
                 className={plus_jakarta?.className}
                 fontSize="14px"
                 fontStyle="normal"
@@ -134,16 +139,9 @@ const Payment = () => {
             alignItems="center"
             gap="8px"
             alignSelf="stretch"
-            background="#DEECFC"
             borderRadius="8px"
           >
-            <Flex
-              padding="0px 8px"
-              alignItems="center"
-              gap="8px"
-              flex="1 0 0"
-              borderLeft="2px solid  #277DE3"
-            >
+            <Flex padding="0px 8px" alignItems="center" gap="8px" flex="1 0 0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="14"
@@ -153,11 +151,11 @@ const Payment = () => {
               >
                 <path
                   d="M6.57348 8.24534C7.63229 8.24534 8.54916 7.86556 9.29831 7.11628C10.0475 6.36716 10.4272 5.45054 10.4272 4.3916C10.4272 3.33298 10.0475 2.41627 9.29819 1.66686C8.54891 0.917834 7.63216 0.538086 6.57348 0.538086C5.51451 0.538086 4.59786 0.917834 3.84874 1.66699C3.09962 2.41614 2.71971 3.33289 2.71971 4.3916C2.71971 5.45054 3.09958 6.36728 3.84886 7.11644C4.59814 7.86546 5.51489 8.24534 6.57348 8.24534ZM13.3165 12.8413C13.2949 12.5295 13.2512 12.1894 13.1868 11.8303C13.1219 11.4684 13.0383 11.1264 12.9382 10.8138C12.8348 10.4907 12.6942 10.1716 12.5204 9.8658C12.3399 9.54843 12.128 9.27205 11.8902 9.04465C11.6416 8.80674 11.3371 8.61546 10.9851 8.4759C10.6342 8.33715 10.2454 8.26684 9.82956 8.26684C9.66621 8.26684 9.50828 8.33384 9.20322 8.53246C8.98637 8.67366 8.76888 8.81387 8.55075 8.95308C8.34116 9.08665 8.05722 9.21177 7.7065 9.32505C7.36435 9.43577 7.01694 9.49193 6.67404 9.49193C6.33117 9.49193 5.98385 9.43577 5.64132 9.32505C5.29101 9.21186 5.00708 9.08677 4.7977 8.95321C4.55489 8.79805 4.3352 8.65646 4.14464 8.5323C3.83996 8.33371 3.68186 8.26668 3.51855 8.26668C3.10252 8.26668 2.71387 8.33712 2.36315 8.47606C2.01134 8.61534 1.70678 8.80662 1.45787 9.04477C1.22022 9.2723 1.00819 9.54852 0.828 9.8658C0.654313 10.1716 0.513688 10.4905 0.410158 10.8139C0.310158 11.1265 0.226565 11.4684 0.161627 11.8303C0.0972838 12.1889 0.0535965 12.5291 0.0319715 12.8416C0.0104598 13.1561 -0.000202754 13.4712 2.91917e-06 13.7864C2.91917e-06 14.6217 0.265502 15.2978 0.789062 15.7964C1.30615 16.2885 1.99034 16.5381 2.82237 16.5381H10.5265C11.3585 16.5381 12.0424 16.2886 12.5596 15.7965C13.0833 15.2982 13.3488 14.6219 13.3488 13.7863C13.3487 13.4639 13.3379 13.1459 13.3165 12.8413Z"
-                  fill="#277DE3"
+                  fill="#A0A5B9"
                 />
               </svg>
               <Text
-                color={"#000"}
+                color="#A0A5B9"
                 className={plus_jakarta?.className}
                 fontSize="14px"
                 fontStyle="normal"
@@ -174,7 +172,7 @@ const Payment = () => {
       <Flex flexDir={"column"}>
         <Flex
           width="70%"
-          padding="16px 24px"
+          padding="8px 12px"
           justifyContent="flex-end"
           alignItems="center"
           gap="16px"
@@ -297,21 +295,15 @@ const Payment = () => {
           </Flex>
         </Flex>
 
-        <Flex
-          width="1440px"
-          height="87vh"
-          background="#F5F6FA"
-          overflow={"hidden"}
-        >
-          <Flex flexDirection="column" alignItems="flex-start" gap="4px">
+        <Flex width="1440px" height="110vh" background="#F5F6FA">
+          <Flex flexDirection="column" alignItems="flex-start">
             <Flex
               width="95%"
-              padding="16px"
+              padding="4px 16px"
               justifyContent="space-between"
               alignItems="center"
               gap="8px"
               borderRadius="16px"
-              background="#FFF"
               h={"126px"}
               ml={"24px"}
               mr={"24px"}
@@ -354,6 +346,26 @@ const Payment = () => {
                   >
                     Users
                   </Text>
+                  <Text
+                    color="  #9CA3AF"
+                    className={plus_jakarta?.className}
+                    fontSize="14px"
+                    fontStyle="normal"
+                    fontWeight="500"
+                    lineHeight="100%"
+                  >
+                    /
+                  </Text>
+                  <Text
+                    color="  #9CA3AF"
+                    className={plus_jakarta?.className}
+                    fontSize="14px"
+                    fontStyle="normal"
+                    fontWeight="500"
+                    lineHeight="100%"
+                  >
+                    User profile
+                  </Text>
                 </Flex>
                 <Flex>
                   <Text
@@ -365,52 +377,243 @@ const Payment = () => {
                     lineHeight="150%"
                     letterSpacing="-0.24px"
                   >
-                    Users
+                    Users Profile
                   </Text>
                 </Flex>
               </Flex>
+              <Flex justifyContent="flex-end" alignItems="center" gap="16px">
+                <Flex
+                  padding="8px 24px"
+                  justifyContent="center"
+                  alignItems="center"
+                  gap="12px"
+                  borderRadius="12px"
+                  background="#EFE3E3"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <g clip-path="url(#clip0_747_675)">
+                      <path
+                        d="M22.8 4H19.08C18.8015 2.87141 18.0646 1.85735 16.9935 1.12872C15.9224 0.40009 14.5826 0.00145452 13.2 0L10.8 0C9.41735 0.00145452 8.07758 0.40009 7.0065 1.12872C5.93542 1.85735 5.19852 2.87141 4.92 4H1.2C0.88174 4 0.576515 4.10536 0.351472 4.29289C0.126428 4.48043 0 4.73478 0 5C0 5.26522 0.126428 5.51957 0.351472 5.70711C0.576515 5.89464 0.88174 6 1.2 6H2.4V19C2.40191 20.3256 3.03466 21.5964 4.15946 22.5338C5.28427 23.4711 6.80929 23.9984 8.4 24H15.6C17.1907 23.9984 18.7157 23.4711 19.8405 22.5338C20.9653 21.5964 21.5981 20.3256 21.6 19V6H22.8C23.1183 6 23.4235 5.89464 23.6485 5.70711C23.8736 5.51957 24 5.26522 24 5C24 4.73478 23.8736 4.48043 23.6485 4.29289C23.4235 4.10536 23.1183 4 22.8 4ZM10.8 2H13.2C13.9443 2.00076 14.6702 2.19338 15.2779 2.55144C15.8857 2.90951 16.3457 3.41549 16.5948 4H7.4052C7.6543 3.41549 8.11428 2.90951 8.72206 2.55144C9.32985 2.19338 10.0557 2.00076 10.8 2ZM19.2 19C19.2 19.7956 18.8207 20.5587 18.1456 21.1213C17.4705 21.6839 16.5548 22 15.6 22H8.4C7.44522 22 6.52955 21.6839 5.85442 21.1213C5.17929 20.5587 4.8 19.7956 4.8 19V6H19.2V19Z"
+                        fill="#E76161"
+                      />
+                      <path
+                        d="M10 17.9995C10.2652 17.9995 10.5196 17.8942 10.7071 17.7066C10.8946 17.5191 11 17.2647 11 16.9995V10.9995C11 10.7343 10.8946 10.4799 10.7071 10.2924C10.5196 10.1049 10.2652 9.99951 10 9.99951C9.73478 9.99951 9.48043 10.1049 9.29289 10.2924C9.10536 10.4799 9 10.7343 9 10.9995V16.9995C9 17.2647 9.10536 17.5191 9.29289 17.7066C9.48043 17.8942 9.73478 17.9995 10 17.9995Z"
+                        fill="#E76161"
+                      />
+                      <path
+                        d="M14 17.9995C14.2652 17.9995 14.5196 17.8942 14.7071 17.7066C14.8946 17.5191 15 17.2647 15 16.9995V10.9995C15 10.7343 14.8946 10.4799 14.7071 10.2924C14.5196 10.1049 14.2652 9.99951 14 9.99951C13.7348 9.99951 13.4804 10.1049 13.2929 10.2924C13.1054 10.4799 13 10.7343 13 10.9995V16.9995C13 17.2647 13.1054 17.5191 13.2929 17.7066C13.4804 17.8942 13.7348 17.9995 14 17.9995Z"
+                        fill="#E76161"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_747_675">
+                        <rect width="24" height="24" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  <Text
+                    color="#E76161"
+                    className={plus_jakarta?.className}
+                    fontSize="16px"
+                    fontStyle="normal"
+                    fontWeight="600"
+                    lineHeight="24px"
+                    letterSpacing="0.15px"
+                  >
+                    Delete User
+                  </Text>
+                </Flex>
 
-              <Flex
-                height="48px"
-                padding="8px 24px"
-                justifyContent="center"
-                alignItems="center"
-                gap="12px"
-                borderRadius="12px"
-                background=" #277DE3"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
+                <Flex
+                  padding="8px 24px"
+                  justifyContent="center"
+                  alignItems="center"
+                  gap="12px"
+                  borderRadius="12px"
+                  background="#277DE3"
                 >
-                  <path d="M10.2857 0H13.7143V24H10.2857V0Z" fill="white" />
-                  <path
-                    d="M24 10.2857V13.7143L0 13.7143L1.49868e-07 10.2857L24 10.2857Z"
-                    fill="white"
-                  />
-                </svg>
-                <Text
-                  color="#FFF"
-                  className={plus_jakarta?.className}
-                  fontSize="16px"
-                  fontStyle="normal"
-                  fontWeight="600"
-                  lineHeight="24px"
-                  letterSpacing="0.15px"
-                >
-                  Add payment
-                </Text>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M20 19.0002H12.5M4 15.8522V18.8002C4 18.9106 4.08954 19.0002 4.2 19.0002H7.14793C7.20097 19.0002 7.25184 18.9791 7.28935 18.9416L17.8586 8.37236C17.9367 8.29425 17.9367 8.16762 17.8586 8.08951L14.9107 5.14159C14.8325 5.06348 14.7059 5.06348 14.6278 5.14159L4.05858 15.7108C4.02107 15.7483 4 15.7992 4 15.8522Z"
+                      stroke="#F9FBFF"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  <Text
+                    color="#fff"
+                    className={plus_jakarta?.className}
+                    fontSize="16px"
+                    fontStyle="normal"
+                    fontWeight="600"
+                    lineHeight="24px"
+                    letterSpacing="0.15px"
+                  >
+                    Edit user
+                  </Text>
+                </Flex>
               </Flex>
             </Flex>
+            {/* personal details */}
+            <Flex
+              background={"#fff"}
+              width="95%"
+              padding="4px 16px"
+              flexDir="column"
+              alignItems="flex-start"
+              gap="12px"
+              borderRadius="16px"
+              h={"126px"}
+              ml={"24px"}
+              mr={"24px"}
+              mt={"34px"}
+            >
+              <Text
+                color=" #111827"
+                className={plus_jakarta?.className}
+                fontSize="18px"
+                fontStyle="normal"
+                fontWeight="600"
+                lineHeight="150%"
+                letterSpacing="-0.18px"
+              >
+                Personal details
+              </Text>
+
+              <Flex alignItems="center" gap="72px" alignSelf="stretch">
+                <Flex
+                  flexDirection="column"
+                  alignItems="flex-start"
+                  gap="8px"
+                  flex="1 0 0"
+                >
+                  <Text
+                    color="#768F97"
+                    className={plus_jakarta?.className}
+                    fontSize="14px"
+                    fontStyle="normal"
+                    fontWeight="400"
+                    lineHeight="22px"
+                  >
+                    User ID
+                  </Text>
+                  <Text
+                    color="#324A51"
+                    className={plus_jakarta?.className}
+                    fontSize="16px"
+                    fontStyle="normal"
+                    fontWeight="500"
+                    lineHeight="26px"
+                  >
+                    #17454
+                  </Text>
+                </Flex>
+
+                <Flex
+                  flexDirection="column"
+                  alignItems="flex-start"
+                  gap="8px"
+                  flex="1 0 0"
+                >
+                  <Text
+                    color="#768F97"
+                    className={plus_jakarta?.className}
+                    fontSize="14px"
+                    fontStyle="normal"
+                    fontWeight="400"
+                    lineHeight="22px"
+                  >
+                    Full Name
+                  </Text>
+                  <Text
+                    color="#324A51"
+                    className={plus_jakarta?.className}
+                    fontSize="16px"
+                    fontStyle="normal"
+                    fontWeight="500"
+                    lineHeight="26px"
+                  >
+                    John Marker
+                  </Text>
+                </Flex>
+
+                <Flex
+                  flexDirection="column"
+                  alignItems="flex-start"
+                  gap="8px"
+                  flex="1 0 0"
+                >
+                  <Text
+                    color="#768F97"
+                    className={plus_jakarta?.className}
+                    fontSize="14px"
+                    fontStyle="normal"
+                    fontWeight="400"
+                    lineHeight="22px"
+                  >
+                    Email
+                  </Text>
+                  <Text
+                    color="#324A51"
+                    className={plus_jakarta?.className}
+                    fontSize="16px"
+                    fontStyle="normal"
+                    fontWeight="500"
+                    lineHeight="26px"
+                  >
+                    john@gmail.com
+                  </Text>
+                </Flex>
+
+                <Flex
+                  flexDirection="column"
+                  alignItems="flex-start"
+                  gap="8px"
+                  flex="1 0 0"
+                >
+                  <Text
+                    color="#768F97"
+                    className={plus_jakarta?.className}
+                    fontSize="14px"
+                    fontStyle="normal"
+                    fontWeight="400"
+                    lineHeight="22px"
+                  >
+                    Subscription
+                  </Text>
+                  <Text
+                    color="#324A51"
+                    className={plus_jakarta?.className}
+                    fontSize="16px"
+                    fontStyle="normal"
+                    fontWeight="500"
+                    lineHeight="26px"
+                  >
+                    Standard
+                  </Text>
+                </Flex>
+              </Flex>
+            </Flex>
+
             <Flex
               width="1000px"
-              padding="16px"
+              padding="6px 16px"
               flexDirection="column"
               alignItems="flex-start"
-              gap="24px"
+              gap="16px"
               borderRadius="16px"
               background="#FFF"
               ml={"24px"}
@@ -432,7 +635,7 @@ const Payment = () => {
                   letterSpacing="-0.18px"
                   w={"746px"}
                 >
-                  All Customers
+                  Chat history
                 </Text>
                 <Flex
                   padding="8px 12px"
@@ -620,7 +823,7 @@ const Payment = () => {
                           background="#F9FAFB"
                           boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
                         >
-                          ID
+                          #
                         </Th>
                         <Th
                           className={plus_jakarta?.className}
@@ -631,7 +834,7 @@ const Payment = () => {
                           background="#F9FAFB"
                           boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
                         >
-                          Username
+                          Chats
                         </Th>
                         <Th
                           className={plus_jakarta?.className}
@@ -642,19 +845,9 @@ const Payment = () => {
                           background="#F9FAFB"
                           boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
                         >
-                          Payment
+                          Date of Chat
                         </Th>
-                        <Th
-                          className={plus_jakarta?.className}
-                          fontSize="16px"
-                          fontStyle="normal"
-                          fontWeight="500"
-                          lineHeight="150%"
-                          background="#F9FAFB"
-                          boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
-                        >
-                          Date of chat
-                        </Th>
+
                         <Th
                           className={plus_jakarta?.className}
                           fontSize="16px"
@@ -671,9 +864,11 @@ const Payment = () => {
                     <Tbody>
                       <Tr>
                         <Td>1</Td>
-                        <Td>Liam</Td>
-                        <Td>$34</Td>
-                        <Td>09-Nov-2023</Td>
+                        <Td>
+                          Please provide a complete list of UK medical schools.
+                        </Td>
+                        <Td>09-Nov-23</Td>
+
                         <Td display={"flex"} gap={"12px"} alignItems={"center"}>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -830,231 +1025,7 @@ const Payment = () => {
           </Flex>
         </Flex>
       </Flex>
-      {/* Add payment */}
-      {/* <Flex
-        width="419px"
-        padding="40px 32px"
-        flexDirection="column"
-        alignItems="center"
-        gap="24px"
-        borderRadius="16px"
-        background="#FFF"
-      >
-        <Text
-          color=" #000"
-          className={plus_jakarta?.className}
-          fontSize="14px"
-          fontStyle="normal"
-          fontWeight="600"
-          lineHeight="150%"
-        >
-          Add Payment
-        </Text>
-
-        <Flex
-          flexDirection="column"
-          alignItems="flex-start"
-          gap="16px"
-          alignSelf="stretch"
-        >
-          <Flex
-            flexDirection="column"
-            alignItems="flex-start"
-            gap="6px"
-            alignSelf="stretch"
-          >
-            <Text
-              color=" #344054)"
-              className={plus_jakarta?.className}
-              fontSize="14px"
-              fontStyle="normal"
-              fontWeight="500"
-              lineHeight="20px"
-            >
-              User name
-            </Text>
-            <Flex
-              padding="8px 12px"
-              alignItems="center"
-              gap="8px"
-              alignSelf="stretch"
-              borderRadius="8px"
-              border="1px solid  #D0D5DD"
-              background=" #FFF"
-              boxShadow="0px 1px 2px 0px rgba(16, 24, 40, 0.05)"
-              flex={"1 0 0"}
-              justifyContent={"space-between"}
-            >
-              <Text
-                color="#808CA5"
-                className={inter?.className}
-                fontSize="14px"
-                fontStyle="normal"
-                fontWeight="400"
-                lineHeight="24px"
-              >
-                Choose User
-              </Text>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-              >
-                <path
-                  d="M11.7166 5.23204C11.858 5.08339 12.049 5 12.248 5C12.4471 5 12.6381 5.08339 12.7795 5.23204C12.8493 5.30503 12.9048 5.39204 12.9427 5.48799C12.9805 5.58395 13 5.68694 13 5.79097C13 5.895 12.9805 5.99799 12.9427 6.09395C12.9048 6.18991 12.8493 6.27691 12.7795 6.34991L8.53202 10.7683C8.39026 10.9168 8.19913 11 8 11C7.80087 11 7.60974 10.9168 7.46798 10.7683L3.22049 6.34991C3.15065 6.27691 3.0952 6.18991 3.05735 6.09395C3.01949 5.99799 3 5.895 3 5.79097C3 5.68694 3.01949 5.58395 3.05735 5.48799C3.0952 5.39204 3.15065 5.30503 3.22049 5.23204C3.36192 5.08339 3.55292 5 3.75197 5C3.95101 5 4.14201 5.08339 4.28345 5.23204L8.00163 8.8556L11.7166 5.23204Z"
-                  fill="#303030"
-                />
-              </svg>
-            </Flex>
-          </Flex>
-
-          <Flex
-            flexDirection="column"
-            alignItems="flex-start"
-            gap="6px"
-            alignSelf="stretch"
-          >
-            <Text
-              color=" #344054)"
-              className={plus_jakarta?.className}
-              fontSize="14px"
-              fontStyle="normal"
-              fontWeight="500"
-              lineHeight="20px"
-            >
-              Amount
-            </Text>
-            <Flex
-              padding="8px 12px"
-              alignItems="center"
-              gap="8px"
-              alignSelf="stretch"
-              borderRadius="8px"
-              border="1px solid  #D0D5DD"
-              background=" #FFF"
-              boxShadow="0px 1px 2px 0px rgba(16, 24, 40, 0.05)"
-              flex={"1 0 0"}
-            >
-              <Text
-                color="#808CA5"
-                className={inter?.className}
-                fontSize="14rpx"
-                fontStyle="normal"
-                fontWeight="400"
-                lineHeight="24px"
-              >
-                Enter amount
-              </Text>
-            </Flex>
-          </Flex>
-
-          <Flex
-            flexDirection="column"
-            alignItems="flex-start"
-            gap="6px"
-            alignSelf="stretch"
-            
-          >
-            <Text
-              color=" #344054)"
-              className={plus_jakarta?.className}
-              fontSize="14px"
-              fontStyle="normal"
-              fontWeight="500"
-              lineHeight="20px"
-            >
-              Date
-            </Text>
-            <Flex
-              padding="8px 12px"
-              alignItems="center"
-              gap="8px"
-              alignSelf="stretch"
-              borderRadius="8px"
-              border="1px solid  #D0D5DD"
-              background=" #FFF"
-              boxShadow="0px 1px 2px 0px rgba(16, 24, 40, 0.05)"
-              flex={"1 0 0"}
-              justifyContent={"space-between"}
-            >
-              <Text
-                color="#808CA5"
-                className={inter?.className}
-                fontSize="14rpx"
-                fontStyle="normal"
-                fontWeight="400"
-                lineHeight="24px"
-              >
-                Enter date
-              </Text>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
-                fill="none"
-              >
-                <path
-                  d="M8.3298 13.678H9.66248M12.3356 13.678H13.6683M4.33172 13.678H5.6644M8.3298 9.67797H9.66248M12.3356 9.67797H13.6683M4.33172 9.67797H5.6644M1 6.33332H17M13.0019 4.33332V1M4.99808 4.33332V1M3.67309 17H14.3269C15.8032 17 17 15.8026 17 14.3256V5.00773C17 3.53071 15.8032 2.33332 14.3269 2.33332H3.67309C2.19678 2.33332 1 3.53071 1 5.00773V14.3256C1 15.8026 2.19678 17 3.67309 17Z"
-                  stroke="#98A2B3"
-                  stroke-width="1.5"
-                  stroke-miterlimit="10"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </Flex>
-          </Flex>
-        </Flex>
-
-        <Flex alignItems="flex-start" gap="16px" alignSelf="stretch">
-          <Flex
-            padding="12px 16px"
-            justifyContent="center"
-            alignItems="center"
-            flex="1 0 0"
-            borderRadius="8px"
-            border="1px solid  #E5E7EB"
-            background=" #FFF"
-            boxShadow="0px 0px 4px 0px rgba(229, 231, 235, 0.50)"
-          >
-            <Text
-              color=" #374151"
-              className={plus_jakarta?.className}
-              fontSize="16px"
-              fontStyle="normal"
-              fontWeight="600"
-              lineHeight="150%"
-            >
-              Discard
-            </Text>
-          </Flex>
-          <Flex
-            padding="12px 16px"
-            justifyContent="center"
-            alignItems="center"
-            flex="1 0 0"
-            borderRadius="8px"
-            border="1rpx solid  #E5E7EB"
-            background=" #277DE3"
-            boxShadow="0px 0px 4px 0px rgba(229, 231, 235, 0.50)"
-          >
-            <Text
-              color=" #fff"
-              className={plus_jakarta?.className}
-              fontSize="16px"
-              fontStyle="normal"
-              fontWeight="600"
-              lineHeight="150%"
-            >
-              Save
-            </Text>
-          </Flex>
-        </Flex>
-      </Flex>*/}
     </Flex>
   );
 };
-export default Payment;
+export default UserProfile;

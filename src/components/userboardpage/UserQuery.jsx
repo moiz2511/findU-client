@@ -5,7 +5,7 @@ const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
-const UserDash = () => {
+const UserQuery = () => {
   return (
     <Flex width="1440px" height="100vh" background="#002045">
       <Flex flexDir={"column"} justifyContent={"flex-start"}>
@@ -905,388 +905,81 @@ const UserDash = () => {
         flexDirection={"column"}
         mt={"16px"}
       >
-        <Flex width="90%" alignItems="flex-start" gap="24px" ml={"70px"}>
-          <Flex
-            flexDirection="column"
-            alignItems="center"
-            gap="5px"
-            flex="1 0 0"
-          >
-            <Flex
-              width="174px"
-              padding="8.556px 52.841px 23px 52.84px"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Image src="cons.png" boxSize="60%" objectFit="fill" />
-            </Flex>
-            <Flex
-              padding="2px"
-              flexDirection="column"
-              alignItems="flex-start"
-              gap="16px"
-              alignSelf="stretch"
-            >
-              <Flex
-                padding="12px"
-                justifyContent="center"
-                alignItems="center"
-                gap="8px"
-                alignSelf="stretch"
-                borderRadius="8px"
-                background="#E8F2FE"
-                flex={"1 0 0"}
-              >
-                <Text
-                  color="var(--Text, #131619)"
-                  className={plus_jakarta?.className}
-                  fontSize="14px"
-                  fontStyle="normal"
-                  fontWeight="400"
-                  lineHeight="24px"
-                  letterSpacing="0.15px"
-                >
-                  Please provide a complete list of UK medical schools.
-                </Text>
-              </Flex>
-
-              <Flex
-                padding="12px"
-                justifyContent="center"
-                alignItems="center"
-                gap="8px"
-                alignSelf="stretch"
-                borderRadius="8px"
-                background="#E8F2FE"
-                flex={"1 0 0"}
-              >
-                <Text
-                  color="var(--Text, #131619)"
-                  className={plus_jakarta?.className}
-                  fontSize="14px"
-                  fontStyle="normal"
-                  fontWeight="400"
-                  lineHeight="24px"
-                  letterSpacing="0.15px"
-                >
-                  Tell me about the course structure of the University of Leed's
-                  Computer Science programme
-                </Text>
-              </Flex>
-
-              <Flex
-                padding="12px"
-                justifyContent="center"
-                alignItems="center"
-                gap="8px"
-                alignSelf="stretch"
-                borderRadius="8px"
-                background="#E8F2FE"
-                flex={"1 0 0"}
-              >
-                <Text
-                  color="var(--Text, #131619)"
-                  className={plus_jakarta?.className}
-                  fontSize="14px"
-                  fontStyle="normal"
-                  fontWeight="400"
-                  lineHeight="24px"
-                  letterSpacing="0.15px"
-                >
-                  how to pick between a BA and BSc Economics degree?
-                </Text>
-              </Flex>
-
-              <Flex
-                padding="12px"
-                justifyContent="center"
-                alignItems="center"
-                gap="8px"
-                alignSelf="stretch"
-                borderRadius="8px"
-                background="#E8F2FE"
-                flex={"1 0 0"}
-              >
-                <Text
-                  color="var(--Text, #131619)"
-                  className={plus_jakarta?.className}
-                  fontSize="14px"
-                  fontStyle="normal"
-                  fontWeight="400"
-                  lineHeight="24px"
-                  letterSpacing="0.15px"
-                >
-                  what are the key dates and steps to apply for a MA course in
-                  political science at LSE?
-                </Text>
-              </Flex>
-            </Flex>
-          </Flex>
-
-          <Flex
-            flexDirection="column"
-            alignItems="center"
-            gap="5px"
-            flex="1 0 0"
-          >
-            <Flex
-              width="174px"
-              padding="8.556px 52.841px 23px 52.84px"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Image src="cons.png" boxSize="60%" objectFit="fill" />
-            </Flex>
-            <Flex
-              padding="2px"
-              flexDirection="column"
-              alignItems="flex-start"
-              gap="16px"
-              alignSelf="stretch"
-            >
-              <Flex
-                padding="12px"
-                justifyContent="center"
-                alignItems="center"
-                gap="8px"
-                alignSelf="stretch"
-                borderRadius="8px"
-                background="#E8F2FE"
-                flex={"1 0 0"}
-              >
-                <Text
-                  color="var(--Text, #131619)"
-                  className={plus_jakarta?.className}
-                  fontSize="14px"
-                  fontStyle="normal"
-                  fontWeight="400"
-                  lineHeight="24px"
-                  letterSpacing="0.15px"
-                >
-                  Remembers what user said earlier in the conversation
-                </Text>
-              </Flex>
-
-              <Flex
-                padding="12px"
-                justifyContent="center"
-                alignItems="center"
-                gap="8px"
-                alignSelf="stretch"
-                borderRadius="8px"
-                background="#E8F2FE"
-                flex={"1 0 0"}
-              >
-                <Text
-                  color="var(--Text, #131619)"
-                  className={plus_jakarta?.className}
-                  fontSize="14px"
-                  fontStyle="normal"
-                  fontWeight="400"
-                  lineHeight="24px"
-                  letterSpacing="0.15px"
-                >
-                  Allows user to provide follow-up corrections
-                </Text>
-              </Flex>
-
-              <Flex
-                padding="12px"
-                justifyContent="center"
-                alignItems="center"
-                gap="8px"
-                alignSelf="stretch"
-                borderRadius="8px"
-                background="#E8F2FE"
-                flex={"1 0 0"}
-              >
-                <Text
-                  color="var(--Text, #131619)"
-                  className={plus_jakarta?.className}
-                  fontSize="14px"
-                  fontStyle="normal"
-                  fontWeight="400"
-                  lineHeight="24px"
-                  letterSpacing="0.15px"
-                >
-                  Information trained from original source
-                </Text>
-              </Flex>
-
-              <Flex
-                padding="12px"
-                justifyContent="center"
-                alignItems="center"
-                gap="8px"
-                alignSelf="stretch"
-                borderRadius="8px"
-                background="#E8F2FE"
-                flex={"1 0 0"}
-              >
-                <Text
-                  color="var(--Text, #131619)"
-                  className={plus_jakarta?.className}
-                  fontSize="14px"
-                  fontStyle="normal"
-                  fontWeight="400"
-                  lineHeight="24px"
-                  letterSpacing="0.15px"
-                >
-                  Includes source link with answer
-                </Text>
-              </Flex>
-            </Flex>
-          </Flex>
-
-          <Flex
-            flexDirection="column"
-            alignItems="center"
-            gap="5px"
-            flex="1 0 0"
-          >
-            <Flex
-              width="174px"
-              padding="8.556px 52.841px 23px 52.84px"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Image src="cons.png" boxSize="60%" objectFit="fill" />
-            </Flex>
-            <Flex
-              padding="2px"
-              flexDirection="column"
-              alignItems="flex-start"
-              gap="16px"
-              alignSelf="stretch"
-            >
-              <Flex
-                padding="12px"
-                justifyContent="center"
-                alignItems="center"
-                gap="8px"
-                alignSelf="stretch"
-                borderRadius="8px"
-                background="#E8F2FE"
-                flex={"1 0 0"}
-              >
-                <Text
-                  color="var(--Text, #131619)"
-                  className={plus_jakarta?.className}
-                  fontSize="14px"
-                  fontStyle="normal"
-                  fontWeight="400"
-                  lineHeight="24px"
-                  letterSpacing="0.15px"
-                >
-                  May occasionally generate incorrect information
-                </Text>
-              </Flex>
-
-              <Flex
-                padding="12px"
-                justifyContent="center"
-                alignItems="center"
-                gap="8px"
-                alignSelf="stretch"
-                borderRadius="8px"
-                background="#E8F2FE"
-                flex={"1 0 0"}
-              >
-                <Text
-                  color="var(--Text, #131619)"
-                  className={plus_jakarta?.className}
-                  fontSize="14px"
-                  fontStyle="normal"
-                  fontWeight="400"
-                  lineHeight="24px"
-                  letterSpacing="0.15px"
-                >
-                  May occasionally produce harmful instructions or biased
-                  content
-                </Text>
-              </Flex>
-            </Flex>
-          </Flex>
-        </Flex>
-        <Flex>
-          <Flex
-            height="48px"
-            padding="8px 24px"
-            justifyContent="center"
-            alignItems="center"
-            gap="12px"
-            flexShrink="0"
-            borderRadius="12px"
-            background=" #277DE3"
-            margin={"auto"}
-          >
+        <Flex
+          width="80%"
+          flexDirection="column"
+          alignItems="center"
+          gap="32px"
+          flexShrink="0"
+          justifyContent={"center"}
+          m={"auto"}
+        >
+          <Flex flexDirection="column" alignItems="center" gap="16px">
             <Text
-              color="var(--Btn-Text-Color, #FFF)"
+              color=" #131619"
+              className={plus_jakarta?.className}
+              fontSize="24px"
+              fontStyle="normal"
+              fontWeight="600"
+              lineHeight="normal"
+              letterSpacing="0.15px"
+            >
+              Unlock Your UK Study Path
+            </Text>
+            <Text
+              color=" #696969"
+              textAlign="center"
               className={plus_jakarta?.className}
               fontSize="16px"
               fontStyle="normal"
-              fontWeight="600"
+              fontWeight="400"
               lineHeight="24px"
               letterSpacing="0.15px"
             >
-              Search
+              Explore courses, universities, scholarships, and more for your UK
+              education journey
             </Text>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                d="M20 20L16.4153 16.4153M16.4153 16.4153C17.7314 15.0992 18.5455 13.281 18.5455 11.2727C18.5455 7.25611 15.2893 4 11.2727 4C7.25611 4 4 7.25611 4 11.2727C4 15.2893 7.25611 18.5455 11.2727 18.5455C13.281 18.5455 15.0992 17.7314 16.4153 16.4153Z"
-                stroke="white"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
           </Flex>
-          <Flex flexDirection="column" alignItems="center">
-            {/* <Flex
-              paddin="12px"
-              flexDirection="column"
-              alignItems="flex-start"
+
+          <Flex gap="16px" alignItems="center">
+            <Flex
+              padding="24px 16px"
+              alignItems="center"
+              gap="12px"
               borderRadius="8px"
-              background="#FFF"
+              border="1px solid  #D0D5DD"
+              alignSelf={"stretch"}
             >
               <Text
-                color="#000"
-                textAlign="center"
+                color=" #787878"
                 className={plus_jakarta?.className}
-                fontSize="12px"
+                fontSize="16px"
                 fontStyle="normal"
-                fontWeight="400"
-                lineHeight="16px"
-                textDecorationLine="underline"
+                fontWeight="500"
+                lineHeight="24px"
+                letterSpacing="0.15px"
               >
-                Terms and Conditions
+                Write your query here
               </Text>
-            </Flex> */}
-            <Flex margin={"auto"} mr={"30px"}>
+            </Flex>
+            <Flex
+              padding="22px 24px"
+              alignItems="center"
+              gap="8px"
+              borderRadius="8px"
+              border="1px solid  #D0D5DD"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="40"
-                height="40"
-                viewBox="0 0 40 40"
+                width="24"
+                height="28"
+                viewBox="0 0 24 28"
                 fill="none"
               >
-                <g clip-path="url(#clip0_722_732)">
-                  <path
-                    d="M20 0C8.94602 0 0 8.945 0 20C0 31.0538 8.945 40 20 40C31.054 40 40 31.055 40 20C40 8.94602 31.055 0 20 0ZM19.4082 29.3609C18.2762 29.3609 17.4074 28.4131 17.4074 27.3337C17.4074 26.228 18.3025 25.3066 19.4082 25.3066C20.514 25.3066 21.4352 26.228 21.4352 27.3338C21.4352 28.413 20.5402 29.3609 19.4082 29.3609ZM22.4093 19.12C20.9614 20.252 20.935 21.0418 20.935 22.4107C20.935 22.911 20.6717 23.4902 19.3818 23.4902C18.3023 23.4902 17.9339 23.0952 17.9339 21.7263C17.9339 19.4623 18.9343 18.3829 19.6977 17.7248C20.5665 16.9876 22.0408 16.1716 22.0408 14.75C22.0408 13.5389 20.9877 12.9598 19.6714 12.9598C16.9862 12.9598 17.5654 14.987 16.1437 14.987C15.4329 14.987 14.5641 14.513 14.5641 13.4863C14.5641 12.0648 16.1963 9.95859 19.7504 9.95859C23.1201 9.95859 25.3578 11.8278 25.3578 14.3024C25.3578 16.777 23.1201 18.5672 22.4093 19.12Z"
-                    fill="#277DE3"
-                  />
-                </g>
-                <defs>
-                  <clipPath id="clip0_722_732">
-                    <rect width="40" height="40" fill="white" />
-                  </clipPath>
-                </defs>
+                <path
+                  d="M1.13716 27.1911C0.785235 26.878 0.502404 26.4885 0.308235 26.0495C0.114066 25.6106 0.0131949 25.1326 0.0126009 24.6488C-0.231096 24.049 3.13843 15.7298 3.32961 14.9785L12.0626 14.9782C12.1847 14.9786 12.3056 14.9537 12.4185 14.9049C12.5313 14.856 12.6339 14.7843 12.7202 14.6938C12.8065 14.6034 12.8749 14.4959 12.9215 14.3776C12.968 14.2593 12.9918 14.1325 12.9915 14.0045C12.9927 13.8763 12.9695 13.7491 12.9233 13.6304C12.877 13.5117 12.8087 13.4038 12.7222 13.3132C12.6357 13.2225 12.5328 13.1508 12.4195 13.1023C12.3063 13.0539 12.185 13.0296 12.0626 13.0308L3.32967 13.0311L0.226667 4.57784C-0.0165141 3.92868 -0.0593894 3.21592 0.104073 2.53986C0.267536 1.86379 0.629108 1.25846 1.13791 0.80905C1.64088 0.354492 2.26694 0.0763345 2.92831 0.0135799C3.58969 -0.0491747 4.2532 0.106621 4.82581 0.459121L22.3933 11.0831C22.8833 11.3779 23.2901 11.8035 23.5723 12.3166C23.8545 12.8297 24.0021 13.4119 24 14.0042C24.0008 14.5951 23.8526 15.1757 23.5703 15.6871C23.2879 16.1986 22.8816 16.6227 22.3924 16.9164L4.82504 27.5408C4.25241 27.8933 3.58889 28.0492 2.92752 27.9864C2.26615 27.9237 1.64011 27.6456 1.13716 27.1911Z"
+                  fill="#686B6E"
+                />
               </svg>
             </Flex>
           </Flex>
@@ -1295,4 +988,4 @@ const UserDash = () => {
     </Flex>
   );
 };
-export default UserDash;
+export default UserQuery;
