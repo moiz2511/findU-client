@@ -9,7 +9,6 @@ import {
   Td,
   TableContainer,
   chakra,
-  Box,
 } from "@chakra-ui/react";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
@@ -17,18 +16,19 @@ const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 import { Inter } from "next/font/google";
-import { instance } from "../../../instance";
-import { unstable_useCacheRefresh, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { instance } from "../../../instance";
 const inter = Inter({
   subsets: ["latin"],
 });
 
-const AdminBoard = () => {
+const ChatDetails = () => {
   const router = useRouter();
-  const [users, setUsers] = useState(null);
-  const [refresh, setRefresh] = useState(1);
-  const fetchUsers = async () => {
+  const { conId } = router.query;
+  const [conversations, setConversations] = useState(null);
+
+  const fetchChats = async () => {
     const token = localStorage.getItem("adminToken");
     if (token) {
       instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -36,20 +36,17 @@ const AdminBoard = () => {
       console.error("No token found");
     }
 
-    const res = await instance?.get("/GetAllUsers/");
+    const res = await instance?.post("/getConversationChat/", {
+      conId: conId,
+    });
 
-    console.log("users", res?.data?.users);
-    setUsers(res?.data?.users);
+    console.log("setConversations", res?.data?.conversations);
+    setConversations(res?.data?.conversations);
   };
   useEffect(() => {
-    fetchUsers();
+    fetchChats();
   }, []);
 
-  // useEffect(() => {
-  //   if (users && Array.isArray(users)) {
-  //     setRefresh((prevRefresh) => prevRefresh + 1);
-  //   }
-  // }, [users]);
   return (
     <Flex>
       <Flex
@@ -335,12 +332,10 @@ const AdminBoard = () => {
             <Flex
               width="95%"
               padding="16px"
-              flexDirection="column"
-              justifyContent="center"
-              alignItems="flex-start"
+              justifyContent="space-between"
+              alignItems="center"
               gap="8px"
               borderRadius="16px"
-              background="#FFF"
               h={"126px"}
               ml={"24px"}
               mr={"24px"}
@@ -383,6 +378,46 @@ const AdminBoard = () => {
                   >
                     Users
                   </Text>
+                  <Text
+                    color="  #9CA3AF"
+                    className={plus_jakarta?.className}
+                    fontSize="14px"
+                    fontStyle="normal"
+                    fontWeight="500"
+                    lineHeight="100%"
+                  >
+                    /
+                  </Text>
+                  <Text
+                    color="  #9CA3AF"
+                    className={plus_jakarta?.className}
+                    fontSize="14px"
+                    fontStyle="normal"
+                    fontWeight="500"
+                    lineHeight="100%"
+                  >
+                    User profile
+                  </Text>
+                  <Text
+                    color="  #9CA3AF"
+                    className={plus_jakarta?.className}
+                    fontSize="14px"
+                    fontStyle="normal"
+                    fontWeight="500"
+                    lineHeight="100%"
+                  >
+                    /
+                  </Text>
+                  <Text
+                    color="  #9CA3AF"
+                    className={plus_jakarta?.className}
+                    fontSize="14px"
+                    fontStyle="normal"
+                    fontWeight="500"
+                    lineHeight="100%"
+                  >
+                    Chat details
+                  </Text>
                 </Flex>
                 <Flex>
                   <Text
@@ -394,7 +429,56 @@ const AdminBoard = () => {
                     lineHeight="150%"
                     letterSpacing="-0.24px"
                   >
-                    Users
+                    Chat details
+                  </Text>
+                </Flex>
+              </Flex>
+              <Flex justifyContent="flex-end" alignItems="center" gap="16px">
+                <Flex
+                  padding="8px 24px"
+                  justifyContent="center"
+                  alignItems="center"
+                  gap="12px"
+                  borderRadius="12px"
+                  background="#EFE3E3"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <g clip-path="url(#clip0_747_675)">
+                      <path
+                        d="M22.8 4H19.08C18.8015 2.87141 18.0646 1.85735 16.9935 1.12872C15.9224 0.40009 14.5826 0.00145452 13.2 0L10.8 0C9.41735 0.00145452 8.07758 0.40009 7.0065 1.12872C5.93542 1.85735 5.19852 2.87141 4.92 4H1.2C0.88174 4 0.576515 4.10536 0.351472 4.29289C0.126428 4.48043 0 4.73478 0 5C0 5.26522 0.126428 5.51957 0.351472 5.70711C0.576515 5.89464 0.88174 6 1.2 6H2.4V19C2.40191 20.3256 3.03466 21.5964 4.15946 22.5338C5.28427 23.4711 6.80929 23.9984 8.4 24H15.6C17.1907 23.9984 18.7157 23.4711 19.8405 22.5338C20.9653 21.5964 21.5981 20.3256 21.6 19V6H22.8C23.1183 6 23.4235 5.89464 23.6485 5.70711C23.8736 5.51957 24 5.26522 24 5C24 4.73478 23.8736 4.48043 23.6485 4.29289C23.4235 4.10536 23.1183 4 22.8 4ZM10.8 2H13.2C13.9443 2.00076 14.6702 2.19338 15.2779 2.55144C15.8857 2.90951 16.3457 3.41549 16.5948 4H7.4052C7.6543 3.41549 8.11428 2.90951 8.72206 2.55144C9.32985 2.19338 10.0557 2.00076 10.8 2ZM19.2 19C19.2 19.7956 18.8207 20.5587 18.1456 21.1213C17.4705 21.6839 16.5548 22 15.6 22H8.4C7.44522 22 6.52955 21.6839 5.85442 21.1213C5.17929 20.5587 4.8 19.7956 4.8 19V6H19.2V19Z"
+                        fill="#E76161"
+                      />
+                      <path
+                        d="M10 17.9995C10.2652 17.9995 10.5196 17.8942 10.7071 17.7066C10.8946 17.5191 11 17.2647 11 16.9995V10.9995C11 10.7343 10.8946 10.4799 10.7071 10.2924C10.5196 10.1049 10.2652 9.99951 10 9.99951C9.73478 9.99951 9.48043 10.1049 9.29289 10.2924C9.10536 10.4799 9 10.7343 9 10.9995V16.9995C9 17.2647 9.10536 17.5191 9.29289 17.7066C9.48043 17.8942 9.73478 17.9995 10 17.9995Z"
+                        fill="#E76161"
+                      />
+                      <path
+                        d="M14 17.9995C14.2652 17.9995 14.5196 17.8942 14.7071 17.7066C14.8946 17.5191 15 17.2647 15 16.9995V10.9995C15 10.7343 14.8946 10.4799 14.7071 10.2924C14.5196 10.1049 14.2652 9.99951 14 9.99951C13.7348 9.99951 13.4804 10.1049 13.2929 10.2924C13.1054 10.4799 13 10.7343 13 10.9995V16.9995C13 17.2647 13.1054 17.5191 13.2929 17.7066C13.4804 17.8942 13.7348 17.9995 14 17.9995Z"
+                        fill="#E76161"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_747_675">
+                        <rect width="24" height="24" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  <Text
+                    color="#E76161"
+                    className={plus_jakarta?.className}
+                    fontSize="16px"
+                    fontStyle="normal"
+                    fontWeight="600"
+                    lineHeight="24px"
+                    letterSpacing="0.15px"
+                  >
+                    Delete Chat
                   </Text>
                 </Flex>
               </Flex>
@@ -411,424 +495,75 @@ const AdminBoard = () => {
               mr={"24px"}
               mt={"34px"}
             >
-              <Flex
-                justifyContent="space-between"
-                alignItems="center"
-                alignSelf="stretch"
-              >
-                <Text
-                  color="#111827"
-                  className={plus_jakarta?.className}
-                  fontSize="18px"
-                  fontStyle="normal"
-                  fontWeight="600"
-                  lineHeight="150%"
-                  letterSpacing="-0.18px"
-                  w={"746px"}
+              <Flex width="301px" alignItems="center" gap="16px">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="17"
+                  viewBox="0 0 14 17"
+                  fill="none"
                 >
-                  All Customers
-                </Text>
+                  <path
+                    d="M6.57348 8.24534C7.63229 8.24534 8.54916 7.86556 9.29831 7.11628C10.0475 6.36716 10.4272 5.45054 10.4272 4.3916C10.4272 3.33298 10.0475 2.41627 9.29819 1.66686C8.54891 0.917834 7.63216 0.538086 6.57348 0.538086C5.51451 0.538086 4.59786 0.917834 3.84874 1.66699C3.09962 2.41614 2.71971 3.33289 2.71971 4.3916C2.71971 5.45054 3.09958 6.36728 3.84886 7.11644C4.59814 7.86546 5.51489 8.24534 6.57348 8.24534ZM13.3165 12.8413C13.2949 12.5295 13.2512 12.1894 13.1868 11.8303C13.1219 11.4684 13.0383 11.1264 12.9382 10.8138C12.8348 10.4907 12.6942 10.1716 12.5204 9.8658C12.3399 9.54843 12.128 9.27205 11.8902 9.04465C11.6416 8.80674 11.3371 8.61546 10.9851 8.4759C10.6342 8.33715 10.2454 8.26684 9.82956 8.26684C9.66621 8.26684 9.50828 8.33384 9.20322 8.53246C8.98637 8.67366 8.76888 8.81387 8.55075 8.95308C8.34116 9.08665 8.05722 9.21177 7.7065 9.32505C7.36435 9.43577 7.01694 9.49193 6.67404 9.49193C6.33117 9.49193 5.98385 9.43577 5.64132 9.32505C5.29101 9.21186 5.00708 9.08677 4.7977 8.95321C4.55489 8.79805 4.3352 8.65646 4.14464 8.5323C3.83996 8.33371 3.68186 8.26668 3.51855 8.26668C3.10252 8.26668 2.71387 8.33712 2.36315 8.47606C2.01134 8.61534 1.70678 8.80662 1.45787 9.04477C1.22022 9.2723 1.00819 9.54852 0.828 9.8658C0.654313 10.1716 0.513688 10.4905 0.410158 10.8139C0.310158 11.1265 0.226565 11.4684 0.161627 11.8303C0.0972838 12.1889 0.0535965 12.5291 0.0319715 12.8416C0.0104598 13.1561 -0.000202754 13.4712 2.91917e-06 13.7864C2.91917e-06 14.6217 0.265502 15.2978 0.789062 15.7964C1.30615 16.2885 1.99034 16.5381 2.82237 16.5381H10.5265C11.3585 16.5381 12.0424 16.2886 12.5596 15.7965C13.0833 15.2982 13.3488 14.6219 13.3488 13.7863C13.3487 13.4639 13.3379 13.1459 13.3165 12.8413Z"
+                    fill="#277DE3"
+                  />
+                </svg>
                 <Flex
-                  padding="8px 12px"
-                  alignItems="center"
-                  gap="8px"
-                  borderRadius="8px"
-                  background="#F3F4F6"
+                  padding="10px"
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="flex-start"
+                  gap="14px"
+                  borderRadius="6px"
+                  background="#E2F1FC"
+                  boxShadow="0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <g clip-path="url(#clip0_747_497)">
-                      <path
-                        d="M2.5 7.49984L5.83333 4.1665M5.83333 4.1665L9.16667 7.49984M5.83333 4.1665V15.8332"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M17.5007 12.4998L14.1673 15.8332M14.1673 15.8332L10.834 12.4998M14.1673 15.8332V4.1665"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_747_497">
-                        <rect width="20" height="20" fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
                   <Text
-                    color="#111827"
+                    color="#000"
                     className={plus_jakarta?.className}
-                    fontSize="16px"
-                    fontStyle="normal"
-                    fontWeight="500"
-                    lineHeight="150%"
-                    whiteSpace={"nowrap"}
-                  >
-                    Sort by: Date added{" "}
-                  </Text>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <g clip-path="url(#clip0_747_502)">
-                      <path
-                        d="M5 7.5L10 12.5L15 7.5"
-                        stroke="#9CA3AF"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_747_502">
-                        <rect width="20" height="20" fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </Flex>
-
-                <Flex
-                  padding="8px 12px"
-                  alignItems="center"
-                  gap="8px"
-                  borderRadius="8px"
-                  border="1px solid  ##E5E7EB"
-                  background=" #FFF"
-                  boxShadow="0px 0px 2px 0px #E5E7EB"
-                  ml={"16px"}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <g clip-path="url(#clip0_747_89)">
-                      <path
-                        d="M11.6667 6.66683C12.5871 6.66683 13.3333 5.92064 13.3333 5.00016C13.3333 4.07969 12.5871 3.3335 11.6667 3.3335C10.7462 3.3335 10 4.07969 10 5.00016C10 5.92064 10.7462 6.66683 11.6667 6.66683Z"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M3.33398 5H10.0007"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M13.334 5H16.6673"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M6.66667 11.6668C7.58714 11.6668 8.33333 10.9206 8.33333 10.0002C8.33333 9.07969 7.58714 8.3335 6.66667 8.3335C5.74619 8.3335 5 9.07969 5 10.0002C5 10.9206 5.74619 11.6668 6.66667 11.6668Z"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M3.33398 10H5.00065"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M8.33398 10H16.6673"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M14.1667 16.6668C15.0871 16.6668 15.8333 15.9206 15.8333 15.0002C15.8333 14.0797 15.0871 13.3335 14.1667 13.3335C13.2462 13.3335 12.5 14.0797 12.5 15.0002C12.5 15.9206 13.2462 16.6668 14.1667 16.6668Z"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M3.33398 15H12.5007"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M15.834 15H16.6673"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_747_89">
-                        <rect width="20" height="20" fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                  <Text
-                    color=" #4B5563"
-                    className={plus_jakarta?.className}
-                    fontSize="16px"
-                    fontStyle="normal"
-                    fontWeight="500"
-                    lineHeight="150%"
-                  >
-                    Filters
-                  </Text>
-                </Flex>
-              </Flex>
-
-              <Flex>
-                <TableContainer w={"970px"} borderRadius={"8px"}>
-                  <Table size="md">
-                    <Thead>
-                      <Tr>
-                        <Th
-                          className={plus_jakarta?.className}
-                          fontSize="16px"
-                          fontStyle="normal"
-                          fontWeight="500"
-                          lineHeight="150%"
-                          background="#F9FAFB"
-                          boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
-                        >
-                          ID
-                        </Th>
-                        <Th
-                          className={plus_jakarta?.className}
-                          fontSize="16px"
-                          fontStyle="normal"
-                          fontWeight="500"
-                          lineHeight="150%"
-                          background="#F9FAFB"
-                          boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
-                        >
-                          Username
-                        </Th>
-                        <Th
-                          className={plus_jakarta?.className}
-                          fontSize="16px"
-                          fontStyle="normal"
-                          fontWeight="500"
-                          lineHeight="150%"
-                          background="#F9FAFB"
-                          boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
-                        >
-                          Email
-                        </Th>
-                        <Th
-                          className={plus_jakarta?.className}
-                          fontSize="16px"
-                          fontStyle="normal"
-                          fontWeight="500"
-                          lineHeight="150%"
-                          background="#F9FAFB"
-                          boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
-                        >
-                          Subscription
-                        </Th>
-                        <Th
-                          className={plus_jakarta?.className}
-                          fontSize="16px"
-                          fontStyle="normal"
-                          fontWeight="500"
-                          lineHeight="150%"
-                          background="#F9FAFB"
-                          boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
-                        >
-                          Actions
-                        </Th>
-                      </Tr>
-                    </Thead>
-
-                    <Tbody>
-                      {users?.map((user, i) => (
-                        <Tr>
-                          <Td>{i + 1}</Td>
-                          <Td>{user?.name}</Td>
-                          <Td></Td>
-                          <Td></Td>
-                          <Td
-                            display={"flex"}
-                            gap={"12px"}
-                            alignItems={"center"}
-                          >
-                            <svg
-                              onClick={() =>
-                                router?.push(`userProfile/${user?.id}`)
-                              }
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="18"
-                              height="18"
-                              viewBox="0 0 18 18"
-                              fill="none"
-                            >
-                              <path
-                                d="M11.1159 3.0084L1.21212 12.9234C1.16225 12.9734 1.12671 13.036 1.1092 13.1045L0.01142 17.5152C-0.00472562 17.5807 -0.00373617 17.6492 0.0142928 17.7142C0.0323217 17.7791 0.0667808 17.8383 0.114342 17.8861C0.187394 17.959 0.286305 17.9999 0.389445 18C0.421262 18 0.452957 17.9961 0.483814 17.9883L4.88996 16.8892C4.95847 16.872 5.02101 16.8364 5.07088 16.7863L14.9756 6.87204L11.1159 3.0084ZM17.4292 1.6565L16.3268 0.552924C15.5899 -0.184674 14.3057 -0.183942 13.5697 0.552924L12.2193 1.90482L16.0788 5.76832L17.4292 4.41646C17.7973 4.04817 18 3.55794 18 3.03657C18 2.5152 17.7973 2.02497 17.4292 1.6565Z"
-                                fill="#898989"
-                              />
-                            </svg>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                            >
-                              <g clip-path="url(#clip0_747_1766)">
-                                <path
-                                  d="M23.2715 9.42146C21.7205 6.89793 18.1925 2.66406 12.0005 2.66406C5.80854 2.66406 2.28054 6.89793 0.72954 9.42146C0.250068 10.1962 -0.00390625 11.0891 -0.00390625 11.9999C-0.00390625 12.9108 0.250068 13.8037 0.72954 14.5784C2.28054 17.102 5.80854 21.3358 12.0005 21.3358C18.1925 21.3358 21.7205 17.102 23.2715 14.5784C23.751 13.8037 24.005 12.9108 24.005 11.9999C24.005 11.0891 23.751 10.1962 23.2715 9.42146ZM21.5665 13.5324C20.2345 15.6963 17.2195 19.3378 12.0005 19.3378C6.78154 19.3378 3.76654 15.6963 2.43454 13.5324C2.14967 13.0719 1.99879 12.5413 1.99879 11.9999C1.99879 11.4586 2.14967 10.9279 2.43454 10.4674C3.76654 8.30356 6.78154 4.66211 12.0005 4.66211C17.2195 4.66211 20.2345 8.29956 21.5665 10.4674C21.8514 10.9279 22.0023 11.4586 22.0023 11.9999C22.0023 12.5413 21.8514 13.0719 21.5665 13.5324Z"
-                                  fill="#898989"
-                                />
-                                <path
-                                  d="M12 7.00488C11.0111 7.00488 10.0444 7.29784 9.22215 7.84671C8.39991 8.39558 7.75904 9.17572 7.3806 10.0885C7.00217 11.0012 6.90315 12.0055 7.09608 12.9745C7.289 13.9435 7.76521 14.8335 8.46447 15.5321C9.16373 16.2307 10.0546 16.7064 11.0246 16.8991C11.9945 17.0919 12.9998 16.993 13.9134 16.6149C14.827 16.2368 15.6079 15.5966 16.1574 14.7751C16.7068 13.9537 17 12.9879 17 12C16.9984 10.6757 16.4711 9.4061 15.5338 8.46967C14.5964 7.53325 13.3256 7.00647 12 7.00488ZM12 14.9971C11.4067 14.9971 10.8266 14.8213 10.3333 14.492C9.83994 14.1627 9.45543 13.6946 9.22836 13.1469C9.0013 12.5993 8.94189 11.9967 9.05765 11.4153C9.1734 10.8339 9.45912 10.2999 9.87868 9.88075C10.2982 9.46161 10.8328 9.17616 11.4147 9.06052C11.9967 8.94488 12.5999 9.00423 13.1481 9.23107C13.6962 9.45791 14.1648 9.84205 14.4944 10.3349C14.8241 10.8278 15 11.4072 15 12C15 12.7949 14.6839 13.5572 14.1213 14.1193C13.5587 14.6813 12.7957 14.9971 12 14.9971Z"
-                                  fill="#898989"
-                                />
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_747_1766">
-                                  <rect
-                                    width="24"
-                                    height="23.9766"
-                                    fill="white"
-                                    transform="translate(0 0.0117188)"
-                                  />
-                                </clipPath>
-                              </defs>
-                            </svg>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="20"
-                              height="20"
-                              viewBox="0 0 20 20"
-                              fill="none"
-                            >
-                              <g clip-path="url(#clip0_747_1769)">
-                                <path
-                                  d="M19 3.33333H15.9C15.6679 2.39284 15.0538 1.54779 14.1613 0.940598C13.2687 0.333408 12.1522 0.0012121 11 0L9 0C7.8478 0.0012121 6.73132 0.333408 5.83875 0.940598C4.94618 1.54779 4.3321 2.39284 4.1 3.33333H1C0.734784 3.33333 0.48043 3.42113 0.292893 3.57741C0.105357 3.73369 0 3.94565 0 4.16667C0 4.38768 0.105357 4.59964 0.292893 4.75592C0.48043 4.9122 0.734784 5 1 5H2V15.8333C2.00159 16.938 2.52888 17.997 3.46622 18.7782C4.40356 19.5593 5.67441 19.9987 7 20H13C14.3256 19.9987 15.5964 19.5593 16.5338 18.7782C17.4711 17.997 17.9984 16.938 18 15.8333V5H19C19.2652 5 19.5196 4.9122 19.7071 4.75592C19.8946 4.59964 20 4.38768 20 4.16667C20 3.94565 19.8946 3.73369 19.7071 3.57741C19.5196 3.42113 19.2652 3.33333 19 3.33333ZM9 1.66667H11C11.6203 1.6673 12.2251 1.82781 12.7316 2.1262C13.2381 2.42459 13.6214 2.84624 13.829 3.33333H6.171C6.37858 2.84624 6.7619 2.42459 7.26839 2.1262C7.77487 1.82781 8.37973 1.6673 9 1.66667ZM16 15.8333C16 16.4964 15.6839 17.1323 15.1213 17.6011C14.5587 18.0699 13.7956 18.3333 13 18.3333H7C6.20435 18.3333 5.44129 18.0699 4.87868 17.6011C4.31607 17.1323 4 16.4964 4 15.8333V5H16V15.8333Z"
-                                  fill="#898989"
-                                />
-
-                                <path
-                                  d="M8.33333 14.9997C8.55435 14.9997 8.76631 14.9119 8.92259 14.7556C9.07887 14.5993 9.16667 14.3874 9.16667 14.1663V9.16634C9.16667 8.94533 9.07887 8.73337 8.92259 8.57709C8.76631 8.42081 8.55435 8.33301 8.33333 8.33301C8.11232 8.33301 7.90036 8.42081 7.74408 8.57709C7.5878 8.73337 7.5 8.94533 7.5 9.16634V14.1663C7.5 14.3874 7.5878 14.5993 7.74408 14.7556C7.90036 14.9119 8.11232 14.9997 8.33333 14.9997Z"
-                                  fill="#898989"
-                                />
-                                <path
-                                  d="M11.6654 14.9997C11.8864 14.9997 12.0983 14.9119 12.2546 14.7556C12.4109 14.5993 12.4987 14.3874 12.4987 14.1663V9.16634C12.4987 8.94533 12.4109 8.73337 12.2546 8.57709C12.0983 8.42081 11.8864 8.33301 11.6654 8.33301C11.4444 8.33301 11.2324 8.42081 11.0761 8.57709C10.9198 8.73337 10.832 8.94533 10.832 9.16634V14.1663C10.832 14.3874 10.9198 14.5993 11.0761 14.7556C11.2324 14.9119 11.4444 14.9997 11.6654 14.9997Z"
-                                  fill="#898989"
-                                />
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_747_1769">
-                                  <rect width="20" height="20" fill="white" />
-                                </clipPath>
-                              </defs>
-                            </svg>
-                          </Td>
-                        </Tr>
-                      ))}
-                    </Tbody>
-                  </Table>
-                </TableContainer>
-              </Flex>
-
-              <Flex
-                justifyContent="flex-end"
-                alignItems="center"
-                gap="16px"
-                alignSelf="stretch"
-              >
-                <Flex
-                  padding="12px 0px"
-                  alignItems="center"
-                  gap="11px"
-                  borderTop="1px solid  #EAECF0"
-                >
-                  <Flex
-                    padding="10px 8px"
-                    justifyContent="center"
-                    alignItems="center"
-                    gap="8px"
-                    borderRadius="8px"
-                    border="1px solid #D0D5DD"
-                    background=" #FFF"
-                    boxShadow="0px 1px 2px 0px rgba(16, 24, 40, 0.05)"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                    >
-                      <path
-                        d="M15.8327 10.0001H4.16602M4.16602 10.0001L9.99935 15.8334M4.16602 10.0001L9.99935 4.16675"
-                        stroke="#344054"
-                        stroke-width="1.66667"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </Flex>
-                  <Text
-                    color="#344054)"
-                    className={inter?.className}
                     fontSize="14px"
                     fontStyle="normal"
                     fontWeight="400"
-                    lineHeight="20px"
+                    lineHeight="normal"
                   >
-                    Page <chakra.span fontWeight="500">1</chakra.span> of{" "}
-                    <chakra.span fontWeight="500">10</chakra.span>
+                    Hey, how can i help you
                   </Text>
-                  <Flex
-                    padding="10px 8px"
-                    justifyContent="center"
-                    alignItems="center"
-                    gap="8px"
-                    borderRadius="8px"
-                    border="1px solid #D0D5DD"
-                    background=" #FFF"
-                    boxShadow="0px 1px 2px 0px rgba(16, 24, 40, 0.05)"
+                </Flex>
+              </Flex>
+              <Flex width="301px" alignItems="center" gap="16px">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="17"
+                  viewBox="0 0 14 17"
+                  fill="none"
+                >
+                  <path
+                    d="M6.57348 8.24534C7.63229 8.24534 8.54916 7.86556 9.29831 7.11628C10.0475 6.36716 10.4272 5.45054 10.4272 4.3916C10.4272 3.33298 10.0475 2.41627 9.29819 1.66686C8.54891 0.917834 7.63216 0.538086 6.57348 0.538086C5.51451 0.538086 4.59786 0.917834 3.84874 1.66699C3.09962 2.41614 2.71971 3.33289 2.71971 4.3916C2.71971 5.45054 3.09958 6.36728 3.84886 7.11644C4.59814 7.86546 5.51489 8.24534 6.57348 8.24534ZM13.3165 12.8413C13.2949 12.5295 13.2512 12.1894 13.1868 11.8303C13.1219 11.4684 13.0383 11.1264 12.9382 10.8138C12.8348 10.4907 12.6942 10.1716 12.5204 9.8658C12.3399 9.54843 12.128 9.27205 11.8902 9.04465C11.6416 8.80674 11.3371 8.61546 10.9851 8.4759C10.6342 8.33715 10.2454 8.26684 9.82956 8.26684C9.66621 8.26684 9.50828 8.33384 9.20322 8.53246C8.98637 8.67366 8.76888 8.81387 8.55075 8.95308C8.34116 9.08665 8.05722 9.21177 7.7065 9.32505C7.36435 9.43577 7.01694 9.49193 6.67404 9.49193C6.33117 9.49193 5.98385 9.43577 5.64132 9.32505C5.29101 9.21186 5.00708 9.08677 4.7977 8.95321C4.55489 8.79805 4.3352 8.65646 4.14464 8.5323C3.83996 8.33371 3.68186 8.26668 3.51855 8.26668C3.10252 8.26668 2.71387 8.33712 2.36315 8.47606C2.01134 8.61534 1.70678 8.80662 1.45787 9.04477C1.22022 9.2723 1.00819 9.54852 0.828 9.8658C0.654313 10.1716 0.513688 10.4905 0.410158 10.8139C0.310158 11.1265 0.226565 11.4684 0.161627 11.8303C0.0972838 12.1889 0.0535965 12.5291 0.0319715 12.8416C0.0104598 13.1561 -0.000202754 13.4712 2.91917e-06 13.7864C2.91917e-06 14.6217 0.265502 15.2978 0.789062 15.7964C1.30615 16.2885 1.99034 16.5381 2.82237 16.5381H10.5265C11.3585 16.5381 12.0424 16.2886 12.5596 15.7965C13.0833 15.2982 13.3488 14.6219 13.3488 13.7863C13.3487 13.4639 13.3379 13.1459 13.3165 12.8413Z"
+                    fill="#277DE3"
+                  />
+                </svg>
+
+                <Flex
+                  padding="10px"
+                  flexDirection="column"
+                  justifyContent="center"
+                  alignItems="flex-start"
+                  gap="14px"
+                  borderRadius="6px"
+                  background="#F4F4F4;"
+                  boxShadow="0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)"
+                >
+                  <Text
+                    color="#000"
+                    className={plus_jakarta?.className}
+                    fontSize="14px"
+                    fontStyle="normal"
+                    fontWeight="400"
+                    lineHeight="normal"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                    >
-                      <path
-                        d="M15.8327 10.0001H4.16602M4.16602 10.0001L9.99935 15.8334M4.16602 10.0001L9.99935 4.16675"
-                        stroke="#344054"
-                        stroke-width="1.66667"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </Flex>
+                    Hey, how can i help you
+                  </Text>
                 </Flex>
               </Flex>
             </Flex>
@@ -838,4 +573,4 @@ const AdminBoard = () => {
     </Flex>
   );
 };
-export default AdminBoard;
+export default ChatDetails;

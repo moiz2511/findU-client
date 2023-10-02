@@ -1,11 +1,37 @@
-import { Flex, Text, chakra } from "@chakra-ui/react";
+import { Flex, Select, Text, chakra } from "@chakra-ui/react";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { useEffect, useState } from "react";
+import { useStepActions, useStepsStore } from "../../../zustand/store";
+import { useLocalStore } from "@/hooks/useLocalStore";
 const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
-const Curriculam = () => {
+const Curriculam = ({ onContinue, onBack, actions }) => {
+  // const curriculum = useCurriculum();
+  useEffect(() => {
+    console.log("curr act", actions);
+  }, [actions]);
+  // const language = useLanguage();
+
+  // const { setLanguage, setCurriculum } = useStepActions();
+
+  // const actions = useStepsStore((state) => state);
+
+  // const [curriculumVal, setCurriculumVal] = useState("");
+  // const [languageVal, setLanguageVal] = useState("");
+
+  const [curriculumVal, setCurriculumVal] = useLocalStore("curriculum", "Fall");
+  const [languageVal, setLanguageVal] = useLocalStore("language", "English");
+
+  const handleCurriculumChange = (event) => {
+    setCurriculumVal(event.target.value);
+  };
+
+  const handleLanguageChange = (event) => {
+    setLanguageVal(event.target.value);
+  };
   return (
     <Flex
       padding="30px 341px 53px 308px"
@@ -110,7 +136,9 @@ const Curriculam = () => {
                 border="1px solid var(--Input-Border, #D0px5px)"
                 background="var(--Input-BG, #F9FBFF)"
               >
-                <Text
+                <Select
+                  value={curriculumVal}
+                  onChange={handleCurriculumChange}
                   color="var(--Input-Text-In-Active, #787878)"
                   className={plus_jakarta?.className}
                   fontSize="16px"
@@ -120,9 +148,29 @@ const Curriculam = () => {
                   letterSpacing="0.15px"
                   flex="1 0 0"
                   w={"545px"}
-                >
+                  placeholder="
                   Choose from list
-                </Text>
+                  "
+                >
+                  <option value="GCE / IGCE A Levels">
+                    GCE / IGCE A Levels
+                  </option>
+                  <option value="International Baccalaureate Diploma IB">
+                    International Baccalaureate Diploma IB
+                  </option>
+                  <option value="SQA Highers and Advanced Highers">
+                    SQA Highers and Advanced Highers
+                  </option>
+                  <option value="The Cambridge Pre-U">
+                    The Cambridge Pre-U
+                  </option>
+                  <option value="Irish Leaving Certificate Exam">
+                    Irish Leaving Certificate Exam
+                  </option>
+                  <option value="The European Baccalaureate">
+                    The European Baccalaureate
+                  </option>
+                </Select>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -163,7 +211,9 @@ const Curriculam = () => {
                 border="1px solid var(--Input-Border, #D0px5px)"
                 background="var(--Input-BG, #F9FBFF)"
               >
-                <Text
+                <Select
+                  value={languageVal}
+                  onChange={handleLanguageChange}
                   color="var(--Input-Text-In-Active, #787878)"
                   className={plus_jakarta?.className}
                   fontSize="16px"
@@ -173,9 +223,11 @@ const Curriculam = () => {
                   letterSpacing="0.15px"
                   flex="1 0 0"
                   w={"545px"}
+                  placeholder="Enter Language"
                 >
-                  Enter the language
-                </Text>
+                  <option value="English">English</option>
+                  <option value="Spanish">Spanish</option>
+                </Select>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -208,6 +260,8 @@ const Curriculam = () => {
             fontStyle="normal"
             fontWeight="400"
             lineHeight="44px"
+            cursor={"pointer"}
+            onClick={onBack}
           >
             Back
           </Text>
@@ -229,6 +283,8 @@ const Curriculam = () => {
                 fontWeight="600"
                 lineHeight="24px"
                 letterSpacing="0.15px"
+                cursor={"pointer"}
+                onClick={onContinue}
               >
                 Continue
               </Text>

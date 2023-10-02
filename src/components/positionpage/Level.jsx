@@ -1,11 +1,47 @@
-import { Flex, Text } from "@chakra-ui/react";
+import useAllLocalStoreValues from "@/hooks/useAllStored";
+import { useLocalStore } from "@/hooks/useLocalStore";
+import { Flex, Select, Text } from "@chakra-ui/react";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { instance } from "../../../instance";
 const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
-const Level = () => {
+const Level = ({ onContinue, onBack }) => {
+  const [academicLevel, setAcademicLevel] = useLocalStore(
+    "academicLevel",
+    "undergraduate"
+  );
+  const [subjectInterest, setSubjectInterest] = useLocalStore(
+    "subjectInterest",
+    "English"
+  );
+
+  const allStored = useAllLocalStoreValues();
+
+  const handleSubmit = () => {
+    console.log("all=>", allStored);
+
+    const token = localStorage.getItem("token");
+
+    // Check if the token exists
+    if (token) {
+      // Attach the token to the Authorization header for all requests
+      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      console.error("No token found");
+    }
+
+    const res = instance?.post("/updateProfile/", {
+      position: allStored?.position,
+      academicCurriculam: allStored?.curriculum,
+      preferredLanguage: allStored?.language,
+      academicLevel: allStored?.academicLevel,
+      subjectInterests: allStored?.subjectInterest,
+      name: "Razi",
+    });
+  };
   return (
     <Flex
       padding="30px 341px 53px 308px"
@@ -107,6 +143,13 @@ const Level = () => {
                 alignSelf="stretch"
                 borderRadius="16px"
                 background="#F0F7FF"
+                onClick={() => setAcademicLevel("undergraduate")}
+                border={
+                  academicLevel === "undergraduate"
+                    ? "2px solid #277DE3"
+                    : "none"
+                }
+                cursor={"pointer"}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -140,6 +183,11 @@ const Level = () => {
                 alignSelf="stretch"
                 borderRadius="16px"
                 background="#F0F7FF"
+                onClick={() => setAcademicLevel("graduate")}
+                border={
+                  academicLevel === "graduate" ? "2px solid #277DE3" : "none"
+                }
+                cursor={"pointer"}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +237,7 @@ const Level = () => {
                 border="1px solid var(--Input-Border, #D0px5px)"
                 background="var(--Input-BG, #F9FBFF)"
               >
-                <Text
+                {/* <Text
                   color="var(--Input-Text-In-Active, #787878)"
                   className={plus_jakarta?.className}
                   fontSize="16px"
@@ -201,8 +249,31 @@ const Level = () => {
                   w={"545px"}
                 >
                   Choose from list
-                </Text>
-                <svg
+                </Text> */}
+                <Select
+                  value={subjectInterest}
+                  onChange={(e) => setSubjectInterest(e.target.value)}
+                  color="var(--Input-Text-In-Active, #787878)"
+                  className={plus_jakarta?.className}
+                  fontSize="16px"
+                  fontStyle="normal"
+                  fontWeight="400"
+                  lineHeight="24px"
+                  letterSpacing="0.15px"
+                  flex="1 0 0"
+                  w={"545px"}
+                  placeholder="Choose from List"
+                >
+                  <option value="عربي">عربي</option>
+                  <option value="繁體中⽂">繁體中⽂</option>
+                  <option value="簡體中⽂">簡體中⽂</option>
+                  <option value="English">English</option>
+                  <option value="le français">le français</option>
+                  <option value="The European Baccalaureate">
+                    The European Baccalaureate
+                  </option>
+                </Select>
+                {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
                   height="25"
@@ -216,7 +287,7 @@ const Level = () => {
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   />
-                </svg>
+                </svg> */}
               </Flex>
             </Flex>
           </Flex>
@@ -234,6 +305,8 @@ const Level = () => {
             fontStyle="normal"
             fontWeight="400"
             lineHeight="44px"
+            cursor={"pointer"}
+            onClick={onBack}
           >
             Back
           </Text>
@@ -255,6 +328,8 @@ const Level = () => {
                 fontWeight="600"
                 lineHeight="24px"
                 letterSpacing="0.15px"
+                cursor={"pointer"}
+                onClick={handleSubmit}
               >
                 Continue
               </Text>

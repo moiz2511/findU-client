@@ -1,11 +1,22 @@
 import { Flex, Text, chakra, Button, Input, Checkbox } from "@chakra-ui/react";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { useState } from "react";
+import { instance } from "../../../instance";
 const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
 const Login = () => {
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    const res = await instance?.post("/login/", { username, password });
+
+    localStorage.setItem("token", res?.data?.token);
+  };
   return (
     <Flex width="1440px" borderRadius="24px" background="var(--Form-BG, #FFF)">
       <Flex
@@ -146,8 +157,8 @@ const Login = () => {
               alignSelf="stretch"
             >
               <Input
-                placeholder={"Enter the email"}
-                type="email"
+                placeholder={"Enter the username"}
+                type="text"
                 color="var(--Input-Text-In-Active, #787878)"
                 borderRadius="8px"
                 border="1px solid var(--Input-Border, #D0px5px)"
@@ -158,6 +169,10 @@ const Login = () => {
                 fontWeight="400"
                 lineHeight="24rpx"
                 letterSpacing="0.15px"
+                onChange={(e) => {
+                  console.log("username", e?.target?.value);
+                  setUserName(e?.target?.value);
+                }}
               />
               <Input
                 placeholder={"Enter the password"}
@@ -172,6 +187,10 @@ const Login = () => {
                 fontWeight="400"
                 lineHeight="24rpx"
                 letterSpacing="0.15px"
+                onChange={(e) => {
+                  console.log("password", e?.target?.value);
+                  setPassword(e?.target?.value);
+                }}
               />
             </Flex>
 
@@ -224,6 +243,8 @@ const Login = () => {
                 fontWeight="600"
                 lineHeight="24px"
                 letterSpacing="0.15px"
+                cursor={"pointer"}
+                onClick={handleLogin}
               >
                 Log in
               </Text>

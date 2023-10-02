@@ -1,11 +1,21 @@
 import { Flex, Text, chakra, Button, Input, Checkbox } from "@chakra-ui/react";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { useState } from "react";
+import { instance } from "../../../instance";
 const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
 const SignUp = () => {
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignUp = () => {
+    const res = instance?.post("/signup/", { username, password });
+  };
+
   return (
     <Flex width="1440px" borderRadius="24px" background="var(--Form-BG, #FFF)">
       <Flex
@@ -112,29 +122,6 @@ const SignUp = () => {
             gap="48px"
             alignSelf="stretch"
           >
-            {/* <Flex
-              height="48px"
-              justifyContent="center"
-              alignItems="center"
-              gap="12px"
-              alignSelf="stretch"
-              padding="8px 24px"
-              borderRadius="12px"
-              background="var(--Primary, #277DE3)"
-            >
-              <Text
-                color="var(--Btn-Text-Color, #FFF)"
-                className={plus_jakarta?.className}
-                fontSize="16px"
-                fontStyle="normal"
-                fontWeight="600"
-                lineHeight="24px"
-                letterSpacing="0.15px"
-              >
-                Sign up in with email
-              </Text>
-            </Flex> */}
-
             <Flex
               flexDirection="column"
               alignItems="flex-start"
@@ -154,6 +141,10 @@ const SignUp = () => {
                 fontWeight="400"
                 lineHeight="24rpx"
                 letterSpacing="0.15px"
+                onChange={(e) => {
+                  console.log("username", e?.target?.value);
+                  setUserName(e?.target?.value);
+                }}
               />
               <Input
                 placeholder={"test@gmail.com"}
@@ -182,6 +173,10 @@ const SignUp = () => {
                 fontWeight="400"
                 lineHeight="24rpx"
                 letterSpacing="0.15px"
+                onChange={(e) => {
+                  console.log("pass", e?.target?.value);
+                  setPassword(e?.target?.value);
+                }}
               />
             </Flex>
 
@@ -234,6 +229,8 @@ const SignUp = () => {
                 fontWeight="600"
                 lineHeight="24px"
                 letterSpacing="0.15px"
+                cursor={"pointer"}
+                onClick={handleSignUp}
               >
                 Log in
               </Text>

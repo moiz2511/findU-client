@@ -2,11 +2,13 @@ import { Flex, Text } from "@chakra-ui/react";
 // import "@fontsource/Plus Jakarta Sans/500.css";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { useRouter } from "next/router";
 const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
 const Navbar = () => {
+  const router = useRouter();
   return (
     <Flex
       width="1441px"
@@ -75,6 +77,8 @@ const Navbar = () => {
             fontStyle="normal"
             fontWeight="500"
             lineHeight="normal"
+            cursor={"pointer"}
+            onClick={() => router?.push("/")}
           >
             Home
           </Text>
@@ -92,6 +96,8 @@ const Navbar = () => {
             fontStyle="normal"
             fontWeight="500"
             lineHeight="normal"
+            cursor={"pointer"}
+            onClick={() => router?.push("/faq")}
           >
             FAQs
           </Text>
@@ -111,6 +117,8 @@ const Navbar = () => {
             fontStyle="normal"
             fontWeight="500"
             lineHeight="normal"
+            onClick={() => router?.push("/login")}
+            cursor={"pointer"}
           >
             Login
           </Text>
@@ -130,6 +138,8 @@ const Navbar = () => {
             fontStyle="normal"
             fontWeight="500"
             lineHeight="normal"
+            cursor={"pointer"}
+            onClick={() => router?.push("/signup")}
           >
             Sign Up
           </Text>

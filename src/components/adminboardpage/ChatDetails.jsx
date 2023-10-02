@@ -16,11 +16,15 @@ const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 import { Inter } from "next/font/google";
+import { useRouter } from "next/router";
 const inter = Inter({
   subsets: ["latin"],
 });
 
 const ChatDetails = () => {
+  const router = useRouter();
+
+  const { id } = router.query;
   return (
     <Flex>
       <Flex

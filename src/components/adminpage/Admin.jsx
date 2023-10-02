@@ -1,11 +1,27 @@
 import { Checkbox, Flex, Input, Text } from "@chakra-ui/react";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { useState } from "react";
+import { instance } from "../../../instance";
+import { useRouter } from "next/router";
 const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
 const Admin = () => {
+  const router = useRouter();
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    const res = await instance?.post("/adminLogin/", { username, password });
+
+    localStorage.setItem("adminToken", res?.data?.token);
+
+    router?.push("adminboardpage");
+  };
+
   return (
     <Flex
       padding="92px 424px 298.145px 424px"
@@ -94,7 +110,7 @@ const Admin = () => {
             alignSelf="stretch"
           >
             <Input
-              placeholder={"Enter the email"}
+              placeholder={"Enter the username"}
               height="48px"
               padding="0px 16px"
               alignItems="center"
@@ -107,6 +123,10 @@ const Admin = () => {
               fontWeight="400"
               lineHeight="24px"
               letterSpacing="0.15px"
+              onChange={(e) => {
+                console.log("username", e?.target?.value);
+                setUserName(e?.target?.value);
+              }}
             />
             <Input
               placeholder={"Enter the password"}
@@ -122,6 +142,10 @@ const Admin = () => {
               fontWeight="400"
               lineHeight="24px"
               letterSpacing="0.15px"
+              onChange={(e) => {
+                console.log("password", e?.target?.value);
+                setPassword(e?.target?.value);
+              }}
             />
           </Flex>
           <Flex
@@ -173,6 +197,8 @@ const Admin = () => {
               fontWeight="600"
               lineHeight="24px"
               letterSpacing="0.15px"
+              cursor={"pointer"}
+              onClick={handleLogin}
             >
               Log in
             </Text>

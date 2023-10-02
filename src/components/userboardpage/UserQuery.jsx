@@ -1,11 +1,30 @@
-import { Flex, Text, Image } from "@chakra-ui/react";
+import { Flex, Text, Image, Input, Box, Button } from "@chakra-ui/react";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { useState } from "react";
+import { instance } from "../../../instance";
 const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
 const UserQuery = () => {
+  const [startNew, setStartNew] = useState(false);
+  const [convName, setConvName] = useState("");
+
+  const handleNewConversation = async () => {
+    const token = localStorage.getItem("token");
+
+    // Check if the token exists
+    if (token) {
+      // Attach the token to the Authorization header for all requests
+      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      console.error("No token found");
+    }
+
+    const res = instance?.post("/StartConversationForNew/", { name: convName });
+  };
+
   return (
     <Flex width="1440px" height="100vh" background="#002045">
       <Flex flexDir={"column"} justifyContent={"flex-start"}>
@@ -181,18 +200,22 @@ const UserQuery = () => {
                   </defs>
                 </svg>
               </Flex>
-              <Text
-                color="var(--Text, #FFF)"
-                textAlign="center"
-                className={plus_jakarta?.className}
-                fontSize="14px"
-                fontStyle="normal"
-                fontWeight="600"
-                lineHeight="20px"
-                letterSpacing="0.15px"
-              >
-                New Chat
-              </Text>
+              <Box>
+                <Text
+                  color="var(--Text, #FFF)"
+                  textAlign="center"
+                  className={plus_jakarta?.className}
+                  fontSize="14px"
+                  fontStyle="normal"
+                  fontWeight="600"
+                  lineHeight="20px"
+                  letterSpacing="0.15px"
+                  cursor={"pointer"}
+                  onClick={() => setStartNew(true)}
+                >
+                  New Chat
+                </Text>
+              </Box>
             </Flex>
             <Flex
               padding="4px 8px"
@@ -218,6 +241,16 @@ const UserQuery = () => {
               </Text>
             </Flex>
           </Flex>
+          {startNew && (
+            <Flex>
+              <Input
+                value={convName}
+                onChange={(e) => setConvName(e.target.value)}
+                placeholder="Name"
+              />
+              <Button onClick={handleNewConversation}>Start</Button>
+            </Flex>
+          )}
         </Flex>
         <Flex
           padding="12px 8px"
