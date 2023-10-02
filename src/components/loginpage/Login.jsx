@@ -100,7 +100,7 @@ const Login = () => {
               lineHeight="44px"
               mb={"16px"}
             >
-              Let's get{" "}
+              Lets get
               <chakra.span color="var(--Primary, #277DE3)">
                 {" "}
                 creative!
@@ -491,7 +491,7 @@ const Login = () => {
                 fontWeight="400"
                 lineHeight="normal"
               >
-                "FindU proved to be an indispensable partner throughout my UK
+                FindU proved to be an indispensable partner throughout my UK
                 study adventure. Its unwavering support, from assisting me in
                 exploring top-tier universities to helping me adapt to campus
                 life, made all the differen

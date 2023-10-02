@@ -969,7 +969,7 @@ const UserDash = () => {
                   lineHeight="24px"
                   letterSpacing="0.15px"
                 >
-                  Tell me about the course structure of the University of Leed's
+                  Tell me about the course structure of the University of Leeds
                   Computer Science programme
                 </Text>
               </Flex>

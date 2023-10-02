@@ -886,7 +886,7 @@ const UserProfile = () => {
                     </Thead>
                     <Tbody>
                       {conversations?.map((conv, i) => (
-                        <Tr>
+                        <Tr key={i}>
                           <Td>{i + 1}</Td>
                           <Td>{conv?.name}</Td>
                           <Td>01-Oct-23</Td>

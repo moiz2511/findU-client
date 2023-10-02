@@ -665,7 +665,7 @@ const AdminBoard = () => {
 
                     <Tbody>
                       {users?.map((user, i) => (
-                        <Tr>
+                        <Tr key={i}>
                           <Td>{i + 1}</Td>
                           <Td>{user?.name}</Td>
                           <Td></Td>

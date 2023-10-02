@@ -478,7 +478,7 @@ const SignUp = () => {
                 fontWeight="400"
                 lineHeight="normal"
               >
-                "FindU proved to be an indispensable partner throughout my UK
+                FindU proved to be an indispensable partner throughout my UK
                 study adventure. Its unwavering support, from assisting me in
                 exploring top-tier universities to helping me adapt to campus
                 life, made all the differen
