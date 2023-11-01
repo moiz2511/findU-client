@@ -185,7 +185,7 @@ const Login = () => {
                 fontSize="16px"
                 fontStyle="normal"
                 fontWeight="400"
-                lineHeight="24rpx"
+                lineHeight="24px"
                 letterSpacing="0.15px"
                 onChange={(e) => {
                   console.log("password", e?.target?.value);

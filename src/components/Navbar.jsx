@@ -117,7 +117,7 @@ const Navbar = () => {
             fontStyle="normal"
             fontWeight="500"
             lineHeight="normal"
-            onClick={() => router?.push("/login")}
+            onClick={() => router?.push("/admin")}
             cursor={"pointer"}
           >
             Login

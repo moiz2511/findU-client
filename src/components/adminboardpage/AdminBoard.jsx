@@ -50,6 +50,10 @@ const AdminBoard = () => {
   //     setRefresh((prevRefresh) => prevRefresh + 1);
   //   }
   // }, [users]);
+
+  const DeleteUser = async () => {
+    const res = await instance?.post("/deleteUser/");
+  };
   return (
     <Flex>
       <Flex

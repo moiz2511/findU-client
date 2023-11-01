@@ -19,7 +19,7 @@ const Admin = () => {
 
     localStorage.setItem("adminToken", res?.data?.token);
 
-    router?.push("adminboardpage");
+    router?.push("adminboard");
   };
 
   return (
@@ -29,7 +29,7 @@ const Admin = () => {
       alignItems="center"
       gap="124px"
       borderRadius="24px"
-      background="var(--Form-BG, #FFF)"
+      background="#FFF"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -82,11 +82,11 @@ const Admin = () => {
         alignItems="center"
         gap="64px"
         borderRadius="16px"
-        background="var(--Form-BG, #FFF)"
+        background="#FFF"
         boxShadow="0px 4px 16px 0px rgba(0, 0, 0, 0.08)"
       >
         <Text
-          color="var(--Primary, #277DE3)"
+          color=" #277DE3"
           textAlign="center"
           className={plus_jakarta?.className}
           fontSize="36px"
@@ -116,7 +116,7 @@ const Admin = () => {
               alignItems="center"
               gap="12px"
               alignSelf="stretch"
-              color="var(--Input-Text-In-Active, #787878)"
+              color="#787878"
               className={plus_jakarta?.className}
               fontSize="16px"
               fontStyle="normal"
@@ -187,10 +187,10 @@ const Admin = () => {
             gap="12px"
             alignSelf="stretch"
             borderRadius="12px"
-            background="var(--Primary, #277DE3)"
+            background="#277DE3"
           >
             <Text
-              color="var(--Btn-Text-Color, #FFF)"
+              color=" #FFF"
               className={plus_jakarta?.className}
               fontSize="16px"
               fontStyle="normal"
