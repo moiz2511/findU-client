@@ -10,6 +10,18 @@ import {
   TableContainer,
   chakra,
   Box,
+  Input,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  Button,
+  List,
+  ListItem,
+  Card,
+  CardBody,
 } from "@chakra-ui/react";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
@@ -28,6 +40,46 @@ const AdminBoard = () => {
   const router = useRouter();
   const [users, setUsers] = useState(null);
   const [refresh, setRefresh] = useState(1);
+  const [pageRefresh, setPageRefresh] = useState(false);
+  const [isUserSelected, setIsUserSelected] = useState(false);
+  const [isDataSelected, setIsDataSelected] = useState(false);
+  const [isPromptSelected, setIsPromptSelected] = useState(false);
+  const [selectedURLId, setSelectedURLId] = useState("");
+  const [subModal, setSubModal] = useState(false);
+  const [singleWebUrl, setSingleWebURL] = useState("");
+  const [webURL, setWebURL] = useState([]);
+  const [urls, setUrls] = useState([]);
+  const [subURLs, setSubURLs] = useState(null);
+  const [urlInput, setUrlInput] = useState("");
+  const [prompt, setPrompt] = useState("");
+  const [activePrompt, setActivePrompt] = useState("");
+
+  // Function to add a URL to the array
+  const addUrl = () => {
+    if (urlInput.trim() !== "") {
+      setUrls([...urls, urlInput]);
+      setUrlInput(""); // Clear the input field
+    }
+  };
+
+  const handleUserClick = () => {
+    setIsUserSelected(true);
+    setIsDataSelected(false);
+    setIsPromptSelected(false);
+  };
+
+  const handleDataClick = () => {
+    setIsUserSelected(false);
+    setIsDataSelected(true);
+    setIsPromptSelected(false);
+  };
+
+  const handlePromptClick = () => {
+    setIsUserSelected(false);
+    setIsDataSelected(false);
+    setIsPromptSelected(true);
+  };
+
   const fetchUsers = async () => {
     const token = localStorage.getItem("adminToken");
     if (token) {
@@ -45,27 +97,205 @@ const AdminBoard = () => {
     fetchUsers();
   }, []);
 
-  // useEffect(() => {
-  //   if (users && Array.isArray(users)) {
-  //     setRefresh((prevRefresh) => prevRefresh + 1);
-  //   }
-  // }, [users]);
+  const DeleteUser = async (ID) => {
+    const token = localStorage.getItem("adminToken");
+    if (token) {
+      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      console.error("No token found");
+      return;
+    }
 
-  const DeleteUser = async () => {
-    const res = await instance?.post("/deleteUser/");
+    // Define the data you want to send in the request body
+    const requestBody = {
+      id: ID,
+      // Add more data as needed
+    };
+
+    try {
+      const res = await instance.post("/deleteUser/", requestBody);
+
+      console.log("Response data:", res.data);
+      alert("User Deleted Successfully!");
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
+
+  const addSingleURL = async (data) => {
+    const token = localStorage.getItem("adminToken");
+    if (token) {
+      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      console.error("No token found");
+      return;
+    }
+
+    const requestBody = {
+      urls: data,
+    };
+
+    try {
+      const res = await instance.post("/addSingleWebUrls/", requestBody);
+      alert("Data Added Successfully!");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const addURL = async (data) => {
+    const token = localStorage.getItem("adminToken");
+    if (token) {
+      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      console.error("No token found");
+      return;
+    }
+
+    const requestBody = {
+      urls: data,
+    };
+
+    try {
+      const res = await instance.post("/addWebUrls/", requestBody);
+      alert("Data Added Successfully!");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const addPrompt = async (data) => {
+    const token = localStorage.getItem("adminToken");
+    if (token) {
+      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      console.error("No token found");
+      return;
+    }
+
+    const requestBody = {
+      prompt: data,
+    };
+
+    try {
+      const res = await instance.post("/createPrompt/", requestBody);
+      alert("Data Added Successfully!");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const fetchWebURL = async () => {
+    const token = localStorage.getItem("adminToken");
+    if (token) {
+      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      console.error("No token found");
+      return;
+    }
+
+    try {
+      const res = await instance.post("/getWeb/");
+      console.log(res);
+
+      setWebURL(res.data.urls);
+      console.log(webURL);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const fetchSubWebURL = async (ID) => {
+    const token = localStorage.getItem("adminToken");
+    if (token) {
+      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      console.error("No token found");
+      return;
+    }
+
+    const body = {
+      id: ID,
+    };
+
+    try {
+      const res = await instance.post("/getWebSubURLS/", body);
+      console.log(res);
+      setSubURLs(res.data.subUrls);
+      console.log(subURLs)
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const fetchActivePrompt = async () => {
+    const token = localStorage.getItem("adminToken");
+    if (token) {
+      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      console.error("No token found");
+      return;
+    }
+
+    try {
+      const res = await instance.post("/getActivePrompt/");
+      console.log(res);
+
+      setActivePrompt(res.data.prompt);
+      console.log(webURL);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchWebURL();
+  }, []);
+
+  const openSubModal = (data) => {
+    setSubModal(true);
+    setSelectedURLId(data);
+  };
+
+  useEffect(() => {
+    if (selectedURLId) {
+      fetchSubWebURL(selectedURLId);
+    }
+  }, [selectedURLId]);
+
+  const closeSubModal = () => {
+    setSubModal(false);
+  };
+
   return (
     <Flex>
+      <Modal onClose={closeSubModal} size={"md"} isOpen={subModal}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Sub URLs</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Box p={5}>
+              <List>
+                {subURLs &&
+                  subURLs.map((sub, index) => (
+                    <ListItem key={index}> {index + 1}: {sub}</ListItem>
+                  ))}
+              </List>
+            </Box>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
       <Flex
         width="264px"
-        height="87vh"
+        // height="87vh"
         padding="24px 16px"
         flexDirection="column"
         alignItems="flex-start"
         gap="32px"
         flexShrink="0"
         background="var(--colors-white, #FFF)"
-        overflow={"hidden"}
+        overflow={"auto"}
       >
         <Flex
           padding="24px"
@@ -133,14 +363,18 @@ const AdminBoard = () => {
             gap="8px"
             alignSelf="stretch"
             borderRadius="8px"
-            background="#DEECFC"
+            onClick={handleUserClick}
+            cursor={"pointer"}
+            background={isUserSelected ? "#DEECFC" : "#fff"}
           >
             <Flex
               padding="0px 8px"
               alignItems="center"
               gap="8px"
               flex="1 0 0"
-              borderLeft="2px solid var(--Primary, #277DE3)"
+              borderLeft={
+                isUserSelected ? "2px solid var(--Primary, #277DE3)" : "none"
+              }
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -163,6 +397,96 @@ const AdminBoard = () => {
                 lineHeight="20px"
               >
                 Users
+              </Text>
+            </Flex>
+          </Flex>
+
+          <Flex
+            padding="12px 0px"
+            justifyContent="flex-end"
+            alignItems="center"
+            gap="8px"
+            alignSelf="stretch"
+            borderRadius="8px"
+            onClick={handleDataClick}
+            cursor={"pointer"}
+            background={isDataSelected ? "#DEECFC" : "#fff"}
+          >
+            <Flex
+              padding="0px 8px"
+              alignItems="center"
+              gap="8px"
+              flex="1 0 0"
+              borderLeft={
+                isDataSelected ? "2px solid var(--Primary, #277DE3)" : "none"
+              }
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="17"
+                viewBox="0 0 14 17"
+                fill="none"
+              >
+                <path
+                  d="M6.57348 8.24534C7.63229 8.24534 8.54916 7.86556 9.29831 7.11628C10.0475 6.36716 10.4272 5.45054 10.4272 4.3916C10.4272 3.33298 10.0475 2.41627 9.29819 1.66686C8.54891 0.917834 7.63216 0.538086 6.57348 0.538086C5.51451 0.538086 4.59786 0.917834 3.84874 1.66699C3.09962 2.41614 2.71971 3.33289 2.71971 4.3916C2.71971 5.45054 3.09958 6.36728 3.84886 7.11644C4.59814 7.86546 5.51489 8.24534 6.57348 8.24534ZM13.3165 12.8413C13.2949 12.5295 13.2512 12.1894 13.1868 11.8303C13.1219 11.4684 13.0383 11.1264 12.9382 10.8138C12.8348 10.4907 12.6942 10.1716 12.5204 9.8658C12.3399 9.54843 12.128 9.27205 11.8902 9.04465C11.6416 8.80674 11.3371 8.61546 10.9851 8.4759C10.6342 8.33715 10.2454 8.26684 9.82956 8.26684C9.66621 8.26684 9.50828 8.33384 9.20322 8.53246C8.98637 8.67366 8.76888 8.81387 8.55075 8.95308C8.34116 9.08665 8.05722 9.21177 7.7065 9.32505C7.36435 9.43577 7.01694 9.49193 6.67404 9.49193C6.33117 9.49193 5.98385 9.43577 5.64132 9.32505C5.29101 9.21186 5.00708 9.08677 4.7977 8.95321C4.55489 8.79805 4.3352 8.65646 4.14464 8.5323C3.83996 8.33371 3.68186 8.26668 3.51855 8.26668C3.10252 8.26668 2.71387 8.33712 2.36315 8.47606C2.01134 8.61534 1.70678 8.80662 1.45787 9.04477C1.22022 9.2723 1.00819 9.54852 0.828 9.8658C0.654313 10.1716 0.513688 10.4905 0.410158 10.8139C0.310158 11.1265 0.226565 11.4684 0.161627 11.8303C0.0972838 12.1889 0.0535965 12.5291 0.0319715 12.8416C0.0104598 13.1561 -0.000202754 13.4712 2.91917e-06 13.7864C2.91917e-06 14.6217 0.265502 15.2978 0.789062 15.7964C1.30615 16.2885 1.99034 16.5381 2.82237 16.5381H10.5265C11.3585 16.5381 12.0424 16.2886 12.5596 15.7965C13.0833 15.2982 13.3488 14.6219 13.3488 13.7863C13.3487 13.4639 13.3379 13.1459 13.3165 12.8413Z"
+                  fill="#A0A5B9"
+                />
+              </svg>
+              <Text
+                color="#A0A5B9"
+                className={plus_jakarta?.className}
+                fontSize="14px"
+                fontStyle="normal"
+                fontWeight="500"
+                lineHeight="20px"
+              >
+                Data
+              </Text>
+            </Flex>
+          </Flex>
+
+          <Flex
+            padding="12px 0px"
+            justifyContent="flex-end"
+            alignItems="center"
+            gap="8px"
+            alignSelf="stretch"
+            borderRadius="8px"
+            onClick={handlePromptClick}
+            cursor={"pointer"}
+            background={isPromptSelected ? "#DEECFC" : "#fff"}
+          >
+            <Flex
+              padding="0px 8px"
+              alignItems="center"
+              gap="8px"
+              flex="1 0 0"
+              borderLeft={
+                isPromptSelected ? "2px solid var(--Primary, #277DE3)" : "none"
+              }
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="17"
+                viewBox="0 0 14 17"
+                fill="none"
+              >
+                <path
+                  d="M6.57348 8.24534C7.63229 8.24534 8.54916 7.86556 9.29831 7.11628C10.0475 6.36716 10.4272 5.45054 10.4272 4.3916C10.4272 3.33298 10.0475 2.41627 9.29819 1.66686C8.54891 0.917834 7.63216 0.538086 6.57348 0.538086C5.51451 0.538086 4.59786 0.917834 3.84874 1.66699C3.09962 2.41614 2.71971 3.33289 2.71971 4.3916C2.71971 5.45054 3.09958 6.36728 3.84886 7.11644C4.59814 7.86546 5.51489 8.24534 6.57348 8.24534ZM13.3165 12.8413C13.2949 12.5295 13.2512 12.1894 13.1868 11.8303C13.1219 11.4684 13.0383 11.1264 12.9382 10.8138C12.8348 10.4907 12.6942 10.1716 12.5204 9.8658C12.3399 9.54843 12.128 9.27205 11.8902 9.04465C11.6416 8.80674 11.3371 8.61546 10.9851 8.4759C10.6342 8.33715 10.2454 8.26684 9.82956 8.26684C9.66621 8.26684 9.50828 8.33384 9.20322 8.53246C8.98637 8.67366 8.76888 8.81387 8.55075 8.95308C8.34116 9.08665 8.05722 9.21177 7.7065 9.32505C7.36435 9.43577 7.01694 9.49193 6.67404 9.49193C6.33117 9.49193 5.98385 9.43577 5.64132 9.32505C5.29101 9.21186 5.00708 9.08677 4.7977 8.95321C4.55489 8.79805 4.3352 8.65646 4.14464 8.5323C3.83996 8.33371 3.68186 8.26668 3.51855 8.26668C3.10252 8.26668 2.71387 8.33712 2.36315 8.47606C2.01134 8.61534 1.70678 8.80662 1.45787 9.04477C1.22022 9.2723 1.00819 9.54852 0.828 9.8658C0.654313 10.1716 0.513688 10.4905 0.410158 10.8139C0.310158 11.1265 0.226565 11.4684 0.161627 11.8303C0.0972838 12.1889 0.0535965 12.5291 0.0319715 12.8416C0.0104598 13.1561 -0.000202754 13.4712 2.91917e-06 13.7864C2.91917e-06 14.6217 0.265502 15.2978 0.789062 15.7964C1.30615 16.2885 1.99034 16.5381 2.82237 16.5381H10.5265C11.3585 16.5381 12.0424 16.2886 12.5596 15.7965C13.0833 15.2982 13.3488 14.6219 13.3488 13.7863C13.3487 13.4639 13.3379 13.1459 13.3165 12.8413Z"
+                  fill="#A0A5B9"
+                />
+              </svg>
+              <Text
+                color="#A0A5B9"
+                className={plus_jakarta?.className}
+                fontSize="14px"
+                fontStyle="normal"
+                fontWeight="500"
+                lineHeight="20px"
+              >
+                Prompt
               </Text>
             </Flex>
           </Flex>
@@ -334,75 +658,78 @@ const AdminBoard = () => {
           height="87vh"
           background="#F5F6FA"
           overflow={"hidden"}
+          flexDir={"column"}
         >
-          <Flex flexDirection="column" alignItems="flex-start" gap="4px">
+          {/* <Flex flexDirection="column" alignItems="flex-start" gap="4px"> */}
+          <Flex
+            width="95%"
+            padding="16px"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="flex-start"
+            gap="8px"
+            borderRadius="16px"
+            background="#FFF"
+            h={"126px"}
+            ml={"24px"}
+            mr={"24px"}
+            mt={"34px"}
+          >
             <Flex
-              width="95%"
-              padding="16px"
-              flexDirection="column"
-              justifyContent="center"
-              alignItems="flex-start"
               gap="8px"
-              borderRadius="16px"
-              background="#FFF"
-              h={"126px"}
-              ml={"24px"}
-              mr={"24px"}
-              mt={"34px"}
+              alignItems={"flex-start"}
+              borderRadius="6px"
+              flexDir={"column"}
             >
-              <Flex
-                gap="8px"
-                alignItems={"flex-start"}
-                borderRadius="6px"
-                flexDir={"column"}
-              >
-                <Flex gap={"8px"} alignItems={"center"}>
-                  <Text
-                    color="#111827"
-                    className={plus_jakarta?.className}
-                    fontSize="14px"
-                    fontStyle="normal"
-                    fontWeight="500"
-                    lineHeight="100%"
-                  >
-                    Home
-                  </Text>
-                  <Text
-                    color=" #9CA3AF"
-                    className={plus_jakarta?.className}
-                    fontSize="14px"
-                    fontStyle="normal"
-                    fontWeight="500"
-                    lineHeight="100%"
-                  >
-                    /
-                  </Text>
-                  <Text
-                    color="  #9CA3AF"
-                    className={plus_jakarta?.className}
-                    fontSize="14px"
-                    fontStyle="normal"
-                    fontWeight="500"
-                    lineHeight="100%"
-                  >
-                    Users
-                  </Text>
-                </Flex>
-                <Flex>
-                  <Text
-                    color="#111827"
-                    className={plus_jakarta?.className}
-                    fontSize="24px"
-                    fontStyle="normal"
-                    fontWeight="600"
-                    lineHeight="150%"
-                    letterSpacing="-0.24px"
-                  >
-                    Users
-                  </Text>
-                </Flex>
+              <Flex gap={"8px"} alignItems={"center"}>
+                <Text
+                  color="#111827"
+                  className={plus_jakarta?.className}
+                  fontSize="14px"
+                  fontStyle="normal"
+                  fontWeight="500"
+                  lineHeight="100%"
+                >
+                  Home
+                </Text>
+                <Text
+                  color=" #9CA3AF"
+                  className={plus_jakarta?.className}
+                  fontSize="14px"
+                  fontStyle="normal"
+                  fontWeight="500"
+                  lineHeight="100%"
+                >
+                  /
+                </Text>
+                <Text
+                  color="  #9CA3AF"
+                  className={plus_jakarta?.className}
+                  fontSize="14px"
+                  fontStyle="normal"
+                  fontWeight="500"
+                  lineHeight="100%"
+                >
+                  Users
+                </Text>
+              </Flex>
+
+              <Flex>
+                <Text
+                  color="#111827"
+                  className={plus_jakarta?.className}
+                  fontSize="24px"
+                  fontStyle="normal"
+                  fontWeight="600"
+                  lineHeight="150%"
+                  letterSpacing="-0.24px"
+                >
+                  Users
+                </Text>
               </Flex>
             </Flex>
+          </Flex>
+          {isUserSelected && (
             <Flex
               width="1000px"
               padding="16px"
@@ -728,6 +1055,7 @@ const AdminBoard = () => {
                               height="20"
                               viewBox="0 0 20 20"
                               fill="none"
+                              onClick={() => DeleteUser(user.id)}
                             >
                               <g clip-path="url(#clip0_747_1769)">
                                 <path
@@ -836,7 +1164,349 @@ const AdminBoard = () => {
                 </Flex>
               </Flex>
             </Flex>
-          </Flex>
+          )}
+
+          {isDataSelected && (
+            <Card
+              overflow={"auto"}
+              width={"90%"}
+              backgroundColor={"#FFFFFF"}
+              ml={5}
+              mr={10}
+              mt={2}
+            >
+              <CardBody>
+                <Text
+                  color="#111827"
+                  className={plus_jakarta?.className}
+                  fontSize="24px"
+                  fontStyle="normal"
+                  fontWeight="600"
+                  lineHeight="150%"
+                  letterSpacing="-0.24px"
+                  marginBottom={"4%"}
+                >
+                  Add Data
+                </Text>
+                <Box marginBottom={"3%"}>
+                  <Text
+                    className={plus_jakarta?.className}
+                    marginBottom={"1.5%"}
+                  >
+                    Add Single Web URL
+                  </Text>
+                  <Input
+                    value={singleWebUrl}
+                    onChange={(e) => setSingleWebURL(e.target.value)}
+                    placeholder="https://uni.edu.pk"
+                  />
+                  <Button
+                    marginTop={"1.5%"}
+                    onClick={() => addSingleURL(singleWebUrl)}
+                  >
+                    Create Single URL
+                  </Button>
+                </Box>
+                <Box marginBottom={"3%"}>
+                  <Text
+                    className={plus_jakarta?.className}
+                    marginBottom={"1.5%"}
+                  >
+                    Add Web URLs
+                  </Text>
+                  <Input
+                    placeholder="https://uni.edu.pk"
+                    value={urlInput}
+                    onChange={(e) => setUrlInput(e.target.value)}
+                  />
+                  <Button marginTop={"1.5%"} onClick={addUrl}>
+                    Add URL
+                  </Button>
+                  <Button
+                    marginTop={"1.5%"}
+                    marginLeft={"1.5%"}
+                    onClick={() => addURL(urls)}
+                  >
+                    Create Web URL
+                  </Button>
+
+                  <List>
+                    {urls.map((url, index) => (
+                      <ListItem key={index}>{url}</ListItem>
+                    ))}
+                  </List>
+                </Box>
+
+                <Flex flexDirection={"row"} justifyContent={"space-evenly"}>
+                  <Box>
+                    <Text
+                      color="#111827"
+                      className={plus_jakarta?.className}
+                      fontSize="24px"
+                      fontStyle="normal"
+                      fontWeight="600"
+                      lineHeight="150%"
+                      letterSpacing="-0.24px"
+                      marginBottom={"3%"}
+                    >
+                      {" "}
+                      Web URL's{" "}
+                    </Text>
+                    {webURL?.map((url, index) => (
+                      <Box key={index} marginBottom={"6%"}>
+                        <Flex alignItems={"center"}>
+                          <Text
+                            color="#111827"
+                            className={plus_jakarta?.className}
+                            fontSize="16px"
+                            fontStyle="normal"
+                            lineHeight="150%"
+                            letterSpacing="-0.24px"
+                          >
+                            URL: {url.url}
+                          </Text>
+                          <Button
+                            ml={7}
+                            size={"sm"}
+                            onClick={() => openSubModal(url.id)}
+                          >
+                            View Sub URL's
+                          </Button>
+                        </Flex>
+                        <Text
+                          color="#111827"
+                          className={plus_jakarta?.className}
+                          fontSize="16px"
+                          fontStyle="normal"
+                          lineHeight="150%"
+                          letterSpacing="-0.24px"
+                        >
+                          Status: {url.statuss}
+                        </Text>
+                      </Box>
+                    ))}
+                  </Box>
+                  <Box>
+                    <Text
+                      color="#111827"
+                      className={plus_jakarta?.className}
+                      fontSize="24px"
+                      fontStyle="normal"
+                      fontWeight="600"
+                      lineHeight="150%"
+                      letterSpacing="-0.24px"
+                      marginBottom={"3%"}
+                    >
+                      {" "}
+                      Single Web URL's{" "}
+                    </Text>
+                    {webURL?.map((url, index) => (
+                      <Box key={index} marginBottom={"8%"}>
+                        <Text
+                          color="#111827"
+                          className={plus_jakarta?.className}
+                          fontSize="16px"
+                          fontStyle="normal"
+                          lineHeight="150%"
+                          letterSpacing="-0.24px"
+                        >
+                          URL: {url.url}
+                        </Text>
+
+                        <Text
+                          color="#111827"
+                          className={plus_jakarta?.className}
+                          fontSize="16px"
+                          fontStyle="normal"
+                          lineHeight="150%"
+                          letterSpacing="-0.24px"
+                        >
+                          Status: {url.statuss}
+                        </Text>
+                      </Box>
+                    ))}
+                  </Box>
+                </Flex>
+              </CardBody>
+            </Card>
+          )}
+
+          {isPromptSelected && (
+            <Card
+              overflow={"auto"}
+              width={"90%"}
+              backgroundColor={"#FFFFFF"}
+              ml={5}
+              mr={10}
+              mt={2}
+            >
+              <CardBody>
+                <Text
+                  color="#111827"
+                  className={plus_jakarta?.className}
+                  fontSize="24px"
+                  fontStyle="normal"
+                  fontWeight="600"
+                  lineHeight="150%"
+                  letterSpacing="-0.24px"
+                  marginBottom={"4%"}
+                >
+                  Add Prompts
+                </Text>
+                <Box marginBottom={"3%"}>
+                  <Text
+                    className={plus_jakarta?.className}
+                    marginBottom={"1.5%"}
+                  >
+                    Add Prompt
+                  </Text>
+                  <Input
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    placeholder="e.g: Tell me more about University"
+                  />
+                  <Button
+                    marginTop={"1.5%"}
+                    onClick={() => addPrompt(prompt)}
+                  >
+                    Create Prompt
+                  </Button>
+                </Box>
+                <Box marginBottom={"3%"}>
+                  <Text
+                    className={plus_jakarta?.className}
+                    marginBottom={"1.5%"}
+                  >
+                    Active Prompt
+                  </Text>
+                  <Input value={activePrompt} readOnly />
+                  <Button marginTop={"1.5%"} onClick={fetchActivePrompt}>
+                    Get Active Prompt
+                  </Button>
+                </Box>
+                {/* <Box marginBottom={"3%"}>
+                  <Text
+                    className={plus_jakarta?.className}
+                    marginBottom={"1.5%"}
+                  >
+                    Add Web URLs
+                  </Text>
+                  <Input
+                    placeholder="https://uni.edu.pk"
+                    value={urlInput}
+                    onChange={(e) => setUrlInput(e.target.value)}
+                  />
+                  <Button marginTop={"1.5%"} onClick={addUrl}>
+                    Add URL
+                  </Button>
+                  <Button
+                    marginTop={"1.5%"}
+                    marginLeft={"1.5%"}
+                    onClick={() => addURL(urls)}
+                  >
+                    Create Web URL
+                  </Button>
+
+                  <List>
+                    {urls.map((url, index) => (
+                      <ListItem key={index}>{url}</ListItem>
+                    ))}
+                  </List>
+                </Box>
+
+                <Flex flexDirection={'row'} justifyContent={'space-evenly'} >
+                <Box>
+                  <Text
+                    color="#111827"
+                    className={plus_jakarta?.className}
+                    fontSize="24px"
+                    fontStyle="normal"
+                    fontWeight="600"
+                    lineHeight="150%"
+                    letterSpacing="-0.24px"
+                    marginBottom={"3%"}
+                  >
+                    {" "}
+                    Web URL's{" "}
+                  </Text>
+                  {webURL?.map((url, index) => (
+                    <Box key={index} marginBottom={"6%"}>
+                      <Flex  alignItems={'center'} >
+                      <Text
+                        color="#111827"
+                        className={plus_jakarta?.className}
+                        fontSize="16px"
+                        fontStyle="normal"
+                        
+                        lineHeight="150%"
+                        letterSpacing="-0.24px"
+                      >
+                        URL: {url.url}
+                      </Text>
+                      <Button ml={7} size={'sm'} >View Sub URL's</Button>
+                      </Flex>
+                      <Text
+                        color="#111827"
+                        className={plus_jakarta?.className}
+                        fontSize="16px"
+                        fontStyle="normal"
+                        
+                        lineHeight="150%"
+                        letterSpacing="-0.24px"
+                      >
+                        Status: {url.statuss}
+                      </Text>
+                    </Box>
+                  ))}
+                </Box>
+                <Box>
+                  <Text
+                    color="#111827"
+                    className={plus_jakarta?.className}
+                    fontSize="24px"
+                    fontStyle="normal"
+                    fontWeight="600"
+                    lineHeight="150%"
+                    letterSpacing="-0.24px"
+                    marginBottom={"3%"}
+                  >
+                    {" "}
+                    Single Web URL's{" "}
+                  </Text>
+                  {webURL?.map((url, index) => (
+                    <Box key={index} marginBottom={"8%"}>
+                     
+                      <Text
+                        color="#111827"
+                        className={plus_jakarta?.className}
+                        fontSize="16px"
+                        fontStyle="normal"
+                        
+                        lineHeight="150%"
+                        letterSpacing="-0.24px"
+                      >
+                        URL: {url.url}
+                      </Text>
+                     
+                      <Text
+                        color="#111827"
+                        className={plus_jakarta?.className}
+                        fontSize="16px"
+                        fontStyle="normal"
+                        
+                        lineHeight="150%"
+                        letterSpacing="-0.24px"
+                      >
+                        Status: {url.statuss}
+                      </Text>
+                    </Box>
+                  ))}
+                </Box>
+                </Flex> */}
+              </CardBody>
+            </Card>
+          )}
+          {/* </Flex> */}
         </Flex>
       </Flex>
     </Flex>

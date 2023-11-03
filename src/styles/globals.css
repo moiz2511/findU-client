@@ -105,3 +105,20 @@ a {
     color-scheme: dark;
   }
 }
+
+/* To hide the scrollbar in webkit-based browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 0; /* This makes the scrollbar invisible */
+  background: transparent; /* Background behind the content area */
+}
+
+/* For thumb and track in webkit-based browsers */
+::-webkit-scrollbar-thumb {
+  background: transparent; /* The draggable scrolling element */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* The track (background) of the scrollbar */
+}
+
+

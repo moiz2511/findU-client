@@ -3,6 +3,7 @@ import { Flex, Text, chakra, Button, Input, Checkbox } from "@chakra-ui/react";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { useState } from "react";
 import { instance } from "../../../instance";
+import { useRouter } from "next/router";
 const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
@@ -11,7 +12,7 @@ const SignUp = () => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const router = useRouter();
   const handleSignUp = () => {
     const res = instance?.post("/signup/", { username, password });
   };
@@ -232,7 +233,7 @@ const SignUp = () => {
                 cursor={"pointer"}
                 onClick={handleSignUp}
               >
-                Log in
+                Sign Up
               </Text>
             </Flex>
             <Flex alignItems="center" gap="16px" alignSelf="stretch">
@@ -425,7 +426,7 @@ const SignUp = () => {
               lineHeight="24px"
               letterSpacing="0.15px"
             >
-              Don’t have an account?
+              Already have an Account?
             </Text>
             <Text
               color="var(--Primary, #277DE3)"
@@ -435,8 +436,10 @@ const SignUp = () => {
               fontWeight="600"
               lineHeight="24px"
               letterSpacing="0.15px"
+              onClick={() => router.push('/login')}
+              cursor={'pointer'}
             >
-              Sign Up
+              Login
             </Text>
           </Flex>
         </Flex>

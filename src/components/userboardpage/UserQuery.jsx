@@ -1,8 +1,9 @@
 import { Flex, Text, Image, Input, Box, Button } from "@chakra-ui/react";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { instance } from "../../../instance";
+import UserChat from "./UserChat";
 const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
@@ -10,13 +11,51 @@ const plus_jakarta = Plus_Jakarta_Sans({
 const UserQuery = () => {
   const [startNew, setStartNew] = useState(false);
   const [convName, setConvName] = useState("");
+  const [query, setQuery] = useState("");
+  const [conversations, setConversations] = useState([]);
+  const [selectedChat, setSelectedChat] = useState(null)
+
+  console.log(selectedChat)
+
+  const fetchConversations = async () => {
+    const token = localStorage.getItem("token");
+    console.log(token)
+    if (token) {
+      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      console.error("No token found");
+    }
+
+    const res = await instance?.post("/GetMyConversations/");
+    console.log(res)
+
+    setConversations(res?.data.conversations);
+  };
+
+  useEffect(() => {
+    fetchConversations();
+  }, []);
+
+  const fetchChat = async (ID) => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      console.error("No token found");
+    }
+    
+    const body ={
+      conId: ID
+    }
+
+    const res = instance?.post("/getConversationChat/", body );
+  };
 
   const handleNewConversation = async () => {
     const token = localStorage.getItem("token");
 
-    // Check if the token exists
     if (token) {
-      // Attach the token to the Authorization header for all requests
       instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     } else {
       console.error("No token found");
@@ -245,6 +284,7 @@ const UserQuery = () => {
             <Flex>
               <Input
                 value={convName}
+                color={"#fff"}
                 onChange={(e) => setConvName(e.target.value)}
                 placeholder="Name"
               />
@@ -257,6 +297,8 @@ const UserQuery = () => {
           flexDirection="column"
           alignItems="flex-start"
           gap="4px"
+          maxH={'300px'}
+          overflow={'auto'}
           flex="1 0 0"
           alignSelf="stretch"
           borderBottom="1px solid #415D8A"
@@ -279,221 +321,124 @@ const UserQuery = () => {
               History
             </Text>
           </Flex>
-          <Flex
-            height="48px"
-            padding="14px 4px"
-            alignItems="center"
-            gap="16px"
-            alignSelf="stretch"
-            borderRadius="8px"
-          >
-            <Flex alignItems="center" gap="16px" flex="1 0 0">
-              <Flex h={"20px"}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="42"
-                  height="41"
-                  viewBox="0 0 42 41"
-                  fill="none"
-                >
-                  <g filter="url(#filter0_dd_505_14156)">
-                    <path
-                      d="M28.5 10.538C28.5 14.6801 25.1421 18.038 21 18.038C16.8579 18.038 13.5 14.6801 13.5 10.538C13.5 6.39583 16.8579 3.03796 21 3.03796C23.0711 3.03796 24.9461 3.87743 26.3033 5.23466M24.75 6.3713H27.0417C27.1567 6.3713 27.25 6.27802 27.25 6.16296V3.8713M21 7.20463V9.70954C21 10.24 20.7893 10.7487 20.4142 11.1238L19.3333 12.2046"
-                      stroke="#7796B4"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </g>
-                  <defs>
-                    <filter
-                      id="filter0_dd_505_14156"
-                      x="-1"
-                      y="-1.46204"
-                      width="44"
-                      height="44"
-                      filterUnits="userSpaceOnUse"
-                      color-interpolation-filters="sRGB"
-                    >
-                      <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                      <feColorMatrix
-                        in="SourceAlpha"
-                        type="matrix"
-                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                        result="hardAlpha"
-                      />
-                      <feMorphology
-                        radius="4"
-                        operator="erode"
-                        in="SourceAlpha"
-                        result="effect1_dropShadow_505_14156"
-                      />
-                      <feOffset dy="4" />
-                      <feGaussianBlur stdDeviation="3" />
-                      <feColorMatrix
-                        type="matrix"
-                        values="0 0 0 0 0.741176 0 0 0 0 0.231373 0 0 0 0 0.227451 0 0 0 0.16 0"
-                      />
-                      <feBlend
-                        mode="normal"
-                        in2="BackgroundImageFix"
-                        result="effect1_dropShadow_505_14156"
-                      />
-                      <feColorMatrix
-                        in="SourceAlpha"
-                        type="matrix"
-                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                        result="hardAlpha"
-                      />
-                      <feMorphology
-                        radius="3"
-                        operator="erode"
-                        in="SourceAlpha"
-                        result="effect2_dropShadow_505_14156"
-                      />
-                      <feOffset dy="10" />
-                      <feGaussianBlur stdDeviation="7.5" />
-                      <feColorMatrix
-                        type="matrix"
-                        values="0 0 0 0 0.741176 0 0 0 0 0.231373 0 0 0 0 0.227451 0 0 0 0.16 0"
-                      />
-                      <feBlend
-                        mode="normal"
-                        in2="effect1_dropShadow_505_14156"
-                        result="effect2_dropShadow_505_14156"
-                      />
-                      <feBlend
-                        mode="normal"
-                        in="SourceGraphic"
-                        in2="effect2_dropShadow_505_14156"
-                        result="shape"
-                      />
-                    </filter>
-                  </defs>
-                </svg>
-              </Flex>
-              <Text
-                color="#7796B4"
-                textAlign="center"
-                className={plus_jakarta?.className}
-                fontSize="14px"
-                fontStyle="normal"
-                fontWeight="600"
-                lineHeight="20px"
-                letterSpacing="0.15px"
+          {conversations &&
+            conversations.map((chat, index) => (
+              <Flex
+                height="48px"
+                padding="14px 4px"
+                alignItems="center"
+                gap="16px"
+                alignSelf="stretch"
+                borderRadius="8px"
+                cursor={'pointer'}
+                key={index}
               >
-                What is the criteria of.....
-              </Text>
-            </Flex>
-          </Flex>
+                <Flex alignItems="center" gap="16px" flex="1 0 0"  onClick={() => setSelectedChat(chat)} >
+                  <Flex h={"20px"}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="42"
+                      height="41"
+                      viewBox="0 0 42 41"
+                      fill="none"
+                    >
+                      <g filter="url(#filter0_dd_505_14156)">
+                        <path
+                          d="M28.5 10.538C28.5 14.6801 25.1421 18.038 21 18.038C16.8579 18.038 13.5 14.6801 13.5 10.538C13.5 6.39583 16.8579 3.03796 21 3.03796C23.0711 3.03796 24.9461 3.87743 26.3033 5.23466M24.75 6.3713H27.0417C27.1567 6.3713 27.25 6.27802 27.25 6.16296V3.8713M21 7.20463V9.70954C21 10.24 20.7893 10.7487 20.4142 11.1238L19.3333 12.2046"
+                          stroke="#7796B4"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </g>
+                      <defs>
+                        <filter
+                          id="filter0_dd_505_14156"
+                          x="-1"
+                          y="-1.46204"
+                          width="44"
+                          height="44"
+                          filterUnits="userSpaceOnUse"
+                          color-interpolation-filters="sRGB"
+                        >
+                          <feFlood
+                            flood-opacity="0"
+                            result="BackgroundImageFix"
+                          />
+                          <feColorMatrix
+                            in="SourceAlpha"
+                            type="matrix"
+                            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                            result="hardAlpha"
+                          />
+                          <feMorphology
+                            radius="4"
+                            operator="erode"
+                            in="SourceAlpha"
+                            result="effect1_dropShadow_505_14156"
+                          />
+                          <feOffset dy="4" />
+                          <feGaussianBlur stdDeviation="3" />
+                          <feColorMatrix
+                            type="matrix"
+                            values="0 0 0 0 0.741176 0 0 0 0 0.231373 0 0 0 0 0.227451 0 0 0 0.16 0"
+                          />
+                          <feBlend
+                            mode="normal"
+                            in2="BackgroundImageFix"
+                            result="effect1_dropShadow_505_14156"
+                          />
+                          <feColorMatrix
+                            in="SourceAlpha"
+                            type="matrix"
+                            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                            result="hardAlpha"
+                          />
+                          <feMorphology
+                            radius="3"
+                            operator="erode"
+                            in="SourceAlpha"
+                            result="effect2_dropShadow_505_14156"
+                          />
+                          <feOffset dy="10" />
+                          <feGaussianBlur stdDeviation="7.5" />
+                          <feColorMatrix
+                            type="matrix"
+                            values="0 0 0 0 0.741176 0 0 0 0 0.231373 0 0 0 0 0.227451 0 0 0 0.16 0"
+                          />
+                          <feBlend
+                            mode="normal"
+                            in2="effect1_dropShadow_505_14156"
+                            result="effect2_dropShadow_505_14156"
+                          />
+                          <feBlend
+                            mode="normal"
+                            in="SourceGraphic"
+                            in2="effect2_dropShadow_505_14156"
+                            result="shape"
+                          />
+                        </filter>
+                      </defs>
+                    </svg>
+                  </Flex>
+                  <Text
+                    color="#7796B4"
+                    textAlign="center"
+                    className={plus_jakarta?.className}
+                    fontSize="14px"
+                    fontStyle="normal"
+                    fontWeight="600"
+                    lineHeight="20px"
+                    letterSpacing="0.15px"
+                    overflowX={"hidden"}
+                  >
+                    {chat.name}
+                  </Text>
+                </Flex>
+              </Flex>
+            ))}
 
-          <Flex
-            height="48px"
-            padding="14px 4px"
-            alignItems="center"
-            gap="16px"
-            alignSelf="stretch"
-            borderRadius="8px"
-          >
-            <Flex alignItems="center" gap="16px" flex="1 0 0">
-              <Flex h={"20px"}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="42"
-                  height="41"
-                  viewBox="0 0 42 41"
-                  fill="none"
-                >
-                  <g filter="url(#filter0_dd_505_14156)">
-                    <path
-                      d="M28.5 10.538C28.5 14.6801 25.1421 18.038 21 18.038C16.8579 18.038 13.5 14.6801 13.5 10.538C13.5 6.39583 16.8579 3.03796 21 3.03796C23.0711 3.03796 24.9461 3.87743 26.3033 5.23466M24.75 6.3713H27.0417C27.1567 6.3713 27.25 6.27802 27.25 6.16296V3.8713M21 7.20463V9.70954C21 10.24 20.7893 10.7487 20.4142 11.1238L19.3333 12.2046"
-                      stroke="#7796B4"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </g>
-                  <defs>
-                    <filter
-                      id="filter0_dd_505_14156"
-                      x="-1"
-                      y="-1.46204"
-                      width="44"
-                      height="44"
-                      filterUnits="userSpaceOnUse"
-                      color-interpolation-filters="sRGB"
-                    >
-                      <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                      <feColorMatrix
-                        in="SourceAlpha"
-                        type="matrix"
-                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                        result="hardAlpha"
-                      />
-                      <feMorphology
-                        radius="4"
-                        operator="erode"
-                        in="SourceAlpha"
-                        result="effect1_dropShadow_505_14156"
-                      />
-                      <feOffset dy="4" />
-                      <feGaussianBlur stdDeviation="3" />
-                      <feColorMatrix
-                        type="matrix"
-                        values="0 0 0 0 0.741176 0 0 0 0 0.231373 0 0 0 0 0.227451 0 0 0 0.16 0"
-                      />
-                      <feBlend
-                        mode="normal"
-                        in2="BackgroundImageFix"
-                        result="effect1_dropShadow_505_14156"
-                      />
-                      <feColorMatrix
-                        in="SourceAlpha"
-                        type="matrix"
-                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                        result="hardAlpha"
-                      />
-                      <feMorphology
-                        radius="3"
-                        operator="erode"
-                        in="SourceAlpha"
-                        result="effect2_dropShadow_505_14156"
-                      />
-                      <feOffset dy="10" />
-                      <feGaussianBlur stdDeviation="7.5" />
-                      <feColorMatrix
-                        type="matrix"
-                        values="0 0 0 0 0.741176 0 0 0 0 0.231373 0 0 0 0 0.227451 0 0 0 0.16 0"
-                      />
-                      <feBlend
-                        mode="normal"
-                        in2="effect1_dropShadow_505_14156"
-                        result="effect2_dropShadow_505_14156"
-                      />
-                      <feBlend
-                        mode="normal"
-                        in="SourceGraphic"
-                        in2="effect2_dropShadow_505_14156"
-                        result="shape"
-                      />
-                    </filter>
-                  </defs>
-                </svg>
-              </Flex>
-              <Text
-                color="#7796B4"
-                textAlign="center"
-                className={plus_jakarta?.className}
-                fontSize="14px"
-                fontStyle="normal"
-                fontWeight="600"
-                lineHeight="20px"
-                letterSpacing="0.15px"
-              >
-                What is the criteria of.....
-              </Text>
-            </Flex>
-          </Flex>
+          
         </Flex>
 
         <Flex
@@ -928,7 +873,7 @@ const UserQuery = () => {
           </Flex>
         </Flex>
       </Flex>
-      <Flex
+      {/* <Flex
         width="1050px"
         height="95vh"
         flexShrink="0"
@@ -974,29 +919,11 @@ const UserQuery = () => {
             </Text>
           </Flex>
 
-          <Flex gap="16px" alignItems="center">
+          <Flex width={"100%"} gap="16px" alignItems="center">
+            <Input p={8} placeholder="Write your query here" />
+
             <Flex
-              padding="24px 16px"
-              alignItems="center"
-              gap="12px"
-              borderRadius="8px"
-              border="1px solid  #D0D5DD"
-              alignSelf={"stretch"}
-            >
-              <Text
-                color=" #787878"
-                className={plus_jakarta?.className}
-                fontSize="16px"
-                fontStyle="normal"
-                fontWeight="500"
-                lineHeight="24px"
-                letterSpacing="0.15px"
-              >
-                Write your query here
-              </Text>
-            </Flex>
-            <Flex
-              padding="22px 24px"
+              p={5}
               alignItems="center"
               gap="8px"
               borderRadius="8px"
@@ -1004,8 +931,8 @@ const UserQuery = () => {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="28"
+                width="20"
+                height="24"
                 viewBox="0 0 24 28"
                 fill="none"
               >
@@ -1017,7 +944,25 @@ const UserQuery = () => {
             </Flex>
           </Flex>
         </Flex>
-      </Flex>
+      </Flex> */}
+      {/* <Flex
+        width="1050px"
+        height="95vh"
+        flexShrink="0"
+        borderRadius="24px"
+        background=" #FFF"
+        padding={"12px"}
+        flexDirection={"column"}
+        mt={"16px"}
+      >
+       <Box width={'100%'} backgroundColor={'blue'} >
+      <Text>sdjchdscdshcsdhcvdhc</Text>
+       </Box>
+       <Box width={'100%'} backgroundColor={'blue'} >
+      <Text>sdjchdscdshcsdhcvdhc</Text>
+       </Box>
+      </Flex> */}
+      <UserChat chat={selectedChat} />
     </Flex>
   );
 };
