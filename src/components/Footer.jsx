@@ -10,11 +10,11 @@ const plus_jakarta = Plus_Jakarta_Sans({
 const Footer = () => {
   return (
     <Flex
-      width="1443px"
+      
       height="96px"
       flexShrink="0"
       background="#FFF"
-      alignItems={"flex-start"}
+      // alignItems={"flex-start"}
     >
       <Text
         color="var(--Input-Text-In-Active, #787878)"

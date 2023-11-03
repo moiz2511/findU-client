@@ -9,13 +9,6 @@ const plus_jakarta = Plus_Jakarta_Sans({
 });
 
 const Position = ({ onContinue, onBack, actions }) => {
-  // const position = usePosition();
-
-  // const { setPosition } = useStepActions();
-
-  // useEffect(() => {
-  //   console.log("[ppos", actions);
-  // }, [position]);
 
   const [position, setPosition] = useLocalStore("position", "student");
 
@@ -331,9 +324,10 @@ const Position = ({ onContinue, onBack, actions }) => {
               letterSpacing="0.15px"
               cursor={"pointer"}
               onClick={() => {
-                setPosition("wowowww");
+                setPosition(position);
                 onContinue();
               }}
+              _disabled={position === ''}
             >
               Continue
             </Text>

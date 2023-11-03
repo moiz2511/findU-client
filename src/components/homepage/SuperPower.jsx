@@ -23,7 +23,6 @@ const SuperPower = () => {
           fontStyle="normal"
           fontWeight="700"
           lineHeight="74px"
-          w={"510px"}
         >
           Superpower with AI Writer
         </Text>
@@ -36,18 +35,17 @@ const SuperPower = () => {
           fontWeight="400"
           lineHeight="26px"
           letterSpacing="-0.18px"
-          w={"597px"}
         >
           Let our AI assist with most time consuming to write blog articles,
           product descriptions and more.
         </Text>
       </Flex>
 
-      <Flex flexDirection="column" alignItems="flex-start" gap="20px">
-        <Flex alignItems="flex-start" gap="20px">
+      <Flex flexDirection={{base: 'column', lg: 'row'}} alignItems="center" justifyContent={'center'} gap="20px" flexWrap={'wrap'} >
+        <Flex alignItems="flex-start" gap="20px" flexWrap={'wrap'} >
           {/* first box */}
           <Flex
-            width="386px"
+           
             padding="32px"
             alignItems="flex-start"
             borderRadius="15px"
@@ -236,7 +234,7 @@ const SuperPower = () => {
           </Flex>
         </Flex>
 
-        <Flex alignItems="flex-start" gap="20px">
+        <Flex alignItems="flex-start" gap="20px" flexWrap={'wrap'} >
           {/* first box */}
           <Flex
             width="386px"
@@ -365,7 +363,7 @@ const SuperPower = () => {
           </Flex>
 
           <Flex
-            width="386px"
+            // width="386px"
             padding="32px"
             alignItems="flex-start"
             borderRadius="15px"
@@ -404,7 +402,7 @@ const SuperPower = () => {
                 fontStyle="normal"
                 fontWeight="700"
                 lineHeight="28px"
-                w={"269px"}
+                // w={"269px"}
                 mb={"11px"}
               >
                 Brainstorm faster
@@ -417,7 +415,7 @@ const SuperPower = () => {
                   fontStyle="normal"
                   fontWeight="400"
                   lineHeight="25px"
-                  w={"288px"}
+                  // w={"288px"}
                 >
                   Adipis cing nisi sem gravida enim eu adipi scing sagittis
                   scele risque aug ue nulla massa ali quet fring illa null am

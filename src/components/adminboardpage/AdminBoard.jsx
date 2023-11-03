@@ -41,7 +41,7 @@ const AdminBoard = () => {
   const [users, setUsers] = useState(null);
   const [refresh, setRefresh] = useState(1);
   const [pageRefresh, setPageRefresh] = useState(false);
-  const [isUserSelected, setIsUserSelected] = useState(false);
+  const [isUserSelected, setIsUserSelected] = useState(true);
   const [isDataSelected, setIsDataSelected] = useState(false);
   const [isPromptSelected, setIsPromptSelected] = useState(false);
   const [selectedURLId, setSelectedURLId] = useState("");
@@ -222,7 +222,7 @@ const AdminBoard = () => {
       const res = await instance.post("/getWebSubURLS/", body);
       console.log(res);
       setSubURLs(res.data.subUrls);
-      console.log(subURLs)
+      console.log(subURLs);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -279,7 +279,10 @@ const AdminBoard = () => {
               <List>
                 {subURLs &&
                   subURLs.map((sub, index) => (
-                    <ListItem key={index}> {index + 1}: {sub}</ListItem>
+                    <ListItem key={index}>
+                      {" "}
+                      {index + 1}: {sub}
+                    </ListItem>
                   ))}
               </List>
             </Box>
@@ -287,7 +290,8 @@ const AdminBoard = () => {
         </ModalContent>
       </Modal>
       <Flex
-        width="264px"
+        flex={0.15}
+        // width="264px"
         // height="87vh"
         padding="24px 16px"
         flexDirection="column"
@@ -527,9 +531,8 @@ const AdminBoard = () => {
         </Flex>
       </Flex>
 
-      <Flex flexDir={"column"}>
+      <Flex flex={0.85} flexDir={"column"}>
         <Flex
-          width="70%"
           padding="16px 24px"
           justifyContent="flex-end"
           alignItems="center"
@@ -654,591 +657,71 @@ const AdminBoard = () => {
         </Flex>
 
         <Flex
-          width="1440px"
-          height="87vh"
+          // width="1440px"
+          width="100%"
+          height="100%"
           background="#F5F6FA"
-          overflow={"hidden"}
+          overflow={"auto"}
           flexDir={"column"}
         >
           {/* <Flex flexDirection="column" alignItems="flex-start" gap="4px"> */}
-          <Flex
-            width="95%"
-            padding="16px"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="flex-start"
-            gap="8px"
-            borderRadius="16px"
-            background="#FFF"
-            h={"126px"}
-            ml={"24px"}
-            mr={"24px"}
-            mt={"34px"}
-          >
-            <Flex
-              gap="8px"
-              alignItems={"flex-start"}
-              borderRadius="6px"
-              flexDir={"column"}
-            >
-              <Flex gap={"8px"} alignItems={"center"}>
-                <Text
-                  color="#111827"
-                  className={plus_jakarta?.className}
-                  fontSize="14px"
-                  fontStyle="normal"
-                  fontWeight="500"
-                  lineHeight="100%"
-                >
-                  Home
-                </Text>
-                <Text
-                  color=" #9CA3AF"
-                  className={plus_jakarta?.className}
-                  fontSize="14px"
-                  fontStyle="normal"
-                  fontWeight="500"
-                  lineHeight="100%"
-                >
-                  /
-                </Text>
-                <Text
-                  color="  #9CA3AF"
-                  className={plus_jakarta?.className}
-                  fontSize="14px"
-                  fontStyle="normal"
-                  fontWeight="500"
-                  lineHeight="100%"
-                >
-                  Users
-                </Text>
-              </Flex>
 
-              <Flex>
-                <Text
-                  color="#111827"
-                  className={plus_jakarta?.className}
-                  fontSize="24px"
-                  fontStyle="normal"
-                  fontWeight="600"
-                  lineHeight="150%"
-                  letterSpacing="-0.24px"
-                >
-                  Users
-                </Text>
-              </Flex>
-            </Flex>
-          </Flex>
           {isUserSelected && (
-            <Flex
-              width="1000px"
-              padding="16px"
-              flexDirection="column"
-              alignItems="flex-start"
-              gap="24px"
-              borderRadius="16px"
-              background="#FFF"
-              ml={"24px"}
-              mr={"24px"}
-              mt={"34px"}
-            >
+            <Flex flexDir={"column"} height={"100vh"}>
               <Flex
-                justifyContent="space-between"
-                alignItems="center"
-                alignSelf="stretch"
-              >
-                <Text
-                  color="#111827"
-                  className={plus_jakarta?.className}
-                  fontSize="18px"
-                  fontStyle="normal"
-                  fontWeight="600"
-                  lineHeight="150%"
-                  letterSpacing="-0.18px"
-                  w={"746px"}
-                >
-                  All Customers
-                </Text>
-                <Flex
-                  padding="8px 12px"
-                  alignItems="center"
-                  gap="8px"
-                  borderRadius="8px"
-                  background="#F3F4F6"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <g clip-path="url(#clip0_747_497)">
-                      <path
-                        d="M2.5 7.49984L5.83333 4.1665M5.83333 4.1665L9.16667 7.49984M5.83333 4.1665V15.8332"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M17.5007 12.4998L14.1673 15.8332M14.1673 15.8332L10.834 12.4998M14.1673 15.8332V4.1665"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_747_497">
-                        <rect width="20" height="20" fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                  <Text
-                    color="#111827"
-                    className={plus_jakarta?.className}
-                    fontSize="16px"
-                    fontStyle="normal"
-                    fontWeight="500"
-                    lineHeight="150%"
-                    whiteSpace={"nowrap"}
-                  >
-                    Sort by: Date added{" "}
-                  </Text>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <g clip-path="url(#clip0_747_502)">
-                      <path
-                        d="M5 7.5L10 12.5L15 7.5"
-                        stroke="#9CA3AF"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_747_502">
-                        <rect width="20" height="20" fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                </Flex>
-
-                <Flex
-                  padding="8px 12px"
-                  alignItems="center"
-                  gap="8px"
-                  borderRadius="8px"
-                  border="1px solid  ##E5E7EB"
-                  background=" #FFF"
-                  boxShadow="0px 0px 2px 0px #E5E7EB"
-                  ml={"16px"}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <g clip-path="url(#clip0_747_89)">
-                      <path
-                        d="M11.6667 6.66683C12.5871 6.66683 13.3333 5.92064 13.3333 5.00016C13.3333 4.07969 12.5871 3.3335 11.6667 3.3335C10.7462 3.3335 10 4.07969 10 5.00016C10 5.92064 10.7462 6.66683 11.6667 6.66683Z"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M3.33398 5H10.0007"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M13.334 5H16.6673"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M6.66667 11.6668C7.58714 11.6668 8.33333 10.9206 8.33333 10.0002C8.33333 9.07969 7.58714 8.3335 6.66667 8.3335C5.74619 8.3335 5 9.07969 5 10.0002C5 10.9206 5.74619 11.6668 6.66667 11.6668Z"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M3.33398 10H5.00065"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M8.33398 10H16.6673"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M14.1667 16.6668C15.0871 16.6668 15.8333 15.9206 15.8333 15.0002C15.8333 14.0797 15.0871 13.3335 14.1667 13.3335C13.2462 13.3335 12.5 14.0797 12.5 15.0002C12.5 15.9206 13.2462 16.6668 14.1667 16.6668Z"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M3.33398 15H12.5007"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M15.834 15H16.6673"
-                        stroke="#4B5563"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_747_89">
-                        <rect width="20" height="20" fill="white" />
-                      </clipPath>
-                    </defs>
-                  </svg>
-                  <Text
-                    color=" #4B5563"
-                    className={plus_jakarta?.className}
-                    fontSize="16px"
-                    fontStyle="normal"
-                    fontWeight="500"
-                    lineHeight="150%"
-                  >
-                    Filters
-                  </Text>
-                </Flex>
-              </Flex>
-
-              <Flex>
-                <TableContainer w={"970px"} borderRadius={"8px"}>
-                  <Table size="md">
-                    <Thead>
-                      <Tr>
-                        <Th
-                          className={plus_jakarta?.className}
-                          fontSize="16px"
-                          fontStyle="normal"
-                          fontWeight="500"
-                          lineHeight="150%"
-                          background="#F9FAFB"
-                          boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
-                        >
-                          ID
-                        </Th>
-                        <Th
-                          className={plus_jakarta?.className}
-                          fontSize="16px"
-                          fontStyle="normal"
-                          fontWeight="500"
-                          lineHeight="150%"
-                          background="#F9FAFB"
-                          boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
-                        >
-                          Username
-                        </Th>
-                        <Th
-                          className={plus_jakarta?.className}
-                          fontSize="16px"
-                          fontStyle="normal"
-                          fontWeight="500"
-                          lineHeight="150%"
-                          background="#F9FAFB"
-                          boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
-                        >
-                          Email
-                        </Th>
-                        <Th
-                          className={plus_jakarta?.className}
-                          fontSize="16px"
-                          fontStyle="normal"
-                          fontWeight="500"
-                          lineHeight="150%"
-                          background="#F9FAFB"
-                          boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
-                        >
-                          Subscription
-                        </Th>
-                        <Th
-                          className={plus_jakarta?.className}
-                          fontSize="16px"
-                          fontStyle="normal"
-                          fontWeight="500"
-                          lineHeight="150%"
-                          background="#F9FAFB"
-                          boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
-                        >
-                          Actions
-                        </Th>
-                      </Tr>
-                    </Thead>
-
-                    <Tbody>
-                      {users?.map((user, i) => (
-                        <Tr key={i}>
-                          <Td>{i + 1}</Td>
-                          <Td>{user?.name}</Td>
-                          <Td></Td>
-                          <Td></Td>
-                          <Td
-                            display={"flex"}
-                            gap={"12px"}
-                            alignItems={"center"}
-                          >
-                            <svg
-                              onClick={() =>
-                                router?.push(`userProfile/${user?.id}`)
-                              }
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="18"
-                              height="18"
-                              viewBox="0 0 18 18"
-                              fill="none"
-                            >
-                              <path
-                                d="M11.1159 3.0084L1.21212 12.9234C1.16225 12.9734 1.12671 13.036 1.1092 13.1045L0.01142 17.5152C-0.00472562 17.5807 -0.00373617 17.6492 0.0142928 17.7142C0.0323217 17.7791 0.0667808 17.8383 0.114342 17.8861C0.187394 17.959 0.286305 17.9999 0.389445 18C0.421262 18 0.452957 17.9961 0.483814 17.9883L4.88996 16.8892C4.95847 16.872 5.02101 16.8364 5.07088 16.7863L14.9756 6.87204L11.1159 3.0084ZM17.4292 1.6565L16.3268 0.552924C15.5899 -0.184674 14.3057 -0.183942 13.5697 0.552924L12.2193 1.90482L16.0788 5.76832L17.4292 4.41646C17.7973 4.04817 18 3.55794 18 3.03657C18 2.5152 17.7973 2.02497 17.4292 1.6565Z"
-                                fill="#898989"
-                              />
-                            </svg>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                            >
-                              <g clip-path="url(#clip0_747_1766)">
-                                <path
-                                  d="M23.2715 9.42146C21.7205 6.89793 18.1925 2.66406 12.0005 2.66406C5.80854 2.66406 2.28054 6.89793 0.72954 9.42146C0.250068 10.1962 -0.00390625 11.0891 -0.00390625 11.9999C-0.00390625 12.9108 0.250068 13.8037 0.72954 14.5784C2.28054 17.102 5.80854 21.3358 12.0005 21.3358C18.1925 21.3358 21.7205 17.102 23.2715 14.5784C23.751 13.8037 24.005 12.9108 24.005 11.9999C24.005 11.0891 23.751 10.1962 23.2715 9.42146ZM21.5665 13.5324C20.2345 15.6963 17.2195 19.3378 12.0005 19.3378C6.78154 19.3378 3.76654 15.6963 2.43454 13.5324C2.14967 13.0719 1.99879 12.5413 1.99879 11.9999C1.99879 11.4586 2.14967 10.9279 2.43454 10.4674C3.76654 8.30356 6.78154 4.66211 12.0005 4.66211C17.2195 4.66211 20.2345 8.29956 21.5665 10.4674C21.8514 10.9279 22.0023 11.4586 22.0023 11.9999C22.0023 12.5413 21.8514 13.0719 21.5665 13.5324Z"
-                                  fill="#898989"
-                                />
-                                <path
-                                  d="M12 7.00488C11.0111 7.00488 10.0444 7.29784 9.22215 7.84671C8.39991 8.39558 7.75904 9.17572 7.3806 10.0885C7.00217 11.0012 6.90315 12.0055 7.09608 12.9745C7.289 13.9435 7.76521 14.8335 8.46447 15.5321C9.16373 16.2307 10.0546 16.7064 11.0246 16.8991C11.9945 17.0919 12.9998 16.993 13.9134 16.6149C14.827 16.2368 15.6079 15.5966 16.1574 14.7751C16.7068 13.9537 17 12.9879 17 12C16.9984 10.6757 16.4711 9.4061 15.5338 8.46967C14.5964 7.53325 13.3256 7.00647 12 7.00488ZM12 14.9971C11.4067 14.9971 10.8266 14.8213 10.3333 14.492C9.83994 14.1627 9.45543 13.6946 9.22836 13.1469C9.0013 12.5993 8.94189 11.9967 9.05765 11.4153C9.1734 10.8339 9.45912 10.2999 9.87868 9.88075C10.2982 9.46161 10.8328 9.17616 11.4147 9.06052C11.9967 8.94488 12.5999 9.00423 13.1481 9.23107C13.6962 9.45791 14.1648 9.84205 14.4944 10.3349C14.8241 10.8278 15 11.4072 15 12C15 12.7949 14.6839 13.5572 14.1213 14.1193C13.5587 14.6813 12.7957 14.9971 12 14.9971Z"
-                                  fill="#898989"
-                                />
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_747_1766">
-                                  <rect
-                                    width="24"
-                                    height="23.9766"
-                                    fill="white"
-                                    transform="translate(0 0.0117188)"
-                                  />
-                                </clipPath>
-                              </defs>
-                            </svg>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="20"
-                              height="20"
-                              viewBox="0 0 20 20"
-                              fill="none"
-                              onClick={() => DeleteUser(user.id)}
-                            >
-                              <g clip-path="url(#clip0_747_1769)">
-                                <path
-                                  d="M19 3.33333H15.9C15.6679 2.39284 15.0538 1.54779 14.1613 0.940598C13.2687 0.333408 12.1522 0.0012121 11 0L9 0C7.8478 0.0012121 6.73132 0.333408 5.83875 0.940598C4.94618 1.54779 4.3321 2.39284 4.1 3.33333H1C0.734784 3.33333 0.48043 3.42113 0.292893 3.57741C0.105357 3.73369 0 3.94565 0 4.16667C0 4.38768 0.105357 4.59964 0.292893 4.75592C0.48043 4.9122 0.734784 5 1 5H2V15.8333C2.00159 16.938 2.52888 17.997 3.46622 18.7782C4.40356 19.5593 5.67441 19.9987 7 20H13C14.3256 19.9987 15.5964 19.5593 16.5338 18.7782C17.4711 17.997 17.9984 16.938 18 15.8333V5H19C19.2652 5 19.5196 4.9122 19.7071 4.75592C19.8946 4.59964 20 4.38768 20 4.16667C20 3.94565 19.8946 3.73369 19.7071 3.57741C19.5196 3.42113 19.2652 3.33333 19 3.33333ZM9 1.66667H11C11.6203 1.6673 12.2251 1.82781 12.7316 2.1262C13.2381 2.42459 13.6214 2.84624 13.829 3.33333H6.171C6.37858 2.84624 6.7619 2.42459 7.26839 2.1262C7.77487 1.82781 8.37973 1.6673 9 1.66667ZM16 15.8333C16 16.4964 15.6839 17.1323 15.1213 17.6011C14.5587 18.0699 13.7956 18.3333 13 18.3333H7C6.20435 18.3333 5.44129 18.0699 4.87868 17.6011C4.31607 17.1323 4 16.4964 4 15.8333V5H16V15.8333Z"
-                                  fill="#898989"
-                                />
-
-                                <path
-                                  d="M8.33333 14.9997C8.55435 14.9997 8.76631 14.9119 8.92259 14.7556C9.07887 14.5993 9.16667 14.3874 9.16667 14.1663V9.16634C9.16667 8.94533 9.07887 8.73337 8.92259 8.57709C8.76631 8.42081 8.55435 8.33301 8.33333 8.33301C8.11232 8.33301 7.90036 8.42081 7.74408 8.57709C7.5878 8.73337 7.5 8.94533 7.5 9.16634V14.1663C7.5 14.3874 7.5878 14.5993 7.74408 14.7556C7.90036 14.9119 8.11232 14.9997 8.33333 14.9997Z"
-                                  fill="#898989"
-                                />
-                                <path
-                                  d="M11.6654 14.9997C11.8864 14.9997 12.0983 14.9119 12.2546 14.7556C12.4109 14.5993 12.4987 14.3874 12.4987 14.1663V9.16634C12.4987 8.94533 12.4109 8.73337 12.2546 8.57709C12.0983 8.42081 11.8864 8.33301 11.6654 8.33301C11.4444 8.33301 11.2324 8.42081 11.0761 8.57709C10.9198 8.73337 10.832 8.94533 10.832 9.16634V14.1663C10.832 14.3874 10.9198 14.5993 11.0761 14.7556C11.2324 14.9119 11.4444 14.9997 11.6654 14.9997Z"
-                                  fill="#898989"
-                                />
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_747_1769">
-                                  <rect width="20" height="20" fill="white" />
-                                </clipPath>
-                              </defs>
-                            </svg>
-                          </Td>
-                        </Tr>
-                      ))}
-                    </Tbody>
-                  </Table>
-                </TableContainer>
-              </Flex>
-
-              <Flex
-                justifyContent="flex-end"
-                alignItems="center"
-                gap="16px"
-                alignSelf="stretch"
+                // width="95%"
+                padding="16px"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="flex-start"
+                // gap="8px"
+                borderRadius="16px"
+                background="#FFF"
+                h={"126px"}
+                ml={"24px"}
+                mr={"24px"}
+                mt={"34px"}
               >
                 <Flex
-                  padding="12px 0px"
-                  alignItems="center"
-                  gap="11px"
-                  borderTop="1px solid  #EAECF0"
+                  gap="8px"
+                  alignItems={"flex-start"}
+                  borderRadius="6px"
+                  flexDir={"column"}
                 >
-                  <Flex
-                    padding="10px 8px"
-                    justifyContent="center"
-                    alignItems="center"
-                    gap="8px"
-                    borderRadius="8px"
-                    border="1px solid #D0D5DD"
-                    background=" #FFF"
-                    boxShadow="0px 1px 2px 0px rgba(16, 24, 40, 0.05)"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
+                  <Flex gap={"8px"} alignItems={"center"}>
+                    <Text
+                      color="#111827"
+                      className={plus_jakarta?.className}
+                      fontSize="14px"
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="100%"
                     >
-                      <path
-                        d="M15.8327 10.0001H4.16602M4.16602 10.0001L9.99935 15.8334M4.16602 10.0001L9.99935 4.16675"
-                        stroke="#344054"
-                        stroke-width="1.66667"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </Flex>
-                  <Text
-                    color="#344054)"
-                    className={inter?.className}
-                    fontSize="14px"
-                    fontStyle="normal"
-                    fontWeight="400"
-                    lineHeight="20px"
-                  >
-                    Page <chakra.span fontWeight="500">1</chakra.span> of{" "}
-                    <chakra.span fontWeight="500">10</chakra.span>
-                  </Text>
-                  <Flex
-                    padding="10px 8px"
-                    justifyContent="center"
-                    alignItems="center"
-                    gap="8px"
-                    borderRadius="8px"
-                    border="1px solid #D0D5DD"
-                    background=" #FFF"
-                    boxShadow="0px 1px 2px 0px rgba(16, 24, 40, 0.05)"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
+                      Home
+                    </Text>
+                    <Text
+                      color=" #9CA3AF"
+                      className={plus_jakarta?.className}
+                      fontSize="14px"
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="100%"
                     >
-                      <path
-                        d="M15.8327 10.0001H4.16602M4.16602 10.0001L9.99935 15.8334M4.16602 10.0001L9.99935 4.16675"
-                        stroke="#344054"
-                        stroke-width="1.66667"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
+                      /
+                    </Text>
+                    <Text
+                      color="  #9CA3AF"
+                      className={plus_jakarta?.className}
+                      fontSize="14px"
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="100%"
+                    >
+                      Users
+                    </Text>
                   </Flex>
-                </Flex>
-              </Flex>
-            </Flex>
-          )}
 
-          {isDataSelected && (
-            <Card
-              overflow={"auto"}
-              width={"90%"}
-              backgroundColor={"#FFFFFF"}
-              ml={5}
-              mr={10}
-              mt={2}
-            >
-              <CardBody>
-                <Text
-                  color="#111827"
-                  className={plus_jakarta?.className}
-                  fontSize="24px"
-                  fontStyle="normal"
-                  fontWeight="600"
-                  lineHeight="150%"
-                  letterSpacing="-0.24px"
-                  marginBottom={"4%"}
-                >
-                  Add Data
-                </Text>
-                <Box marginBottom={"3%"}>
-                  <Text
-                    className={plus_jakarta?.className}
-                    marginBottom={"1.5%"}
-                  >
-                    Add Single Web URL
-                  </Text>
-                  <Input
-                    value={singleWebUrl}
-                    onChange={(e) => setSingleWebURL(e.target.value)}
-                    placeholder="https://uni.edu.pk"
-                  />
-                  <Button
-                    marginTop={"1.5%"}
-                    onClick={() => addSingleURL(singleWebUrl)}
-                  >
-                    Create Single URL
-                  </Button>
-                </Box>
-                <Box marginBottom={"3%"}>
-                  <Text
-                    className={plus_jakarta?.className}
-                    marginBottom={"1.5%"}
-                  >
-                    Add Web URLs
-                  </Text>
-                  <Input
-                    placeholder="https://uni.edu.pk"
-                    value={urlInput}
-                    onChange={(e) => setUrlInput(e.target.value)}
-                  />
-                  <Button marginTop={"1.5%"} onClick={addUrl}>
-                    Add URL
-                  </Button>
-                  <Button
-                    marginTop={"1.5%"}
-                    marginLeft={"1.5%"}
-                    onClick={() => addURL(urls)}
-                  >
-                    Create Web URL
-                  </Button>
-
-                  <List>
-                    {urls.map((url, index) => (
-                      <ListItem key={index}>{url}</ListItem>
-                    ))}
-                  </List>
-                </Box>
-
-                <Flex flexDirection={"row"} justifyContent={"space-evenly"}>
-                  <Box>
+                  <Flex>
                     <Text
                       color="#111827"
                       className={plus_jakarta?.className}
@@ -1247,14 +730,658 @@ const AdminBoard = () => {
                       fontWeight="600"
                       lineHeight="150%"
                       letterSpacing="-0.24px"
-                      marginBottom={"3%"}
                     >
-                      {" "}
-                      Web URL's{" "}
+                      Users
                     </Text>
-                    {webURL?.map((url, index) => (
-                      <Box key={index} marginBottom={"6%"}>
-                        <Flex alignItems={"center"}>
+                  </Flex>
+                </Flex>
+              </Flex>
+
+              <Flex
+                // width="1000px"
+                padding="16px"
+                flexDirection="column"
+                alignItems="flex-start"
+                gap="24px"
+                borderRadius="16px"
+                background="#FFF"
+                ml={"24px"}
+                mr={"24px"}
+                mt={"34px"}
+              >
+                <Flex
+                  justifyContent="space-between"
+                  alignItems="center"
+                  alignSelf="stretch"
+                >
+                  <Text
+                    color="#111827"
+                    className={plus_jakarta?.className}
+                    fontSize="18px"
+                    fontStyle="normal"
+                    fontWeight="600"
+                    lineHeight="150%"
+                    letterSpacing="-0.18px"
+                    w={"746px"}
+                  >
+                    All Customers
+                  </Text>
+                  <Flex
+                    padding="8px 12px"
+                    alignItems="center"
+                    gap="8px"
+                    borderRadius="8px"
+                    background="#F3F4F6"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                    >
+                      <g clip-path="url(#clip0_747_497)">
+                        <path
+                          d="M2.5 7.49984L5.83333 4.1665M5.83333 4.1665L9.16667 7.49984M5.83333 4.1665V15.8332"
+                          stroke="#4B5563"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M17.5007 12.4998L14.1673 15.8332M14.1673 15.8332L10.834 12.4998M14.1673 15.8332V4.1665"
+                          stroke="#4B5563"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_747_497">
+                          <rect width="20" height="20" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                    <Text
+                      color="#111827"
+                      className={plus_jakarta?.className}
+                      fontSize="16px"
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="150%"
+                      whiteSpace={"nowrap"}
+                    >
+                      Sort by: Date added{" "}
+                    </Text>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                    >
+                      <g clip-path="url(#clip0_747_502)">
+                        <path
+                          d="M5 7.5L10 12.5L15 7.5"
+                          stroke="#9CA3AF"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_747_502">
+                          <rect width="20" height="20" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </Flex>
+
+                  <Flex
+                    padding="8px 12px"
+                    alignItems="center"
+                    gap="8px"
+                    borderRadius="8px"
+                    border="1px solid  ##E5E7EB"
+                    background=" #FFF"
+                    boxShadow="0px 0px 2px 0px #E5E7EB"
+                    ml={"16px"}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                    >
+                      <g clip-path="url(#clip0_747_89)">
+                        <path
+                          d="M11.6667 6.66683C12.5871 6.66683 13.3333 5.92064 13.3333 5.00016C13.3333 4.07969 12.5871 3.3335 11.6667 3.3335C10.7462 3.3335 10 4.07969 10 5.00016C10 5.92064 10.7462 6.66683 11.6667 6.66683Z"
+                          stroke="#4B5563"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M3.33398 5H10.0007"
+                          stroke="#4B5563"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M13.334 5H16.6673"
+                          stroke="#4B5563"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M6.66667 11.6668C7.58714 11.6668 8.33333 10.9206 8.33333 10.0002C8.33333 9.07969 7.58714 8.3335 6.66667 8.3335C5.74619 8.3335 5 9.07969 5 10.0002C5 10.9206 5.74619 11.6668 6.66667 11.6668Z"
+                          stroke="#4B5563"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M3.33398 10H5.00065"
+                          stroke="#4B5563"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M8.33398 10H16.6673"
+                          stroke="#4B5563"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M14.1667 16.6668C15.0871 16.6668 15.8333 15.9206 15.8333 15.0002C15.8333 14.0797 15.0871 13.3335 14.1667 13.3335C13.2462 13.3335 12.5 14.0797 12.5 15.0002C12.5 15.9206 13.2462 16.6668 14.1667 16.6668Z"
+                          stroke="#4B5563"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M3.33398 15H12.5007"
+                          stroke="#4B5563"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M15.834 15H16.6673"
+                          stroke="#4B5563"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_747_89">
+                          <rect width="20" height="20" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                    <Text
+                      color=" #4B5563"
+                      className={plus_jakarta?.className}
+                      fontSize="16px"
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="150%"
+                    >
+                      Filters
+                    </Text>
+                  </Flex>
+                </Flex>
+
+                <Flex w={"100%"}>
+                  <TableContainer borderRadius={"8px"}>
+                    <Table>
+                      <Thead>
+                        <Tr>
+                          <Th
+                            className={plus_jakarta?.className}
+                            fontSize="16px"
+                            fontStyle="normal"
+                            fontWeight="500"
+                            lineHeight="150%"
+                            background="#F9FAFB"
+                            boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
+                          >
+                            ID
+                          </Th>
+                          <Th
+                            className={plus_jakarta?.className}
+                            fontSize="16px"
+                            fontStyle="normal"
+                            fontWeight="500"
+                            lineHeight="150%"
+                            background="#F9FAFB"
+                            boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
+                          >
+                            Username
+                          </Th>
+                          <Th
+                            className={plus_jakarta?.className}
+                            fontSize="16px"
+                            fontStyle="normal"
+                            fontWeight="500"
+                            lineHeight="150%"
+                            background="#F9FAFB"
+                            boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
+                          >
+                            Email
+                          </Th>
+                          <Th
+                            className={plus_jakarta?.className}
+                            fontSize="16px"
+                            fontStyle="normal"
+                            fontWeight="500"
+                            lineHeight="150%"
+                            background="#F9FAFB"
+                            boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
+                          >
+                            Subscription
+                          </Th>
+                          <Th
+                            className={plus_jakarta?.className}
+                            fontSize="16px"
+                            fontStyle="normal"
+                            fontWeight="500"
+                            lineHeight="150%"
+                            background="#F9FAFB"
+                            boxShadow="0px 3px 2px 0px rgba(0, 0, 0, 0.08)"
+                          >
+                            Actions
+                          </Th>
+                        </Tr>
+                      </Thead>
+
+                      <Tbody>
+                        {users?.map((user, i) => (
+                          <Tr key={i}>
+                            <Td>{i + 1}</Td>
+                            <Td>{user?.name}</Td>
+                            <Td></Td>
+                            <Td></Td>
+                            <Td
+                              display={"flex"}
+                              gap={"12px"}
+                              alignItems={"center"}
+                            >
+                              <svg
+                                onClick={() =>
+                                  router?.push(
+                                    `userProfile/${user.id}?name=${user.name}&status=${user.status}`
+                                  )
+                                }
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="18"
+                                height="18"
+                                viewBox="0 0 18 18"
+                                fill="none"
+                              >
+                                <path
+                                  d="M11.1159 3.0084L1.21212 12.9234C1.16225 12.9734 1.12671 13.036 1.1092 13.1045L0.01142 17.5152C-0.00472562 17.5807 -0.00373617 17.6492 0.0142928 17.7142C0.0323217 17.7791 0.0667808 17.8383 0.114342 17.8861C0.187394 17.959 0.286305 17.9999 0.389445 18C0.421262 18 0.452957 17.9961 0.483814 17.9883L4.88996 16.8892C4.95847 16.872 5.02101 16.8364 5.07088 16.7863L14.9756 6.87204L11.1159 3.0084ZM17.4292 1.6565L16.3268 0.552924C15.5899 -0.184674 14.3057 -0.183942 13.5697 0.552924L12.2193 1.90482L16.0788 5.76832L17.4292 4.41646C17.7973 4.04817 18 3.55794 18 3.03657C18 2.5152 17.7973 2.02497 17.4292 1.6565Z"
+                                  fill="#898989"
+                                />
+                              </svg>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                              >
+                                <g clip-path="url(#clip0_747_1766)">
+                                  <path
+                                    d="M23.2715 9.42146C21.7205 6.89793 18.1925 2.66406 12.0005 2.66406C5.80854 2.66406 2.28054 6.89793 0.72954 9.42146C0.250068 10.1962 -0.00390625 11.0891 -0.00390625 11.9999C-0.00390625 12.9108 0.250068 13.8037 0.72954 14.5784C2.28054 17.102 5.80854 21.3358 12.0005 21.3358C18.1925 21.3358 21.7205 17.102 23.2715 14.5784C23.751 13.8037 24.005 12.9108 24.005 11.9999C24.005 11.0891 23.751 10.1962 23.2715 9.42146ZM21.5665 13.5324C20.2345 15.6963 17.2195 19.3378 12.0005 19.3378C6.78154 19.3378 3.76654 15.6963 2.43454 13.5324C2.14967 13.0719 1.99879 12.5413 1.99879 11.9999C1.99879 11.4586 2.14967 10.9279 2.43454 10.4674C3.76654 8.30356 6.78154 4.66211 12.0005 4.66211C17.2195 4.66211 20.2345 8.29956 21.5665 10.4674C21.8514 10.9279 22.0023 11.4586 22.0023 11.9999C22.0023 12.5413 21.8514 13.0719 21.5665 13.5324Z"
+                                    fill="#898989"
+                                  />
+                                  <path
+                                    d="M12 7.00488C11.0111 7.00488 10.0444 7.29784 9.22215 7.84671C8.39991 8.39558 7.75904 9.17572 7.3806 10.0885C7.00217 11.0012 6.90315 12.0055 7.09608 12.9745C7.289 13.9435 7.76521 14.8335 8.46447 15.5321C9.16373 16.2307 10.0546 16.7064 11.0246 16.8991C11.9945 17.0919 12.9998 16.993 13.9134 16.6149C14.827 16.2368 15.6079 15.5966 16.1574 14.7751C16.7068 13.9537 17 12.9879 17 12C16.9984 10.6757 16.4711 9.4061 15.5338 8.46967C14.5964 7.53325 13.3256 7.00647 12 7.00488ZM12 14.9971C11.4067 14.9971 10.8266 14.8213 10.3333 14.492C9.83994 14.1627 9.45543 13.6946 9.22836 13.1469C9.0013 12.5993 8.94189 11.9967 9.05765 11.4153C9.1734 10.8339 9.45912 10.2999 9.87868 9.88075C10.2982 9.46161 10.8328 9.17616 11.4147 9.06052C11.9967 8.94488 12.5999 9.00423 13.1481 9.23107C13.6962 9.45791 14.1648 9.84205 14.4944 10.3349C14.8241 10.8278 15 11.4072 15 12C15 12.7949 14.6839 13.5572 14.1213 14.1193C13.5587 14.6813 12.7957 14.9971 12 14.9971Z"
+                                    fill="#898989"
+                                  />
+                                </g>
+                                <defs>
+                                  <clipPath id="clip0_747_1766">
+                                    <rect
+                                      width="24"
+                                      height="23.9766"
+                                      fill="white"
+                                      transform="translate(0 0.0117188)"
+                                    />
+                                  </clipPath>
+                                </defs>
+                              </svg>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
+                                fill="none"
+                                onClick={() => DeleteUser(user.id)}
+                              >
+                                <g clip-path="url(#clip0_747_1769)">
+                                  <path
+                                    d="M19 3.33333H15.9C15.6679 2.39284 15.0538 1.54779 14.1613 0.940598C13.2687 0.333408 12.1522 0.0012121 11 0L9 0C7.8478 0.0012121 6.73132 0.333408 5.83875 0.940598C4.94618 1.54779 4.3321 2.39284 4.1 3.33333H1C0.734784 3.33333 0.48043 3.42113 0.292893 3.57741C0.105357 3.73369 0 3.94565 0 4.16667C0 4.38768 0.105357 4.59964 0.292893 4.75592C0.48043 4.9122 0.734784 5 1 5H2V15.8333C2.00159 16.938 2.52888 17.997 3.46622 18.7782C4.40356 19.5593 5.67441 19.9987 7 20H13C14.3256 19.9987 15.5964 19.5593 16.5338 18.7782C17.4711 17.997 17.9984 16.938 18 15.8333V5H19C19.2652 5 19.5196 4.9122 19.7071 4.75592C19.8946 4.59964 20 4.38768 20 4.16667C20 3.94565 19.8946 3.73369 19.7071 3.57741C19.5196 3.42113 19.2652 3.33333 19 3.33333ZM9 1.66667H11C11.6203 1.6673 12.2251 1.82781 12.7316 2.1262C13.2381 2.42459 13.6214 2.84624 13.829 3.33333H6.171C6.37858 2.84624 6.7619 2.42459 7.26839 2.1262C7.77487 1.82781 8.37973 1.6673 9 1.66667ZM16 15.8333C16 16.4964 15.6839 17.1323 15.1213 17.6011C14.5587 18.0699 13.7956 18.3333 13 18.3333H7C6.20435 18.3333 5.44129 18.0699 4.87868 17.6011C4.31607 17.1323 4 16.4964 4 15.8333V5H16V15.8333Z"
+                                    fill="#898989"
+                                  />
+
+                                  <path
+                                    d="M8.33333 14.9997C8.55435 14.9997 8.76631 14.9119 8.92259 14.7556C9.07887 14.5993 9.16667 14.3874 9.16667 14.1663V9.16634C9.16667 8.94533 9.07887 8.73337 8.92259 8.57709C8.76631 8.42081 8.55435 8.33301 8.33333 8.33301C8.11232 8.33301 7.90036 8.42081 7.74408 8.57709C7.5878 8.73337 7.5 8.94533 7.5 9.16634V14.1663C7.5 14.3874 7.5878 14.5993 7.74408 14.7556C7.90036 14.9119 8.11232 14.9997 8.33333 14.9997Z"
+                                    fill="#898989"
+                                  />
+                                  <path
+                                    d="M11.6654 14.9997C11.8864 14.9997 12.0983 14.9119 12.2546 14.7556C12.4109 14.5993 12.4987 14.3874 12.4987 14.1663V9.16634C12.4987 8.94533 12.4109 8.73337 12.2546 8.57709C12.0983 8.42081 11.8864 8.33301 11.6654 8.33301C11.4444 8.33301 11.2324 8.42081 11.0761 8.57709C10.9198 8.73337 10.832 8.94533 10.832 9.16634V14.1663C10.832 14.3874 10.9198 14.5993 11.0761 14.7556C11.2324 14.9119 11.4444 14.9997 11.6654 14.9997Z"
+                                    fill="#898989"
+                                  />
+                                </g>
+                                <defs>
+                                  <clipPath id="clip0_747_1769">
+                                    <rect width="20" height="20" fill="white" />
+                                  </clipPath>
+                                </defs>
+                              </svg>
+                            </Td>
+                          </Tr>
+                        ))}
+                      </Tbody>
+                    </Table>
+                  </TableContainer>
+                </Flex>
+
+                <Flex
+                  justifyContent="flex-end"
+                  alignItems="center"
+                  gap="16px"
+                  alignSelf="stretch"
+                >
+                  <Flex
+                    padding="12px 0px"
+                    alignItems="center"
+                    gap="11px"
+                    borderTop="1px solid  #EAECF0"
+                  >
+                    <Flex
+                      padding="10px 8px"
+                      justifyContent="center"
+                      alignItems="center"
+                      gap="8px"
+                      borderRadius="8px"
+                      border="1px solid #D0D5DD"
+                      background=" #FFF"
+                      boxShadow="0px 1px 2px 0px rgba(16, 24, 40, 0.05)"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                      >
+                        <path
+                          d="M15.8327 10.0001H4.16602M4.16602 10.0001L9.99935 15.8334M4.16602 10.0001L9.99935 4.16675"
+                          stroke="#344054"
+                          stroke-width="1.66667"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </Flex>
+                    <Text
+                      color="#344054)"
+                      className={inter?.className}
+                      fontSize="14px"
+                      fontStyle="normal"
+                      fontWeight="400"
+                      lineHeight="20px"
+                    >
+                      Page <chakra.span fontWeight="500">1</chakra.span> of{" "}
+                      <chakra.span fontWeight="500">10</chakra.span>
+                    </Text>
+                    <Flex
+                      padding="10px 8px"
+                      justifyContent="center"
+                      alignItems="center"
+                      gap="8px"
+                      borderRadius="8px"
+                      border="1px solid #D0D5DD"
+                      background=" #FFF"
+                      boxShadow="0px 1px 2px 0px rgba(16, 24, 40, 0.05)"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                      >
+                        <path
+                          d="M15.8327 10.0001H4.16602M4.16602 10.0001L9.99935 15.8334M4.16602 10.0001L9.99935 4.16675"
+                          stroke="#344054"
+                          stroke-width="1.66667"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </Flex>
+                  </Flex>
+                </Flex>
+              </Flex>
+            </Flex>
+          )}
+
+          {isDataSelected && (
+            <Flex flexDir={"column"} height={"100vh"} >
+              <Flex
+                // width="95%"
+                padding="16px"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="flex-start"
+                // gap="8px"
+                borderRadius="16px"
+                background="#FFF"
+                h={"126px"}
+                ml={"24px"}
+                mr={"24px"}
+                mt={"34px"}
+              >
+                <Flex
+                  gap="8px"
+                  alignItems={"flex-start"}
+                  borderRadius="6px"
+                  flexDir={"column"}
+                >
+                  <Flex gap={"8px"} alignItems={"center"}>
+                    <Text
+                      color="#111827"
+                      className={plus_jakarta?.className}
+                      fontSize="14px"
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="100%"
+                    >
+                      Home
+                    </Text>
+                    <Text
+                      color=" #9CA3AF"
+                      className={plus_jakarta?.className}
+                      fontSize="14px"
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="100%"
+                    >
+                      /
+                    </Text>
+                    <Text
+                      color="  #9CA3AF"
+                      className={plus_jakarta?.className}
+                      fontSize="14px"
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="100%"
+                    >
+                      Data
+                    </Text>
+                  </Flex>
+
+                  <Flex>
+                    <Text
+                      color="#111827"
+                      className={plus_jakarta?.className}
+                      fontSize="24px"
+                      fontStyle="normal"
+                      fontWeight="600"
+                      lineHeight="150%"
+                      letterSpacing="-0.24px"
+                    >
+                      Data
+                    </Text>
+                  </Flex>
+                </Flex>
+              </Flex>
+              <Card
+                overflow={"auto"}
+                // width={"90%"}
+                borderRadius={"20px"}
+                backgroundColor={"#FFFFFF"}
+                ml={6}
+                mr={10}
+                mt={2}
+              >
+                <CardBody>
+                  <Text
+                    color="#111827"
+                    className={plus_jakarta?.className}
+                    fontSize="24px"
+                    fontStyle="normal"
+                    fontWeight="600"
+                    lineHeight="150%"
+                    letterSpacing="-0.24px"
+                    marginBottom={"4%"}
+                  >
+                    Add Data
+                  </Text>
+                  <Box marginBottom={"3%"}>
+                    <Text
+                      className={plus_jakarta?.className}
+                      marginBottom={"1.5%"}
+                    >
+                      Add Single Web URL
+                    </Text>
+                    <Input
+                      value={singleWebUrl}
+                      onChange={(e) => setSingleWebURL(e.target.value)}
+                      placeholder="https://uni.edu.pk"
+                    />
+                    <Button
+                      marginTop={"1.5%"}
+                      onClick={() => addSingleURL(singleWebUrl)}
+                    >
+                      Create Single URL
+                    </Button>
+                  </Box>
+                  <Box marginBottom={"3%"}>
+                    <Text
+                      className={plus_jakarta?.className}
+                      marginBottom={"1.5%"}
+                    >
+                      Add Web URLs
+                    </Text>
+                    <Input
+                      placeholder="https://uni.edu.pk"
+                      value={urlInput}
+                      onChange={(e) => setUrlInput(e.target.value)}
+                    />
+                    <Button marginTop={"1.5%"} onClick={addUrl}>
+                      Add URL
+                    </Button>
+                    <Button
+                      marginTop={"1.5%"}
+                      marginLeft={"1.5%"}
+                      onClick={() => addURL(urls)}
+                    >
+                      Create Web URL
+                    </Button>
+
+                    <List>
+                      {urls.map((url, index) => (
+                        <ListItem key={index}>{url}</ListItem>
+                      ))}
+                    </List>
+                  </Box>
+
+                  <Flex flexDirection={"row"} justifyContent={"space-evenly"}>
+                    <Box>
+                      <Text
+                        color="#111827"
+                        className={plus_jakarta?.className}
+                        fontSize="24px"
+                        fontStyle="normal"
+                        fontWeight="600"
+                        lineHeight="150%"
+                        letterSpacing="-0.24px"
+                        marginBottom={"3%"}
+                      >
+                        {" "}
+                        Web URL&apos;s{" "}
+                      </Text>
+                      {webURL?.map((url, index) => (
+                        <Box key={index} marginBottom={"6%"}>
+                          <Flex alignItems={"center"}>
+                            <Text
+                              color="#111827"
+                              className={plus_jakarta?.className}
+                              fontSize="16px"
+                              fontStyle="normal"
+                              lineHeight="150%"
+                              letterSpacing="-0.24px"
+                            >
+                              URL: {url.url}
+                            </Text>
+                            <Button
+                              ml={7}
+                              size={"sm"}
+                              onClick={() => openSubModal(url.id)}
+                            >
+                              View Sub URL&apos;s
+                            </Button>
+                          </Flex>
+                          <Text
+                            color="#111827"
+                            className={plus_jakarta?.className}
+                            fontSize="16px"
+                            fontStyle="normal"
+                            lineHeight="150%"
+                            letterSpacing="-0.24px"
+                          >
+                            Status: {url.statuss}
+                          </Text>
+                        </Box>
+                      ))}
+                    </Box>
+                    <Box>
+                      <Text
+                        color="#111827"
+                        className={plus_jakarta?.className}
+                        fontSize="24px"
+                        fontStyle="normal"
+                        fontWeight="600"
+                        lineHeight="150%"
+                        letterSpacing="-0.24px"
+                        marginBottom={"3%"}
+                      >
+                        {" "}
+                        Single Web URL&apos;s{" "}
+                      </Text>
+                      {webURL?.map((url, index) => (
+                        <Box key={index} marginBottom={"8%"}>
                           <Text
                             color="#111827"
                             className={plus_jakarta?.className}
@@ -1265,28 +1392,82 @@ const AdminBoard = () => {
                           >
                             URL: {url.url}
                           </Text>
-                          <Button
-                            ml={7}
-                            size={"sm"}
-                            onClick={() => openSubModal(url.id)}
+
+                          <Text
+                            color="#111827"
+                            className={plus_jakarta?.className}
+                            fontSize="16px"
+                            fontStyle="normal"
+                            lineHeight="150%"
+                            letterSpacing="-0.24px"
                           >
-                            View Sub URL's
-                          </Button>
-                        </Flex>
-                        <Text
-                          color="#111827"
-                          className={plus_jakarta?.className}
-                          fontSize="16px"
-                          fontStyle="normal"
-                          lineHeight="150%"
-                          letterSpacing="-0.24px"
-                        >
-                          Status: {url.statuss}
-                        </Text>
-                      </Box>
-                    ))}
-                  </Box>
-                  <Box>
+                            Status: {url.statuss}
+                          </Text>
+                        </Box>
+                      ))}
+                    </Box>
+                  </Flex>
+                </CardBody>
+              </Card>
+            </Flex>
+          )}
+
+          {isPromptSelected && (
+            <Flex flexDir={"column"} height={"100vh"}>
+              <Flex
+                // width="95%"
+                padding="16px"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="flex-start"
+                // gap="8px"
+                borderRadius="16px"
+                background="#FFF"
+                h={"126px"}
+                ml={"24px"}
+                mr={"24px"}
+                mt={"34px"}
+              >
+                <Flex
+                  gap="8px"
+                  alignItems={"flex-start"}
+                  borderRadius="6px"
+                  flexDir={"column"}
+                >
+                  <Flex gap={"8px"} alignItems={"center"}>
+                    <Text
+                      color="#111827"
+                      className={plus_jakarta?.className}
+                      fontSize="14px"
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="100%"
+                    >
+                      Home
+                    </Text>
+                    <Text
+                      color=" #9CA3AF"
+                      className={plus_jakarta?.className}
+                      fontSize="14px"
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="100%"
+                    >
+                      /
+                    </Text>
+                    <Text
+                      color="  #9CA3AF"
+                      className={plus_jakarta?.className}
+                      fontSize="14px"
+                      fontStyle="normal"
+                      fontWeight="500"
+                      lineHeight="100%"
+                    >
+                      Prompt
+                    </Text>
+                  </Flex>
+
+                  <Flex>
                     <Text
                       color="#111827"
                       className={plus_jakarta?.className}
@@ -1295,96 +1476,66 @@ const AdminBoard = () => {
                       fontWeight="600"
                       lineHeight="150%"
                       letterSpacing="-0.24px"
-                      marginBottom={"3%"}
                     >
-                      {" "}
-                      Single Web URL's{" "}
+                      Prompt
                     </Text>
-                    {webURL?.map((url, index) => (
-                      <Box key={index} marginBottom={"8%"}>
-                        <Text
-                          color="#111827"
-                          className={plus_jakarta?.className}
-                          fontSize="16px"
-                          fontStyle="normal"
-                          lineHeight="150%"
-                          letterSpacing="-0.24px"
-                        >
-                          URL: {url.url}
-                        </Text>
-
-                        <Text
-                          color="#111827"
-                          className={plus_jakarta?.className}
-                          fontSize="16px"
-                          fontStyle="normal"
-                          lineHeight="150%"
-                          letterSpacing="-0.24px"
-                        >
-                          Status: {url.statuss}
-                        </Text>
-                      </Box>
-                    ))}
-                  </Box>
+                  </Flex>
                 </Flex>
-              </CardBody>
-            </Card>
-          )}
-
-          {isPromptSelected && (
-            <Card
-              overflow={"auto"}
-              width={"90%"}
-              backgroundColor={"#FFFFFF"}
-              ml={5}
-              mr={10}
-              mt={2}
-            >
-              <CardBody>
-                <Text
-                  color="#111827"
-                  className={plus_jakarta?.className}
-                  fontSize="24px"
-                  fontStyle="normal"
-                  fontWeight="600"
-                  lineHeight="150%"
-                  letterSpacing="-0.24px"
-                  marginBottom={"4%"}
-                >
-                  Add Prompts
-                </Text>
-                <Box marginBottom={"3%"}>
+              </Flex>
+              <Card
+                overflow={"auto"}
+                // width={"90%"}
+                borderRadius={"20px"}
+                backgroundColor={"#FFFFFF"}
+                ml={6}
+                mr={10}
+                mt={2}
+              >
+                <CardBody>
                   <Text
+                    color="#111827"
                     className={plus_jakarta?.className}
-                    marginBottom={"1.5%"}
+                    fontSize="24px"
+                    fontStyle="normal"
+                    fontWeight="600"
+                    lineHeight="150%"
+                    letterSpacing="-0.24px"
+                    marginBottom={"4%"}
                   >
-                    Add Prompt
+                    Add Prompts
                   </Text>
-                  <Input
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    placeholder="e.g: Tell me more about University"
-                  />
-                  <Button
-                    marginTop={"1.5%"}
-                    onClick={() => addPrompt(prompt)}
-                  >
-                    Create Prompt
-                  </Button>
-                </Box>
-                <Box marginBottom={"3%"}>
-                  <Text
-                    className={plus_jakarta?.className}
-                    marginBottom={"1.5%"}
-                  >
-                    Active Prompt
-                  </Text>
-                  <Input value={activePrompt} readOnly />
-                  <Button marginTop={"1.5%"} onClick={fetchActivePrompt}>
-                    Get Active Prompt
-                  </Button>
-                </Box>
-                {/* <Box marginBottom={"3%"}>
+                  <Box marginBottom={"3%"}>
+                    <Text
+                      className={plus_jakarta?.className}
+                      marginBottom={"1.5%"}
+                    >
+                      Add Prompt
+                    </Text>
+                    <Input
+                      value={prompt}
+                      onChange={(e) => setPrompt(e.target.value)}
+                      placeholder="e.g: Tell me more about University"
+                    />
+                    <Button
+                      marginTop={"1.5%"}
+                      onClick={() => addPrompt(prompt)}
+                    >
+                      Create Prompt
+                    </Button>
+                  </Box>
+                  <Box marginBottom={"3%"}>
+                    <Text
+                      className={plus_jakarta?.className}
+                      marginBottom={"1.5%"}
+                    >
+                      Active Prompt
+                    </Text>
+                    <Input value={activePrompt} readOnly />
+                    <Button marginTop={"1.5%"} onClick={fetchActivePrompt}>
+                      Get Active Prompt
+                    </Button>
+                  </Box>
+                  {/* <Box marginBottom={"3%"}>
                   <Text
                     className={plus_jakarta?.className}
                     marginBottom={"1.5%"}
@@ -1503,8 +1654,9 @@ const AdminBoard = () => {
                   ))}
                 </Box>
                 </Flex> */}
-              </CardBody>
-            </Card>
+                </CardBody>
+              </Card>
+            </Flex>
           )}
           {/* </Flex> */}
         </Flex>

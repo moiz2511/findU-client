@@ -1,14 +1,17 @@
 import useAllLocalStoreValues from "@/hooks/useAllStored";
 import { useLocalStore } from "@/hooks/useLocalStore";
-import { Flex, Select, Text } from "@chakra-ui/react";
+import { Flex, Input, Select, Text } from "@chakra-ui/react";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { useRouter } from "next/router";
 import { instance } from "../../../instance";
+import { useState } from "react";
 const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
 const Level = ({ onContinue, onBack }) => {
+  const router = useRouter();
   const [academicLevel, setAcademicLevel] = useLocalStore(
     "academicLevel",
     "undergraduate"
@@ -17,14 +20,15 @@ const Level = ({ onContinue, onBack }) => {
     "subjectInterest",
     "English"
   );
+  const [clientname, setClientname] = useState('')
 
   const allStored = useAllLocalStoreValues();
 
   const handleSubmit = () => {
     console.log("all=>", allStored);
-
+  
     const token = localStorage.getItem("token");
-
+  
     // Check if the token exists
     if (token) {
       // Attach the token to the Authorization header for all requests
@@ -32,16 +36,32 @@ const Level = ({ onContinue, onBack }) => {
     } else {
       console.error("No token found");
     }
-
-    const res = instance?.post("/updateProfile/", {
-      position: allStored?.position,
-      academicCurriculam: allStored?.curriculum,
-      preferredLanguage: allStored?.language,
-      academicLevel: allStored?.academicLevel,
-      subjectInterests: allStored?.subjectInterest,
-      name: "Razi",
-    });
+  
+    instance
+      .post("/updateProfile/", {
+        position: allStored?.position,
+        academicCurriculam: allStored?.curriculum,
+        preferredLanguage: allStored?.language,
+        academicLevel: allStored?.academicLevel,
+        subjectInterests: allStored?.subjectInterest,
+        name: clientname,
+      })
+      .then((response) => {
+        // Check if the response is OK (status code 200)
+        if (response.status === 200) {
+          alert('Data added');
+          // Push the router to the "userboard" route
+          router.push('/userboard');
+        } else {
+          console.error('Failed to update profile');
+        }
+      })
+      .catch((error) => {
+        // Handle any error that may occur during the POST request.
+        console.error("Error updating profile:", error);
+      });
   };
+  
   return (
     <Flex
       padding="30px 341px 53px 308px"
@@ -289,6 +309,31 @@ const Level = ({ onContinue, onBack }) => {
                   />
                 </svg> */}
               </Flex>
+              <Flex>
+                <Text
+                  color="var(--Text, #131619)"
+                  textAlign="center"
+                  className={plus_jakarta?.className}
+                  fontSize="24px"
+                  fontStyle="normal"
+                  fontWeight="400"
+                >
+                  Name:
+                </Text>
+              </Flex>
+              <Flex
+                height="48px"
+                padding="0px 16px"
+                alignItems="center"
+                gap="12px"
+                alignSelf="stretch"
+                borderRadius="8px"
+                // border="1px solid var(--Input-Border, #D0px5px)"
+                background="var(--Input-BG, #F9FBFF)"
+              >
+                
+                <Input value={clientname} onChange={(e) => setClientname(e.target.value)} />
+              </Flex>
             </Flex>
           </Flex>
         </Flex>
@@ -405,6 +450,8 @@ const Level = ({ onContinue, onBack }) => {
             fontWeight="600"
             lineHeight="24px"
             letterSpacing="0.15px"
+            cursor={'pointer'}
+            onClick={() => router.push('/login')}
           >
             Let’s Login
           </Text>

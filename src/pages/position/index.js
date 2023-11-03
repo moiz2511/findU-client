@@ -7,7 +7,7 @@ import { useStepActions } from "../../../zustand/store";
 const PositionPage = () => {
   const actions = useStepActions();
 
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
 
   const handleContinue = () => {
     setStep((prevStep) => prevStep + 1);
@@ -28,6 +28,7 @@ const PositionPage = () => {
       )}
       {step === 2 && (
         <Curriculam
+
           onContinue={handleContinue}
           onBack={handleBack}
           actions={actions}

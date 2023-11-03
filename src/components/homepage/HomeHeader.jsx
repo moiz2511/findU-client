@@ -8,7 +8,6 @@ const plus_jakarta = Plus_Jakarta_Sans({
 const HomeHeader = () => {
   return (
     <Flex
-      width="1441px"
       padding="100px 120px"
       flexDirection="column"
       alignItems="center"
@@ -16,7 +15,6 @@ const HomeHeader = () => {
       background="#FFF"
     >
       <Flex
-        width="1129px"
         flexDirection="column"
         alignItems="center"
         gap="32px"
@@ -35,9 +33,8 @@ const HomeHeader = () => {
             fontStyle="normal"
             fontWeight="700"
             lineHeight="74px"
-            w={"1129px"}
           >
-            High Quality Way to Write You{" "}
+            High Quality Way<br/>  to Write You
             <chakra.span
               background="var(--Gradient, linear-gradient(45deg, #499CFF 0%, #002875 100%))"
               backgroundClip="text"
@@ -55,7 +52,6 @@ const HomeHeader = () => {
           </Text>
 
           <Text
-            width="701px"
             color="var(--Input-Text-In-Active, #787878)"
             textAlign="center"
             className={plus_jakarta?.className}
@@ -163,12 +159,10 @@ const HomeHeader = () => {
           </Flex>
         </Flex>
         <Flex
-          width="866px"
-          height="555px"
-          borderRadius="20px"
-          background='url("screen.png"), 0.42px -49.368px / 99.983% 108.957% no-repeat'
-          boxShadow="0px 0px 0px 0px rgba(0, 0, 0, 0.06)"
-        ></Flex>
+         
+        >
+          <Image src="/Hero-Image.png" />
+        </Flex>
 
         <Flex flexDirection="column" alignItems="flex-start" gap="205px">
           <Flex

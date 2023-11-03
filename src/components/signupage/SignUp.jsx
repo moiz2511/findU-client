@@ -14,12 +14,24 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const router = useRouter();
   const handleSignUp = () => {
-    const res = instance?.post("/signup/", { username, password });
+    instance
+      .post("/signup/", { username, password })
+      .then((response) => {
+        router.push("/position");
+      })
+      .catch((error) => {
+        console.error("Error signing up:", error);
+      });
   };
 
   return (
-    <Flex width="1440px" borderRadius="24px" background="var(--Form-BG, #FFF)">
+    <Flex
+      height={"100vh"}
+      borderRadius="24px"
+      background="var(--Form-BG, #FFF)"
+    >
       <Flex
+        flex={1}
         flexDirection={"column"}
         justifyContent={"center"}
         alignItems={"center"}
@@ -27,8 +39,6 @@ const SignUp = () => {
         pb={"20px"}
       >
         <Flex
-          width="170px"
-          height="49.855px"
           flexShrink="0"
           alignSelf={"center"}
           mb={"80px"}
@@ -81,7 +91,6 @@ const SignUp = () => {
           </svg>
         </Flex>
         <Flex
-          width="592px"
           flexDirection="column"
           alignItems="center"
           gap="55px"
@@ -213,7 +222,6 @@ const SignUp = () => {
               </Text>
             </Flex>
             <Flex
-              height="48px"
               justifyContent="center"
               alignItems="center"
               gap="12px"
@@ -436,8 +444,8 @@ const SignUp = () => {
               fontWeight="600"
               lineHeight="24px"
               letterSpacing="0.15px"
-              onClick={() => router.push('/login')}
-              cursor={'pointer'}
+              onClick={() => router.push("/login")}
+              cursor={"pointer"}
             >
               Login
             </Text>
@@ -446,7 +454,7 @@ const SignUp = () => {
       </Flex>
 
       <Flex
-        width="708px"
+        flex={1}
         padding="140px 48px"
         flexDirection="column"
         alignItems="flex-start"

@@ -8,7 +8,6 @@ const plus_jakarta = Plus_Jakarta_Sans({
 const FaqCard = ({description}) => {
   return (
     <Flex
-      width="920px"
       padding="16px 24px"
       alignItems="flex-start"
       gap="12px"

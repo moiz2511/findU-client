@@ -23,7 +23,7 @@ const Faqs = () => {
           fontSize="40px"
           fontStyle="normal"
           fontWeight="700"
-          lineHeight="74rpx"
+          lineHeight="74px"
         >
           Frequently Asked Questions
         </Text>
@@ -36,7 +36,6 @@ const Faqs = () => {
           fontWeight="400"
           lineHeight="26px"
           letterSpacing="-0.18px"
-          w={"597px"}
         >
           Let our AI assist with most time consuming to write blog articles,
           product descriptions and more.

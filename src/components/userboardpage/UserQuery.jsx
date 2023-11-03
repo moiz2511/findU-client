@@ -1,9 +1,19 @@
-import { Flex, Text, Image, Input, Box, Button } from "@chakra-ui/react";
+import {
+  Flex,
+  Text,
+  Image,
+  Input,
+  Box,
+  Button,
+  IconButton,
+} from "@chakra-ui/react";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { useEffect, useState } from "react";
 import { instance } from "../../../instance";
+import { AiOutlineClose } from "react-icons/ai";
 import UserChat from "./UserChat";
+import UserDash from "./UserDash";
 const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
@@ -13,13 +23,13 @@ const UserQuery = () => {
   const [convName, setConvName] = useState("");
   const [query, setQuery] = useState("");
   const [conversations, setConversations] = useState([]);
-  const [selectedChat, setSelectedChat] = useState(null)
+  const [selectedChat, setSelectedChat] = useState(null);
 
-  console.log(selectedChat)
+  console.log(selectedChat);
 
   const fetchConversations = async () => {
     const token = localStorage.getItem("token");
-    console.log(token)
+    console.log(token);
     if (token) {
       instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     } else {
@@ -27,7 +37,7 @@ const UserQuery = () => {
     }
 
     const res = await instance?.post("/GetMyConversations/");
-    console.log(res)
+    console.log(res);
 
     setConversations(res?.data.conversations);
   };
@@ -44,29 +54,45 @@ const UserQuery = () => {
     } else {
       console.error("No token found");
     }
-    
-    const body ={
-      conId: ID
-    }
 
-    const res = instance?.post("/getConversationChat/", body );
+    const body = {
+      conId: ID,
+    };
+
+    const res = instance?.post("/getConversationChat/", body);
   };
 
   const handleNewConversation = async () => {
     const token = localStorage.getItem("token");
-
+  
     if (token) {
       instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     } else {
       console.error("No token found");
     }
+  
+    instance
+      .post("/StartConversationForNew/", { name: convName })
+      .then((response) => {
 
-    const res = instance?.post("/StartConversationForNew/", { name: convName });
+        alert('Chat Created');
+        setSelectedChat(response?.data)
+        setConvName("");
+        setStartNew(false)
+        // Call the fetchConversations function here, as the response is okay.
+        fetchConversations();
+
+      })
+      .catch((error) => {
+        // Handle any error that may occur during the POST request.
+        console.error("Error creating chat:", error);
+      });
   };
+  
 
   return (
-    <Flex width="1440px" height="100vh" background="#002045">
-      <Flex flexDir={"column"} justifyContent={"flex-start"}>
+    <Flex height="100vh" background="#002045">
+      <Flex flexDir={"column"} justifyContent={"flex-start"} flex={0.2}>
         <Flex
           padding="16px"
           alignItems="center"
@@ -155,7 +181,13 @@ const UserQuery = () => {
             borderTop="1px solid var(--glass-stroke, rgba(255rpx, 255rpx, 255rpx, 0.08px))"
             background="var(--glass-fill, linear-gradient(118deg, rgba(215, 237, 237, 0.16) -47.79%, rgba(204, 235, 235, 0.00) 100%))"
           >
-            <Flex alignItems="center" gap="16px" mr={"50px"}>
+            <Flex
+              alignItems="center"
+              gap="16px"
+              mr={"50px"}
+              cursor={"pointer"}
+              onClick={() => setStartNew(!startNew)}
+            >
               <Flex h={"20px"}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -249,8 +281,6 @@ const UserQuery = () => {
                   fontWeight="600"
                   lineHeight="20px"
                   letterSpacing="0.15px"
-                  cursor={"pointer"}
-                  onClick={() => setStartNew(true)}
                 >
                   New Chat
                 </Text>
@@ -281,14 +311,35 @@ const UserQuery = () => {
             </Flex>
           </Flex>
           {startNew && (
-            <Flex>
+            <Flex width={"100%"} gap={3} justifyContent={"space-between"}>
               <Input
                 value={convName}
                 color={"#fff"}
                 onChange={(e) => setConvName(e.target.value)}
                 placeholder="Name"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && convName.trim() === "") {
+                    e.preventDefault();
+                  } else if (e.key === "Enter") {
+                    handleNewConversation();
+                  }
+                }}
               />
-              <Button onClick={handleNewConversation}>Start</Button>
+              <Button
+                isDisabled={convName === ""}
+                onClick={handleNewConversation}
+              >
+                Start
+              </Button>
+              {convName !== "" ? (
+                <IconButton
+                  backgroundColor={"#e62535"}
+                  icon={<AiOutlineClose color="#fff" />}
+                  onClick={() => setConvName("")}
+                />
+              ) : (
+                ""
+              )}
             </Flex>
           )}
         </Flex>
@@ -297,8 +348,8 @@ const UserQuery = () => {
           flexDirection="column"
           alignItems="flex-start"
           gap="4px"
-          maxH={'300px'}
-          overflow={'auto'}
+          maxH={"300px"}
+          overflow={"auto"}
           flex="1 0 0"
           alignSelf="stretch"
           borderBottom="1px solid #415D8A"
@@ -330,10 +381,31 @@ const UserQuery = () => {
                 gap="16px"
                 alignSelf="stretch"
                 borderRadius="8px"
-                cursor={'pointer'}
+                cursor={"pointer"}
                 key={index}
+                style={{
+                  borderRadius: "8px",
+                  borderTop:
+                    "1px solid var(--glass-stroke, rgba(255rpx, 255rpx, 255rpx, 0.08px))",
+                  background:
+                    selectedChat?.uuid === chat.uuid
+                      ? "var(--glass-fill, linear-gradient(118deg, rgba(215, 237, 237, 0.16) -47.79%, rgba(204, 235, 235, 0.00) 100%))" // Change this to your desired background color
+                      : "",
+                }}
+                _hover={{
+                  borderRadius: "8px",
+                  borderTop:
+                    "1px solid var(--glass-stroke, rgba(255rpx, 255rpx, 255rpx, 0.08px))",
+                  background:
+                    "var(--glass-fill, linear-gradient(118deg, rgba(215, 237, 237, 0.16) -47.79%, rgba(204, 235, 235, 0.00) 100%))",
+                }}
               >
-                <Flex alignItems="center" gap="16px" flex="1 0 0"  onClick={() => setSelectedChat(chat)} >
+                <Flex
+                  alignItems="center"
+                  gap="16px"
+                  flex="1 0 0"
+                  onClick={() => setSelectedChat(chat)}
+                >
                   <Flex h={"20px"}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -437,8 +509,6 @@ const UserQuery = () => {
                 </Flex>
               </Flex>
             ))}
-
-          
         </Flex>
 
         <Flex
@@ -962,7 +1032,11 @@ const UserQuery = () => {
       <Text>sdjchdscdshcsdhcvdhc</Text>
        </Box>
       </Flex> */}
-      <UserChat chat={selectedChat} />
+      <Flex flex={0.8} justifyContent={"center"} alignItems={"center"}>
+        
+        {selectedChat ? <UserChat chat={selectedChat} /> :  <UserDash />}
+        
+      </Flex>
     </Flex>
   );
 };

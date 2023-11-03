@@ -10,8 +10,7 @@ const plus_jakarta = Plus_Jakarta_Sans({
 const Navbar = () => {
   const router = useRouter();
   return (
-    <Flex
-      width="1441px"
+    <Flex    
       padding="18px 120px"
       justifyContent="space-between"
       alignItems="center"

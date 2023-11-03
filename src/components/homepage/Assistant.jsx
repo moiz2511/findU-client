@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Text, Image } from "@chakra-ui/react";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
 const plus_jakarta = Plus_Jakarta_Sans({
@@ -8,13 +8,12 @@ const plus_jakarta = Plus_Jakarta_Sans({
 const Assistant = () => {
   return (
     <Flex
-      width="1439px"
       padding="100px 120px"
       justifyContent="space-between"
       alignItems="center"
       background="#FFF"
     >
-      <Flex flexDirection="column" alignItems="flex-start" gap="16px">
+      <Flex flexDirection="column" alignItems="flex-start" gap="16px" flex={1} >
         <Text
           color="var(--Text, #131619)"
           textAlign="center"
@@ -34,7 +33,7 @@ const Assistant = () => {
           fontWeight="400"
           lineHeight="26px"
           letterSpacing="-0.18px"
-          width="597px"
+        
         >
           Lorem ipsum dolor sit amet consectetur. Eu nibh urna tincidunt euismod
           turpis senectus. Etiam imperdiet dolor sit morbi. Tristique ut
@@ -61,6 +60,9 @@ const Assistant = () => {
             Sign Up
           </Text>
         </Flex>
+      </Flex>
+      <Flex flex={1} >
+        <Image src='/Right Illustration.png' />
       </Flex>
     </Flex>
   );

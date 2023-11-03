@@ -19,7 +19,7 @@ const Admin = () => {
 
     localStorage.setItem("adminToken", res?.data?.token);
 
-    router?.push("adminboard");
+    router.push("/adminboard");
   };
 
   return (
@@ -142,6 +142,7 @@ const Admin = () => {
               fontWeight="400"
               lineHeight="24px"
               letterSpacing="0.15px"
+              type="password"
               onChange={(e) => {
                 console.log("password", e?.target?.value);
                 setPassword(e?.target?.value);
