@@ -30,7 +30,7 @@ const UserProfile = () => {
   const router = useRouter();
 
   const { id } = router?.query;
-  const searchParams = new URLSearchParams(window.location.search);
+  const searchParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
   const name = searchParams.get("name");
   const status = searchParams.get("status");
   console.log(name);

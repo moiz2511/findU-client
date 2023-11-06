@@ -12,8 +12,10 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import { useEffect, useState } from "react";
 import { instance } from "../../../instance";
 import { AiOutlineClose } from "react-icons/ai";
+import { useRouter } from "next/router";
 import UserChat from "./UserChat";
 import UserDash from "./UserDash";
+import { Router } from "next/router";
 const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
@@ -24,6 +26,8 @@ const UserQuery = () => {
   const [query, setQuery] = useState("");
   const [conversations, setConversations] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
+
+  const router = useRouter();
 
   console.log(selectedChat);
 
@@ -91,7 +95,7 @@ const UserQuery = () => {
   
 
   return (
-    <Flex height="100vh" background="#002045">
+    <Flex height="100vh" overflow={'auto'} background="#002045">
       <Flex flexDir={"column"} justifyContent={"flex-start"} flex={0.2}>
         <Flex
           padding="16px"
@@ -349,6 +353,7 @@ const UserQuery = () => {
           alignItems="flex-start"
           gap="4px"
           maxH={"300px"}
+          minH={'300px'}
           overflow={"auto"}
           flex="1 0 0"
           alignSelf="stretch"
@@ -923,6 +928,8 @@ const UserQuery = () => {
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
+                cursor={'pointer'}
+                onClick={() => router.push('/settings')}
               >
                 <path
                   d="M12 10C13.1046 10 14 10.8954 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10Z"

@@ -175,7 +175,7 @@ const UserChat = ({ chat }) => {
           color={"#002045"}
           textAlign={"center"}
           className={plus_jakarta?.className}
-          fontSize="18px"
+          fontSize="24px"
           fontStyle="normal"
           fontWeight="700"
         >
@@ -203,7 +203,7 @@ const UserChat = ({ chat }) => {
                   <Text
                     color="#000"
                     className={plus_jakarta?.className}
-                    fontSize="14px"
+                    fontSize="16px"
                     fontStyle="normal"
                     fontWeight="400"
                     lineHeight="normal"
@@ -252,7 +252,7 @@ const UserChat = ({ chat }) => {
                     <Text
                       color="#000"
                       className={plus_jakarta?.className}
-                      fontSize="14px"
+                      fontSize="16px"
                       fontStyle="normal"
                       fontWeight="400"
                       lineHeight="normal"
