@@ -23,13 +23,33 @@ const plus_jakarta = Plus_Jakarta_Sans({
 const UserQuery = () => {
   const [startNew, setStartNew] = useState(false);
   const [convName, setConvName] = useState("");
+  const [name, setName] = useState("");
+  const [initialText, setInitialText] = useState("");
   const [query, setQuery] = useState("");
   const [conversations, setConversations] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
+  const [chatRefresh, setChatRefresh] = useState(false);
+  const [sendFromBox, setSendFromBox] = useState(false);
+  const [wholeText, setWholeText] = useState("");
 
   const router = useRouter();
 
-  console.log(selectedChat);
+  const fetchData = async () => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      console.error("No token found");
+    }
+
+    const res = await instance?.post("/getProfile/");
+    setName(res?.data?.profile.name);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const fetchConversations = async () => {
     const token = localStorage.getItem("token");
@@ -48,7 +68,7 @@ const UserQuery = () => {
 
   useEffect(() => {
     fetchConversations();
-  }, []);
+  }, [chatRefresh]);
 
   const fetchChat = async (ID) => {
     const token = localStorage.getItem("token");
@@ -68,34 +88,55 @@ const UserQuery = () => {
 
   const handleNewConversation = async () => {
     const token = localStorage.getItem("token");
-  
+
     if (token) {
       instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     } else {
       console.error("No token found");
     }
-  
+
     instance
       .post("/StartConversationForNew/", { name: convName })
       .then((response) => {
-
-        alert('Chat Created');
-        setSelectedChat(response?.data)
+        alert("Chat Created");
+        setSelectedChat(response?.data);
         setConvName("");
-        setStartNew(false)
+        setStartNew(false);
         // Call the fetchConversations function here, as the response is okay.
         fetchConversations();
-
       })
       .catch((error) => {
         // Handle any error that may occur during the POST request.
         console.error("Error creating chat:", error);
       });
   };
-  
+
+  const handleInitialtext = (str) => {
+    setInitialText(str);
+  };
+
+  const SelectApiHandler = async (wholeText, extractedText) => {
+    instance
+      .post("/StartConversationForNew/", { name: extractedText })
+      .then((response) => {
+        alert("Chat Created");
+        setSelectedChat(response?.data);
+        setConvName("");
+        setStartNew(false);
+        // Call the fetchConversations function here, as the response is okay.
+        fetchConversations();
+      })
+      .catch((error) => {
+        // Handle any error that may occur during the POST request.
+        console.error("Error creating chat:", error);
+      });
+
+    setWholeText(wholeText);
+    setSendFromBox(true);
+  };
 
   return (
-    <Flex height="100vh" overflow={'auto'} background="#002045">
+    <Flex height="100vh" overflow={"auto"} background="#002045">
       <Flex flexDir={"column"} justifyContent={"flex-start"} flex={0.2}>
         <Flex
           padding="16px"
@@ -110,6 +151,8 @@ const UserQuery = () => {
             height="38"
             viewBox="0 0 128 38"
             fill="none"
+            cursor={'pointer'}
+            onClick={() => router.push('/userboard')}
           >
             <path
               d="M0 36.9654V5.97629H21.9357C21.9357 9.19686 19.3235 11.7733 16.1387 11.7733H6.62007V18.2861H15.8166C19.0372 18.2861 21.6136 20.8983 21.6136 24.0831H6.62007V30.3453C6.58429 34.0311 3.64999 36.9654 0 36.9654Z"
@@ -184,13 +227,13 @@ const UserQuery = () => {
             borderRadius="8px"
             borderTop="1px solid var(--glass-stroke, rgba(255rpx, 255rpx, 255rpx, 0.08px))"
             background="var(--glass-fill, linear-gradient(118deg, rgba(215, 237, 237, 0.16) -47.79%, rgba(204, 235, 235, 0.00) 100%))"
+            cursor={"pointer"}
+            onClick={() => setStartNew(!startNew)}
           >
             <Flex
               alignItems="center"
               gap="16px"
               mr={"50px"}
-              cursor={"pointer"}
-              onClick={() => setStartNew(!startNew)}
             >
               <Flex h={"20px"}>
                 <svg
@@ -353,7 +396,7 @@ const UserQuery = () => {
           alignItems="flex-start"
           gap="4px"
           maxH={"300px"}
-          minH={'300px'}
+          minH={"300px"}
           overflow={"auto"}
           flex="1 0 0"
           alignSelf="stretch"
@@ -658,103 +701,37 @@ const UserQuery = () => {
             alignSelf="stretch"
             borderRadius="8px"
           >
-            <Flex alignItems="center" gap="16px" flex="1 0 0">
-              <Flex h={"20px"}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="38"
-                  height="39"
-                  viewBox="0 0 38 39"
-                  fill="none"
-                >
-                  <g filter="url(#filter0_dd_505_14184)">
-                    <path
-                      d="M20.346 15.8334H15.1665C14.0619 15.8334 13.1665 14.9379 13.1665 13.8334V6.16669C13.1665 5.06212 14.0619 4.16669 15.1665 4.16669H22.8332C23.9377 4.16669 24.8332 5.06212 24.8332 6.16669V11.3462M20.346 15.8334L24.8332 11.3462M20.346 15.8334V12.3462C20.346 11.7939 20.7937 11.3462 21.346 11.3462H24.8332"
-                      stroke="#CDCECF"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </g>
-                  <defs>
-                    <filter
-                      id="filter0_dd_505_14184"
-                      x="-3"
-                      y="-2"
-                      width="44"
-                      height="44"
-                      filterUnits="userSpaceOnUse"
-                      color-interpolation-filters="sRGB"
-                    >
-                      <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                      <feColorMatrix
-                        in="SourceAlpha"
-                        type="matrix"
-                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                        result="hardAlpha"
-                      />
-                      <feMorphology
-                        radius="4"
-                        operator="erode"
-                        in="SourceAlpha"
-                        result="effect1_dropShadow_505_14184"
-                      />
-                      <feOffset dy="4" />
-                      <feGaussianBlur stdDeviation="3" />
-                      <feColorMatrix
-                        type="matrix"
-                        values="0 0 0 0 0.886275 0 0 0 0 0.435294 0 0 0 0 0.12549 0 0 0 0.16 0"
-                      />
-                      <feBlend
-                        mode="normal"
-                        in2="BackgroundImageFix"
-                        result="effect1_dropShadow_505_14184"
-                      />
-                      <feColorMatrix
-                        in="SourceAlpha"
-                        type="matrix"
-                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                        result="hardAlpha"
-                      />
-                      <feMorphology
-                        radius="3"
-                        operator="erode"
-                        in="SourceAlpha"
-                        result="effect2_dropShadow_505_14184"
-                      />
-                      <feOffset dy="10" />
-                      <feGaussianBlur stdDeviation="7.5" />
-                      <feColorMatrix
-                        type="matrix"
-                        values="0 0 0 0 0.886275 0 0 0 0 0.435294 0 0 0 0 0.12549 0 0 0 0.16 0"
-                      />
-                      <feBlend
-                        mode="normal"
-                        in2="effect1_dropShadow_505_14184"
-                        result="effect2_dropShadow_505_14184"
-                      />
-                      <feBlend
-                        mode="normal"
-                        in="SourceGraphic"
-                        in2="effect2_dropShadow_505_14184"
-                        result="shape"
-                      />
-                    </filter>
-                  </defs>
-                </svg>
-              </Flex>
-              <Text
-                color="#7796B4"
-                textAlign="center"
-                className={plus_jakarta?.className}
-                fontSize="14px"
-                fontStyle="normal"
-                fontWeight="600"
-                lineHeight="20px"
-                letterSpacing="0.15px"
+            <Flex alignItems="center" flex="1 0 0">
+              <Flex
+                _hover={{
+                  borderRadius: "8px",
+                  borderTop:
+                    "1px solid var(--glass-stroke, rgba(255rpx, 255rpx, 255rpx, 0.08px))",
+                  background:
+                    "var(--glass-fill, linear-gradient(118deg, rgba(215, 237, 237, 0.16) -47.79%, rgba(204, 235, 235, 0.00) 100%))",
+                }}
+                gap={4}
+                justifyContent={"center"}
+                alignItems={"center"}
+                onClick={() => router.push("/terms")}
+                cursor={"pointer"}
               >
-                Terms and Condition
-              </Text>
+                <Box marginTop={"17px"}>
+                  <Image src="/terms.png" />
+                </Box>
+                <Text
+                  color="#7796B4"
+                  textAlign="center"
+                  className={plus_jakarta?.className}
+                  fontSize="14px"
+                  fontStyle="normal"
+                  fontWeight="600"
+                  lineHeight="20px"
+                  letterSpacing="0.15px"
+                >
+                  Terms and Condition
+                </Text>
+              </Flex>
             </Flex>
           </Flex>
 
@@ -907,7 +884,7 @@ const UserQuery = () => {
                   lineHeight="24px"
                   letterSpacing="0.15px"
                 >
-                  Ryan Lee
+                  {name}
                 </Text>
                 <Text
                   color="var(--stem-green-500, #B6F09C)"
@@ -928,8 +905,8 @@ const UserQuery = () => {
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
-                cursor={'pointer'}
-                onClick={() => router.push('/settings')}
+                cursor={"pointer"}
+                onClick={() => router.push("/settings")}
               >
                 <path
                   d="M12 10C13.1046 10 14 10.8954 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10Z"
@@ -1040,9 +1017,22 @@ const UserQuery = () => {
        </Box>
       </Flex> */}
       <Flex flex={0.8} justifyContent={"center"} alignItems={"center"}>
-        
-        {selectedChat ? <UserChat chat={selectedChat} /> :  <UserDash />}
-        
+        {selectedChat ? (
+          <UserChat
+            chat={selectedChat}
+            initialMsg={initialText}
+            wholeText={wholeText}
+            sendFromBox={sendFromBox}
+            setSendFromBox={setSendFromBox}
+          />
+        ) : (
+          <UserDash
+            text={handleInitialtext}
+            setChatRefresh={setChatRefresh}
+            setSelectedChat={setSelectedChat}
+            SelectApiHandler={SelectApiHandler}
+          />
+        )}
       </Flex>
     </Flex>
   );

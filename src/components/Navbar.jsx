@@ -103,7 +103,7 @@ const Navbar = () => {
         </Flex>
       </Flex>
       <Flex alignItems="flex-start" gap="16px">
-        <Flex
+        {/* <Flex
           padding="12px 30px"
           justifyContent="center"
           alignItems="center"
@@ -121,7 +121,7 @@ const Navbar = () => {
           >
             Login
           </Text>
-        </Flex>
+        </Flex> */}
         <Flex
           padding="12px 30px"
           justifyContent="center"

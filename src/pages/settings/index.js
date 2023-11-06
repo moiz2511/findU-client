@@ -1,4 +1,12 @@
-import { Flex, Input, Select, Text, Box, Button } from "@chakra-ui/react";
+import {
+  Flex,
+  Input,
+  Select,
+  Text,
+  Box,
+  Button,
+  useToast,
+} from "@chakra-ui/react";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { useRouter } from "next/router";
@@ -10,6 +18,7 @@ const plus_jakarta = Plus_Jakarta_Sans({
 
 const Settings = () => {
   const router = useRouter();
+  const toast = useToast();
   const [name, setName] = useState("");
   const [curriculum, setCurriculum] = useState("");
   const [level, setLevel] = useState("");
@@ -49,18 +58,32 @@ const Settings = () => {
     }
 
     const body = {
-        academicCurriculam: curriculum,
-        name: name,
-        preferredLanguage: language,
-        academicLevel: level,
-        subjectInterests: interests,
-        position: position
-    }
+      academicCurriculam: curriculum,
+      name: name,
+      preferredLanguage: language,
+      academicLevel: level,
+      subjectInterests: interests,
+      position: position,
+    };
 
     const res = await instance?.post("/updateProfile/", body);
-    if(res?.data.status === 'success'){
-        alert("Data Added Successfully!")
-        setTriggerEffect(true);
+    if (res?.data.status === "success") {
+      toast({
+        title: "Data Updated",
+        description: "Data is updated successfully",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      setTriggerEffect(true);
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to update Data",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 
@@ -89,7 +112,7 @@ const Settings = () => {
   };
 
   return (
-    <Flex width={"100%"}  flexDirection="column" gap={5}>
+    <Flex width={"100%"} flexDirection="column" gap={5}>
       <Flex
         justifyContent={"center"}
         cursor={"pointer"}
@@ -161,7 +184,11 @@ const Settings = () => {
           >
             Name:{" "}
           </Text>
-          <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="name" />
+          <Input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="name"
+          />
         </Box>
         <Box display={"flex"} flexDir={"column"} width={"100%"} gap={2}>
           <Text

@@ -16,9 +16,9 @@ const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
-const UserChat = ({ chat }) => {
+const UserChat = ({ chat, initialMsg, sendFromBox, wholeText, setSendFromBox }) => {
   const [prompt, setPrompt] = useState("");
-  const [responses, setResponses] = useState(null);
+  const [responses, setResponses] = useState([]);
   const [refreshState, setRefresh] = useState(false);
   const [currentResponse, setCurrentResponse] = useState([]);
   const [isDone, setIsDone] = useState(true);
@@ -32,17 +32,45 @@ const UserChat = ({ chat }) => {
     });
   }, [responses, currentResponse]);
 
-  const handleButtonClick = () => {
-    if (prompt.trim() !== "") {
-      const updatedResponses = [...responses];
-      updatedResponses.push({ msg: prompt });
-      setResponses(updatedResponses);
+  // useEffect(() => {
+  //   if (initialMsg) {
+  //     setPrompt(initialMsg);
+  //   }
+  // }, [initialMsg]);
+  
+  // useEffect(() => {
+  //   if (prompt === initialMsg) {
+  //     handleButtonClick(prompt); 
+  //   }
+  // }, [initialMsg]);
+
+  useEffect(()=>{
+    if(sendFromBox === true){
+      console.log("in useEffext")
+      handleButtonClick(wholeText)
+      setSendFromBox(false)
+    }
+  },[sendFromBox])
+
+
+
+  const handleButtonClick = (insidePrompt) => {
+    console.log("button CL")
+    if (insidePrompt.trim() !== "") {
+      // const updatedResponses = [...responses];
+      // updatedResponses.push({ msg: insidePrompt });
+
+      // setResponses(updatedResponses);
+
+      setResponses((responses)=>[...responses,{msg: insidePrompt, res : ""}])
       setRefresh(!refreshState);
       setPrompt(""); // Clear the prompt state
-      fetchResponse();
+      fetchResponse(insidePrompt);
       console.log(responses);
     }
   };
+
+ 
 
   const fetchChat = async (ID) => {
     const token = localStorage.getItem("token");
@@ -62,7 +90,7 @@ const UserChat = ({ chat }) => {
     console.log(responses);
   };
 
-  const fetchResponse = async () => {
+  const fetchResponse = async (insidePrompt) => {
     const token = localStorage.getItem("token");
 
     if (token) {
@@ -74,7 +102,7 @@ const UserChat = ({ chat }) => {
 
     const body = {
       uuid: chat?.uuid, // Include the conversation ID or UUID
-      query: prompt, // Include the user's query
+      query: insidePrompt, // Include the user's query
     };
 
     try {
@@ -98,7 +126,7 @@ const UserChat = ({ chat }) => {
         if (done) {
           // Once the streaming response is complete, update the 'res' attribute
           const updatedResponses = [...responses];
-          updatedResponses.push({ msg: prompt, res: result });
+          updatedResponses.push({ msg: insidePrompt, res: result });
           setResponses(updatedResponses);
           setRefresh(!refreshState);
           setIsDone(true);
@@ -293,7 +321,7 @@ const UserChat = ({ chat }) => {
               <Text
                 color="#000"
                 className={plus_jakarta?.className}
-                fontSize="14px"
+                fontSize="16px"
                 fontStyle="normal"
                 fontWeight="400"
                 lineHeight="normal"
@@ -322,7 +350,7 @@ const UserChat = ({ chat }) => {
             if (e.key === "Enter" && prompt.trim() === "") {
               e.preventDefault();
             } else if (e.key === "Enter") {
-              handleButtonClick();
+              handleButtonClick(prompt);
             }
           }}
           className={plus_jakarta?.className}

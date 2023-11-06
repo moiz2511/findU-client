@@ -30,29 +30,41 @@ const plus_jakarta = Plus_Jakarta_Sans({
 });
 import { Inter } from "next/font/google";
 import { instance } from "../../../instance";
+import ChatDetails from "../adminpage/ChatDetails";
 import { unstable_useCacheRefresh, useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useToast } from "@chakra-ui/react";
+import Profile from "../adminpage/Profile";
+import { BsTrash3Fill } from "react-icons/bs";
+import { RiEdit2Fill } from "react-icons/ri";
 const inter = Inter({
   subsets: ["latin"],
 });
 
 const AdminBoard = () => {
   const router = useRouter();
+  const toast = useToast();
+  const [name, setName] = useState("");
   const [users, setUsers] = useState(null);
   const [refresh, setRefresh] = useState(1);
   const [pageRefresh, setPageRefresh] = useState(false);
   const [isUserSelected, setIsUserSelected] = useState(true);
   const [isDataSelected, setIsDataSelected] = useState(false);
   const [isPromptSelected, setIsPromptSelected] = useState(false);
+  const [isProfileSelectd, setIsProfileSelected] = useState(false);
+  const [selectedID, setSelectedID] = useState(null);
+  const [selectedName, setSelectedName] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState(null);
   const [selectedURLId, setSelectedURLId] = useState("");
   const [subModal, setSubModal] = useState(false);
-  const [singleWebUrl, setSingleWebURL] = useState("");
+  const [singleWebUrl, setSingleWebURL] = useState([]);
   const [webURL, setWebURL] = useState([]);
   const [urls, setUrls] = useState([]);
   const [subURLs, setSubURLs] = useState(null);
   const [urlInput, setUrlInput] = useState("");
   const [prompt, setPrompt] = useState("");
   const [activePrompt, setActivePrompt] = useState("");
+  const [singleURLs, setSingleURLS] = useState(null);
 
   // Function to add a URL to the array
   const addUrl = () => {
@@ -62,22 +74,58 @@ const AdminBoard = () => {
     }
   };
 
+  const fetchData = async () => {
+    const token = localStorage.getItem("adminToken");
+
+    if (token) {
+      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      console.error("No token found");
+    }
+
+    const res = await instance?.post("/getProfile/");
+    console.log(res);
+    setName(res?.data?.profile.name);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleProfileClick = (id, name, status) => {
+    setIsProfileSelected(true);
+    setSelectedID(id);
+    setSelectedName(name);
+    setSelectedStatus(status);
+    setIsUserSelected(false);
+    setIsDataSelected(false);
+    setIsPromptSelected(false);
+  };
+
+  const handleProfileClose = () => {
+    setIsProfileSelected(false);
+    setIsUserSelected(true);
+  };
+
   const handleUserClick = () => {
     setIsUserSelected(true);
     setIsDataSelected(false);
     setIsPromptSelected(false);
+    setIsProfileSelected(false);
   };
 
   const handleDataClick = () => {
     setIsUserSelected(false);
     setIsDataSelected(true);
     setIsPromptSelected(false);
+    setIsProfileSelected(false);
   };
 
   const handlePromptClick = () => {
     setIsUserSelected(false);
     setIsDataSelected(false);
     setIsPromptSelected(true);
+    setIsProfileSelected(false);
   };
 
   const fetchUsers = async () => {
@@ -95,7 +143,7 @@ const AdminBoard = () => {
   };
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [pageRefresh]);
 
   const DeleteUser = async (ID) => {
     const token = localStorage.getItem("adminToken");
@@ -116,9 +164,22 @@ const AdminBoard = () => {
       const res = await instance.post("/deleteUser/", requestBody);
 
       console.log("Response data:", res.data);
-      alert("User Deleted Successfully!");
+      toast({
+        title: "User deleted",
+        description: "User is deleted successfully",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      setPageRefresh(true);
     } catch (error) {
-      console.error("Error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete user",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 
@@ -137,9 +198,21 @@ const AdminBoard = () => {
 
     try {
       const res = await instance.post("/addSingleWebUrls/", requestBody);
-      alert("Data Added Successfully!");
+      toast({
+        title: "URL Added",
+        description: "URL is added successfully",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
     } catch (error) {
-      console.error("Error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add URL",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 
@@ -158,9 +231,21 @@ const AdminBoard = () => {
 
     try {
       const res = await instance.post("/addWebUrls/", requestBody);
-      alert("Data Added Successfully!");
+      toast({
+        title: "URL Added",
+        description: "URL's are added successfully",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
     } catch (error) {
-      console.error("Error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add URL",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 
@@ -179,9 +264,21 @@ const AdminBoard = () => {
 
     try {
       const res = await instance.post("/createPrompt/", requestBody);
-      alert("Data Added Successfully!");
+      toast({
+        title: "Prompt Added",
+        description: "Prompt is added successfully",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
     } catch (error) {
-      console.error("Error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add prompt",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 
@@ -199,6 +296,26 @@ const AdminBoard = () => {
       console.log(res);
 
       setWebURL(res.data.urls);
+      console.log(webURL);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const fetchSingleWebURL = async () => {
+    const token = localStorage.getItem("adminToken");
+    if (token) {
+      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      console.error("No token found");
+      return;
+    }
+
+    try {
+      const res = await instance.post("/getSingleWeb/");
+      console.log(res);
+
+      setSingleURLS(res.data.urls);
       console.log(webURL);
     } catch (error) {
       console.error("Error:", error);
@@ -250,6 +367,7 @@ const AdminBoard = () => {
 
   useEffect(() => {
     fetchWebURL();
+    fetchSingleWebURL();
   }, []);
 
   const openSubModal = (data) => {
@@ -307,6 +425,8 @@ const AdminBoard = () => {
           gap="8px"
           alignSelf="stretch"
           borderBottom="1px solid var(--Input-Border, #D0D5DD)"
+          cursor={'pointer'}
+          onClick={() => router.push('/')}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -369,7 +489,7 @@ const AdminBoard = () => {
             borderRadius="8px"
             onClick={handleUserClick}
             cursor={"pointer"}
-            background={isUserSelected ? "#DEECFC" : "#fff"}
+            background={isUserSelected || isProfileSelectd ? "#DEECFC" : "#fff"}
           >
             <Flex
               padding="0px 8px"
@@ -377,7 +497,9 @@ const AdminBoard = () => {
               gap="8px"
               flex="1 0 0"
               borderLeft={
-                isUserSelected ? "2px solid var(--Primary, #277DE3)" : "none"
+                isUserSelected || isProfileSelectd
+                  ? "2px solid var(--Primary, #277DE3)"
+                  : "none"
               }
             >
               <svg
@@ -389,11 +511,13 @@ const AdminBoard = () => {
               >
                 <path
                   d="M6.57348 8.24534C7.63229 8.24534 8.54916 7.86556 9.29831 7.11628C10.0475 6.36716 10.4272 5.45054 10.4272 4.3916C10.4272 3.33298 10.0475 2.41627 9.29819 1.66686C8.54891 0.917834 7.63216 0.538086 6.57348 0.538086C5.51451 0.538086 4.59786 0.917834 3.84874 1.66699C3.09962 2.41614 2.71971 3.33289 2.71971 4.3916C2.71971 5.45054 3.09958 6.36728 3.84886 7.11644C4.59814 7.86546 5.51489 8.24534 6.57348 8.24534ZM13.3165 12.8413C13.2949 12.5295 13.2512 12.1894 13.1868 11.8303C13.1219 11.4684 13.0383 11.1264 12.9382 10.8138C12.8348 10.4907 12.6942 10.1716 12.5204 9.8658C12.3399 9.54843 12.128 9.27205 11.8902 9.04465C11.6416 8.80674 11.3371 8.61546 10.9851 8.4759C10.6342 8.33715 10.2454 8.26684 9.82956 8.26684C9.66621 8.26684 9.50828 8.33384 9.20322 8.53246C8.98637 8.67366 8.76888 8.81387 8.55075 8.95308C8.34116 9.08665 8.05722 9.21177 7.7065 9.32505C7.36435 9.43577 7.01694 9.49193 6.67404 9.49193C6.33117 9.49193 5.98385 9.43577 5.64132 9.32505C5.29101 9.21186 5.00708 9.08677 4.7977 8.95321C4.55489 8.79805 4.3352 8.65646 4.14464 8.5323C3.83996 8.33371 3.68186 8.26668 3.51855 8.26668C3.10252 8.26668 2.71387 8.33712 2.36315 8.47606C2.01134 8.61534 1.70678 8.80662 1.45787 9.04477C1.22022 9.2723 1.00819 9.54852 0.828 9.8658C0.654313 10.1716 0.513688 10.4905 0.410158 10.8139C0.310158 11.1265 0.226565 11.4684 0.161627 11.8303C0.0972838 12.1889 0.0535965 12.5291 0.0319715 12.8416C0.0104598 13.1561 -0.000202754 13.4712 2.91917e-06 13.7864C2.91917e-06 14.6217 0.265502 15.2978 0.789062 15.7964C1.30615 16.2885 1.99034 16.5381 2.82237 16.5381H10.5265C11.3585 16.5381 12.0424 16.2886 12.5596 15.7965C13.0833 15.2982 13.3488 14.6219 13.3488 13.7863C13.3487 13.4639 13.3379 13.1459 13.3165 12.8413Z"
-                  fill="#277DE3"
+                  fill={
+                    isUserSelected || isProfileSelectd ? "#277DE3" : "#A0A5B9"
+                  }
                 />
               </svg>
               <Text
-                color=" #000"
+                color={isUserSelected || isProfileSelectd ? "#000" : "#A0A5B9"}
                 className={plus_jakarta?.className}
                 fontSize="14px"
                 fontStyle="normal"
@@ -434,11 +558,11 @@ const AdminBoard = () => {
               >
                 <path
                   d="M6.57348 8.24534C7.63229 8.24534 8.54916 7.86556 9.29831 7.11628C10.0475 6.36716 10.4272 5.45054 10.4272 4.3916C10.4272 3.33298 10.0475 2.41627 9.29819 1.66686C8.54891 0.917834 7.63216 0.538086 6.57348 0.538086C5.51451 0.538086 4.59786 0.917834 3.84874 1.66699C3.09962 2.41614 2.71971 3.33289 2.71971 4.3916C2.71971 5.45054 3.09958 6.36728 3.84886 7.11644C4.59814 7.86546 5.51489 8.24534 6.57348 8.24534ZM13.3165 12.8413C13.2949 12.5295 13.2512 12.1894 13.1868 11.8303C13.1219 11.4684 13.0383 11.1264 12.9382 10.8138C12.8348 10.4907 12.6942 10.1716 12.5204 9.8658C12.3399 9.54843 12.128 9.27205 11.8902 9.04465C11.6416 8.80674 11.3371 8.61546 10.9851 8.4759C10.6342 8.33715 10.2454 8.26684 9.82956 8.26684C9.66621 8.26684 9.50828 8.33384 9.20322 8.53246C8.98637 8.67366 8.76888 8.81387 8.55075 8.95308C8.34116 9.08665 8.05722 9.21177 7.7065 9.32505C7.36435 9.43577 7.01694 9.49193 6.67404 9.49193C6.33117 9.49193 5.98385 9.43577 5.64132 9.32505C5.29101 9.21186 5.00708 9.08677 4.7977 8.95321C4.55489 8.79805 4.3352 8.65646 4.14464 8.5323C3.83996 8.33371 3.68186 8.26668 3.51855 8.26668C3.10252 8.26668 2.71387 8.33712 2.36315 8.47606C2.01134 8.61534 1.70678 8.80662 1.45787 9.04477C1.22022 9.2723 1.00819 9.54852 0.828 9.8658C0.654313 10.1716 0.513688 10.4905 0.410158 10.8139C0.310158 11.1265 0.226565 11.4684 0.161627 11.8303C0.0972838 12.1889 0.0535965 12.5291 0.0319715 12.8416C0.0104598 13.1561 -0.000202754 13.4712 2.91917e-06 13.7864C2.91917e-06 14.6217 0.265502 15.2978 0.789062 15.7964C1.30615 16.2885 1.99034 16.5381 2.82237 16.5381H10.5265C11.3585 16.5381 12.0424 16.2886 12.5596 15.7965C13.0833 15.2982 13.3488 14.6219 13.3488 13.7863C13.3487 13.4639 13.3379 13.1459 13.3165 12.8413Z"
-                  fill="#A0A5B9"
+                  fill={isDataSelected ? "#277DE3" : "#A0A5B9"}
                 />
               </svg>
               <Text
-                color="#A0A5B9"
+                color={isDataSelected ? "#000" : "#A0A5B9"}
                 className={plus_jakarta?.className}
                 fontSize="14px"
                 fontStyle="normal"
@@ -479,11 +603,11 @@ const AdminBoard = () => {
               >
                 <path
                   d="M6.57348 8.24534C7.63229 8.24534 8.54916 7.86556 9.29831 7.11628C10.0475 6.36716 10.4272 5.45054 10.4272 4.3916C10.4272 3.33298 10.0475 2.41627 9.29819 1.66686C8.54891 0.917834 7.63216 0.538086 6.57348 0.538086C5.51451 0.538086 4.59786 0.917834 3.84874 1.66699C3.09962 2.41614 2.71971 3.33289 2.71971 4.3916C2.71971 5.45054 3.09958 6.36728 3.84886 7.11644C4.59814 7.86546 5.51489 8.24534 6.57348 8.24534ZM13.3165 12.8413C13.2949 12.5295 13.2512 12.1894 13.1868 11.8303C13.1219 11.4684 13.0383 11.1264 12.9382 10.8138C12.8348 10.4907 12.6942 10.1716 12.5204 9.8658C12.3399 9.54843 12.128 9.27205 11.8902 9.04465C11.6416 8.80674 11.3371 8.61546 10.9851 8.4759C10.6342 8.33715 10.2454 8.26684 9.82956 8.26684C9.66621 8.26684 9.50828 8.33384 9.20322 8.53246C8.98637 8.67366 8.76888 8.81387 8.55075 8.95308C8.34116 9.08665 8.05722 9.21177 7.7065 9.32505C7.36435 9.43577 7.01694 9.49193 6.67404 9.49193C6.33117 9.49193 5.98385 9.43577 5.64132 9.32505C5.29101 9.21186 5.00708 9.08677 4.7977 8.95321C4.55489 8.79805 4.3352 8.65646 4.14464 8.5323C3.83996 8.33371 3.68186 8.26668 3.51855 8.26668C3.10252 8.26668 2.71387 8.33712 2.36315 8.47606C2.01134 8.61534 1.70678 8.80662 1.45787 9.04477C1.22022 9.2723 1.00819 9.54852 0.828 9.8658C0.654313 10.1716 0.513688 10.4905 0.410158 10.8139C0.310158 11.1265 0.226565 11.4684 0.161627 11.8303C0.0972838 12.1889 0.0535965 12.5291 0.0319715 12.8416C0.0104598 13.1561 -0.000202754 13.4712 2.91917e-06 13.7864C2.91917e-06 14.6217 0.265502 15.2978 0.789062 15.7964C1.30615 16.2885 1.99034 16.5381 2.82237 16.5381H10.5265C11.3585 16.5381 12.0424 16.2886 12.5596 15.7965C13.0833 15.2982 13.3488 14.6219 13.3488 13.7863C13.3487 13.4639 13.3379 13.1459 13.3165 12.8413Z"
-                  fill="#A0A5B9"
+                  fill={isPromptSelected ? "#277DE3" : "#A0A5B9"}
                 />
               </svg>
               <Text
-                color="#A0A5B9"
+                color={isPromptSelected ? "#000" : "#A0A5B9"}
                 className={plus_jakarta?.className}
                 fontSize="14px"
                 fontStyle="normal"
@@ -539,45 +663,8 @@ const AdminBoard = () => {
           gap="16px"
           background="#FFF"
         >
-          <Flex
-            padding="10px 14px"
-            alignItems="center"
-            gap="8px"
-            alignSelf="stretch"
-            borderRadius="8px"
-            border="1px solid var(--gray-300px, #D0D5DD)"
-            background="var(--base-white, #FFF)"
-            boxShadow="0px 1px 2px 0px rgba(16, 24, 40, 0.05)"
-            w={"292px"}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-            >
-              <path
-                d="M17.5 17.5L14.5834 14.5833M16.6667 9.58333C16.6667 13.4954 13.4954 16.6667 9.58333 16.6667C5.67132 16.6667 2.5 13.4954 2.5 9.58333C2.5 5.67132 5.67132 2.5 9.58333 2.5C13.4954 2.5 16.6667 5.67132 16.6667 9.58333Z"
-                stroke="#667085"
-                stroke-width="1.66667"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-            <Text
-              color=" #667085"
-              className={plus_jakarta?.className}
-              fontSize="16px"
-              fontStyle="normal"
-              fontWeight="400"
-              lineHeight="24px"
-            >
-              Search
-            </Text>
-          </Flex>
           <Flex alignItems="flex-start" gap="20px">
-            <svg
+            {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
@@ -608,9 +695,9 @@ const AdminBoard = () => {
                   <rect width="24" height="24" fill="white" />
                 </clipPath>
               </defs>
-            </svg>
+            </svg> */}
             <Flex gap={"12px"} alignItems={"center"}>
-              <svg
+              {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
@@ -628,7 +715,7 @@ const AdminBoard = () => {
                     <rect width="24" height="24" fill="white" />
                   </clipPath>
                 </defs>
-              </svg>
+              </svg> */}
               <Text
                 color="#000"
                 textAlign="center"
@@ -638,9 +725,9 @@ const AdminBoard = () => {
                 fontWeight="400"
                 lineHeight="20px"
               >
-                John
+                {name}
               </Text>
-              <svg
+              {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"
@@ -651,7 +738,7 @@ const AdminBoard = () => {
                   d="M11.7166 5.23204C11.858 5.08339 12.049 5 12.248 5C12.4471 5 12.6381 5.08339 12.7795 5.23204C12.8493 5.30503 12.9048 5.39204 12.9427 5.48799C12.9805 5.58395 13 5.68694 13 5.79097C13 5.895 12.9805 5.99799 12.9427 6.09395C12.9048 6.18991 12.8493 6.27691 12.7795 6.34991L8.53202 10.7683C8.39026 10.9168 8.19913 11 8 11C7.80087 11 7.60974 10.9168 7.46798 10.7683L3.22049 6.34991C3.15065 6.27691 3.0952 6.18991 3.05735 6.09395C3.01949 5.99799 3 5.895 3 5.79097C3 5.68694 3.01949 5.58395 3.05735 5.48799C3.0952 5.39204 3.15065 5.30503 3.22049 5.23204C3.36192 5.08339 3.55292 5 3.75197 5C3.95101 5 4.14201 5.08339 4.28345 5.23204L8.00163 8.8556L11.7166 5.23204Z"
                   fill="#303030"
                 />
-              </svg>
+              </svg> */}
             </Flex>
           </Flex>
         </Flex>
@@ -665,6 +752,15 @@ const AdminBoard = () => {
           flexDir={"column"}
         >
           {/* <Flex flexDirection="column" alignItems="flex-start" gap="4px"> */}
+
+          {isProfileSelectd && (
+            <Profile
+              id={selectedID}
+              name={selectedName}
+              status={selectedStatus}
+              onClose={handleProfileClose}
+            />
+          )}
 
           {isUserSelected && (
             <Flex flexDir={"column"} height={"100vh"}>
@@ -766,7 +862,7 @@ const AdminBoard = () => {
                   >
                     All Customers
                   </Text>
-                  <Flex
+                  {/* <Flex
                     padding="8px 12px"
                     alignItems="center"
                     gap="8px"
@@ -935,11 +1031,15 @@ const AdminBoard = () => {
                     >
                       Filters
                     </Text>
-                  </Flex>
+                  </Flex> */}
                 </Flex>
 
-                <Flex w={"100%"}>
-                  <TableContainer borderRadius={"8px"}>
+                <Flex
+                  w={"100%"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <TableContainer w={"100%"} borderRadius={"8px"}>
                     <Table>
                       <Thead>
                         <Tr>
@@ -1013,80 +1113,42 @@ const AdminBoard = () => {
                               gap={"12px"}
                               alignItems={"center"}
                             >
-                              <svg
+                              <span
+                                style={{
+                                  cursor: "pointer",
+                                  transition: "color 0.3s",
+                                }}
+                                onMouseEnter={(e) =>
+                                  (e.target.style.color = "#277DE3")
+                                }
+                                onMouseLeave={(e) =>
+                                  (e.target.style.color = "#898989")
+                                }
                                 onClick={() =>
-                                  router?.push(
-                                    `userProfile/${user.id}?name=${user.name}&status=${user.status}`
+                                  handleProfileClick(
+                                    user.id,
+                                    user.name,
+                                    user.status
                                   )
                                 }
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="18"
-                                height="18"
-                                viewBox="0 0 18 18"
-                                fill="none"
                               >
-                                <path
-                                  d="M11.1159 3.0084L1.21212 12.9234C1.16225 12.9734 1.12671 13.036 1.1092 13.1045L0.01142 17.5152C-0.00472562 17.5807 -0.00373617 17.6492 0.0142928 17.7142C0.0323217 17.7791 0.0667808 17.8383 0.114342 17.8861C0.187394 17.959 0.286305 17.9999 0.389445 18C0.421262 18 0.452957 17.9961 0.483814 17.9883L4.88996 16.8892C4.95847 16.872 5.02101 16.8364 5.07088 16.7863L14.9756 6.87204L11.1159 3.0084ZM17.4292 1.6565L16.3268 0.552924C15.5899 -0.184674 14.3057 -0.183942 13.5697 0.552924L12.2193 1.90482L16.0788 5.76832L17.4292 4.41646C17.7973 4.04817 18 3.55794 18 3.03657C18 2.5152 17.7973 2.02497 17.4292 1.6565Z"
-                                  fill="#898989"
-                                />
-                              </svg>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                              >
-                                <g clip-path="url(#clip0_747_1766)">
-                                  <path
-                                    d="M23.2715 9.42146C21.7205 6.89793 18.1925 2.66406 12.0005 2.66406C5.80854 2.66406 2.28054 6.89793 0.72954 9.42146C0.250068 10.1962 -0.00390625 11.0891 -0.00390625 11.9999C-0.00390625 12.9108 0.250068 13.8037 0.72954 14.5784C2.28054 17.102 5.80854 21.3358 12.0005 21.3358C18.1925 21.3358 21.7205 17.102 23.2715 14.5784C23.751 13.8037 24.005 12.9108 24.005 11.9999C24.005 11.0891 23.751 10.1962 23.2715 9.42146ZM21.5665 13.5324C20.2345 15.6963 17.2195 19.3378 12.0005 19.3378C6.78154 19.3378 3.76654 15.6963 2.43454 13.5324C2.14967 13.0719 1.99879 12.5413 1.99879 11.9999C1.99879 11.4586 2.14967 10.9279 2.43454 10.4674C3.76654 8.30356 6.78154 4.66211 12.0005 4.66211C17.2195 4.66211 20.2345 8.29956 21.5665 10.4674C21.8514 10.9279 22.0023 11.4586 22.0023 11.9999C22.0023 12.5413 21.8514 13.0719 21.5665 13.5324Z"
-                                    fill="#898989"
-                                  />
-                                  <path
-                                    d="M12 7.00488C11.0111 7.00488 10.0444 7.29784 9.22215 7.84671C8.39991 8.39558 7.75904 9.17572 7.3806 10.0885C7.00217 11.0012 6.90315 12.0055 7.09608 12.9745C7.289 13.9435 7.76521 14.8335 8.46447 15.5321C9.16373 16.2307 10.0546 16.7064 11.0246 16.8991C11.9945 17.0919 12.9998 16.993 13.9134 16.6149C14.827 16.2368 15.6079 15.5966 16.1574 14.7751C16.7068 13.9537 17 12.9879 17 12C16.9984 10.6757 16.4711 9.4061 15.5338 8.46967C14.5964 7.53325 13.3256 7.00647 12 7.00488ZM12 14.9971C11.4067 14.9971 10.8266 14.8213 10.3333 14.492C9.83994 14.1627 9.45543 13.6946 9.22836 13.1469C9.0013 12.5993 8.94189 11.9967 9.05765 11.4153C9.1734 10.8339 9.45912 10.2999 9.87868 9.88075C10.2982 9.46161 10.8328 9.17616 11.4147 9.06052C11.9967 8.94488 12.5999 9.00423 13.1481 9.23107C13.6962 9.45791 14.1648 9.84205 14.4944 10.3349C14.8241 10.8278 15 11.4072 15 12C15 12.7949 14.6839 13.5572 14.1213 14.1193C13.5587 14.6813 12.7957 14.9971 12 14.9971Z"
-                                    fill="#898989"
-                                  />
-                                </g>
-                                <defs>
-                                  <clipPath id="clip0_747_1766">
-                                    <rect
-                                      width="24"
-                                      height="23.9766"
-                                      fill="white"
-                                      transform="translate(0 0.0117188)"
-                                    />
-                                  </clipPath>
-                                </defs>
-                              </svg>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 20 20"
-                                fill="none"
+                                <RiEdit2Fill size={25} color="#898989" />
+                              </span>
+                              <span
+                                style={{
+                                  cursor: "pointer",
+                                  transition: "color 0.3s",
+                                }}
+                                onMouseEnter={(e) =>
+                                  (e.target.style.color = "red")
+                                }
+                                onMouseLeave={(e) =>
+                                  (e.target.style.color = "#898989")
+                                }
                                 onClick={() => DeleteUser(user.id)}
                               >
-                                <g clip-path="url(#clip0_747_1769)">
-                                  <path
-                                    d="M19 3.33333H15.9C15.6679 2.39284 15.0538 1.54779 14.1613 0.940598C13.2687 0.333408 12.1522 0.0012121 11 0L9 0C7.8478 0.0012121 6.73132 0.333408 5.83875 0.940598C4.94618 1.54779 4.3321 2.39284 4.1 3.33333H1C0.734784 3.33333 0.48043 3.42113 0.292893 3.57741C0.105357 3.73369 0 3.94565 0 4.16667C0 4.38768 0.105357 4.59964 0.292893 4.75592C0.48043 4.9122 0.734784 5 1 5H2V15.8333C2.00159 16.938 2.52888 17.997 3.46622 18.7782C4.40356 19.5593 5.67441 19.9987 7 20H13C14.3256 19.9987 15.5964 19.5593 16.5338 18.7782C17.4711 17.997 17.9984 16.938 18 15.8333V5H19C19.2652 5 19.5196 4.9122 19.7071 4.75592C19.8946 4.59964 20 4.38768 20 4.16667C20 3.94565 19.8946 3.73369 19.7071 3.57741C19.5196 3.42113 19.2652 3.33333 19 3.33333ZM9 1.66667H11C11.6203 1.6673 12.2251 1.82781 12.7316 2.1262C13.2381 2.42459 13.6214 2.84624 13.829 3.33333H6.171C6.37858 2.84624 6.7619 2.42459 7.26839 2.1262C7.77487 1.82781 8.37973 1.6673 9 1.66667ZM16 15.8333C16 16.4964 15.6839 17.1323 15.1213 17.6011C14.5587 18.0699 13.7956 18.3333 13 18.3333H7C6.20435 18.3333 5.44129 18.0699 4.87868 17.6011C4.31607 17.1323 4 16.4964 4 15.8333V5H16V15.8333Z"
-                                    fill="#898989"
-                                  />
-
-                                  <path
-                                    d="M8.33333 14.9997C8.55435 14.9997 8.76631 14.9119 8.92259 14.7556C9.07887 14.5993 9.16667 14.3874 9.16667 14.1663V9.16634C9.16667 8.94533 9.07887 8.73337 8.92259 8.57709C8.76631 8.42081 8.55435 8.33301 8.33333 8.33301C8.11232 8.33301 7.90036 8.42081 7.74408 8.57709C7.5878 8.73337 7.5 8.94533 7.5 9.16634V14.1663C7.5 14.3874 7.5878 14.5993 7.74408 14.7556C7.90036 14.9119 8.11232 14.9997 8.33333 14.9997Z"
-                                    fill="#898989"
-                                  />
-                                  <path
-                                    d="M11.6654 14.9997C11.8864 14.9997 12.0983 14.9119 12.2546 14.7556C12.4109 14.5993 12.4987 14.3874 12.4987 14.1663V9.16634C12.4987 8.94533 12.4109 8.73337 12.2546 8.57709C12.0983 8.42081 11.8864 8.33301 11.6654 8.33301C11.4444 8.33301 11.2324 8.42081 11.0761 8.57709C10.9198 8.73337 10.832 8.94533 10.832 9.16634V14.1663C10.832 14.3874 10.9198 14.5993 11.0761 14.7556C11.2324 14.9119 11.4444 14.9997 11.6654 14.9997Z"
-                                    fill="#898989"
-                                  />
-                                </g>
-                                <defs>
-                                  <clipPath id="clip0_747_1769">
-                                    <rect width="20" height="20" fill="white" />
-                                  </clipPath>
-                                </defs>
-                              </svg>
+                                <BsTrash3Fill size={20} color="#898989" />
+                              </span>
                             </Td>
                           </Tr>
                         ))}
@@ -1107,7 +1169,7 @@ const AdminBoard = () => {
                     gap="11px"
                     borderTop="1px solid  #EAECF0"
                   >
-                    <Flex
+                    {/* <Flex
                       padding="10px 8px"
                       justifyContent="center"
                       alignItems="center"
@@ -1169,7 +1231,7 @@ const AdminBoard = () => {
                           stroke-linejoin="round"
                         />
                       </svg>
-                    </Flex>
+                    </Flex> */}
                   </Flex>
                 </Flex>
               </Flex>
@@ -1177,7 +1239,7 @@ const AdminBoard = () => {
           )}
 
           {isDataSelected && (
-            <Flex flexDir={"column"} height={"100vh"} >
+            <Flex flexDir={"column"} height={"100vh"}>
               <Flex
                 // width="95%"
                 padding="16px"
@@ -1276,8 +1338,8 @@ const AdminBoard = () => {
                       Add Single Web URL
                     </Text>
                     <Input
-                      value={singleWebUrl}
-                      onChange={(e) => setSingleWebURL(e.target.value)}
+                      value={singleWebUrl[0]}
+                      onChange={(e) => setSingleWebURL([e.target.value])}
                       placeholder="https://uni.edu.pk"
                     />
                     <Button
@@ -1318,7 +1380,7 @@ const AdminBoard = () => {
                   </Box>
 
                   <Flex flexDirection={"row"} justifyContent={"space-evenly"}>
-                    <Box>
+                    <Box maxH={'400px'} overflow={'auto'} >
                       <Text
                         color="#111827"
                         className={plus_jakarta?.className}
@@ -1366,7 +1428,7 @@ const AdminBoard = () => {
                         </Box>
                       ))}
                     </Box>
-                    <Box>
+                    <Box maxH={'400px'} overflow={'auto'} >
                       <Text
                         color="#111827"
                         className={plus_jakarta?.className}
@@ -1380,7 +1442,7 @@ const AdminBoard = () => {
                         {" "}
                         Single Web URL&apos;s{" "}
                       </Text>
-                      {webURL?.map((url, index) => (
+                      {singleURLs?.map((url, index) => (
                         <Box key={index} marginBottom={"8%"}>
                           <Text
                             color="#111827"
@@ -1401,7 +1463,7 @@ const AdminBoard = () => {
                             lineHeight="150%"
                             letterSpacing="-0.24px"
                           >
-                            Status: {url.statuss}
+                            Status: {url.status}
                           </Text>
                         </Box>
                       ))}
