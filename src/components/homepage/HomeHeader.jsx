@@ -1,11 +1,12 @@
 import { Flex, Text, Image, chakra } from "@chakra-ui/react";
-
+import { useRouter } from "next/router";
 import { Plus_Jakarta_Sans } from "next/font/google";
 const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
 const HomeHeader = () => {
+  const router = useRouter()
   return (
     <Flex
       padding="100px 120px"
@@ -14,11 +15,7 @@ const HomeHeader = () => {
       gap="52px"
       background="#FFF"
     >
-      <Flex
-        flexDirection="column"
-        alignItems="center"
-        gap="32px"
-      >
+      <Flex flexDirection="column" alignItems="center" gap="32px">
         <Flex
           flexDirection="column"
           alignItems="center"
@@ -34,8 +31,8 @@ const HomeHeader = () => {
             fontWeight="700"
             lineHeight="74px"
           >
-            High Quality Way<br/>  to Write You
-            <chakra.span
+            Supercharge your <br /> University Research
+            {/* <chakra.span
               background="var(--Gradient, linear-gradient(45deg, #499CFF 0%, #002875 100%))"
               backgroundClip="text"
               WebkitBackgroundClip="text"
@@ -48,7 +45,7 @@ const HomeHeader = () => {
             >
               {" "}
               Ai Content
-            </chakra.span>
+            </chakra.span> */}
           </Text>
 
           <Text
@@ -60,9 +57,8 @@ const HomeHeader = () => {
             fontWeight="500"
             lineHeight="24px"
           >
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industrys standard dummy text
-            ever since the 1500s
+            Automate time-consuming university course research with our AI
+            education counsellor in your preferred language
           </Text>
         </Flex>
       </Flex>
@@ -74,6 +70,8 @@ const HomeHeader = () => {
         borderRadius="12px"
         border="1px solid #277px3px"
         background="var(--Primary, #277DE3)"
+        cursor={'pointer'}
+        onClick={() => router.push('/signup')}
       >
         <Text
           color="#FDFDFD"
@@ -83,7 +81,7 @@ const HomeHeader = () => {
           fontWeight="500"
           lineHeight="normal"
         >
-          Start Writing for Free
+          Get Started
         </Text>
       </Flex>
       <Flex alignItems="center" gap="14px">
@@ -158,9 +156,7 @@ const HomeHeader = () => {
             </Flex>
           </Flex>
         </Flex>
-        <Flex
-         
-        >
+        <Flex>
           <Image src="/Hero-Image.png" />
         </Flex>
 

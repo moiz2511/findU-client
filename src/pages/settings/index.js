@@ -15,6 +15,39 @@ import { useEffect, useState } from "react";
 const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
+const validSubjects = [
+  "Accounting and Finance",
+  "Aeronautical and Manufacturing Engineering",
+  "Agriculture and Forestry",
+  "Anatomy and Physiology",
+  "Anthropology",
+  "Archaeology",
+  "Architecture",
+  "Art and Design",
+  "Biological Sciences",
+  "Building",
+  "Business and Management Studies",
+  "Chemical Engineering",
+  "Chemistry",
+  "Civil Engineering",
+  "Classics and Ancient History",
+  "Communication and Media Studies",
+  "Complementary Medicine",
+  "Computer Science",
+  "Counselling",
+  "Creative Writing",
+  "Criminology",
+  "Dentistry",
+  "Drama Dance and Cinematics",
+  "Economics",
+  "Education",
+  "Electrical and Electronic Engineering",
+  "English",
+  "Fashion",
+  "Film Making",
+];
+
+const MAX_SELECTED_SUBJECTS = 5;
 
 const Settings = () => {
   const router = useRouter();
@@ -26,6 +59,26 @@ const Settings = () => {
   const [interests, setInterests] = useState("");
   const [language, setLanguage] = useState("");
   const [triggerEffect, setTriggerEffect] = useState(false);
+  const [selectedSubjects, setSelectedSubjects] = useState("");
+
+  const handleSelectChange = (e) => {
+    const newSubject = e.target.value;
+
+    if (
+      !selectedSubjects.includes(newSubject) &&
+      selectedSubjects.split(",").length < MAX_SELECTED_SUBJECTS
+    ) {
+      setSelectedSubjects((prevSubjects) => {
+        // Use a comma as a delimiter
+        const newSubjects = prevSubjects
+          ? `${prevSubjects},${newSubject}`
+          : newSubject;
+        return newSubjects;
+      });
+    }
+
+    console.log(selectedSubjects);
+  };
 
   const fetchData = async () => {
     const token = localStorage.getItem("token");
@@ -43,7 +96,7 @@ const Settings = () => {
     setLevel(res?.data?.profile?.academicLevel);
     console.log(level);
     setPosition(res?.data?.profile?.position);
-    setInterests(res?.data?.profile?.subjectInterests);
+    setSelectedSubjects(res?.data?.profile?.subjectInterests);
     setLanguage(res?.data?.profile?.preferredLanguage);
     console.log(name);
   };
@@ -62,7 +115,7 @@ const Settings = () => {
       name: name,
       preferredLanguage: language,
       academicLevel: level,
-      subjectInterests: interests,
+      subjectInterests: selectedSubjects,
       position: position,
     };
 
@@ -219,6 +272,35 @@ const Settings = () => {
             <option value="The European Baccalaureate">
               The European Baccalaureate
             </option>
+            <option value="Welsh Baccalaureate Advanced Skills">
+              Welsh Baccalaureate Advanced Skills
+            </option>
+            <option value="Challenge Certificate">Challenge Certificate</option>
+            <option value="BTEC">BTEC</option>
+            <option value="Australia Senior Secondary School">
+              Australia Senior Secondary School
+            </option>
+            <option value="Diploma">Diploma</option>
+            <option value="Canada Alberta, British Columbia, Québec, Ontario">
+              Canada Alberta, British Columbia, Québec, Ontario
+            </option>
+            <option value="China–GAOKAO">China – GAOKAO</option>
+            <option value="Secondary Education (HKDSE)">
+              Secondary Education (HKDSE)
+            </option>
+            <option value="Indian - Standard XII">Indian - Standard XII</option>
+            <option value="Malaysia - Sigjil Tinggi Persekolahan">
+              Malaysia - Sigjil Tinggi Persekolahan
+            </option>
+            <option value="Malaysian (STPM)">Malaysian (STPM)</option>
+            <option value="Singapore – GCE A levels">
+              Singapore – GCE A levels
+            </option>
+            <option value="Taiwan">Taiwan</option>
+            <option value="USA – Advanced Placement / ACT / SAT">
+              USA – Advanced Placement / ACT / SAT
+            </option>
+            <option value="Others">Others</option>
           </Select>
         </Box>
         <Box display={"flex"} flexDir={"column"} width={"100%"} gap={2}>
@@ -258,7 +340,7 @@ const Settings = () => {
             <option value="Teacher">Teacher</option>
           </Select>
         </Box>
-        <Box display={"flex"} flexDir={"column"} width={"100%"} gap={2}>
+        <Box width={"100%"}>
           <Text
             className={plus_jakarta?.className}
             fontSize="24px"
@@ -268,19 +350,25 @@ const Settings = () => {
             Interests:{" "}
           </Text>
           <Select
-            id="interests"
-            value={interests}
-            onChange={handleInterestChange}
+            marginTop={"3%"}
+            value={selectedSubjects}
+            onChange={handleSelectChange}
+            className={plus_jakarta?.className}
+            placeholder="Choose from List"
+            isMulti
           >
-            <option value="عربي">عربي</option>
-            <option value="繁體中⽂">繁體中⽂</option>
-            <option value="簡體中⽂">簡體中⽂</option>
-            <option value="English">English</option>
-            <option value="le français">le français</option>
-            <option value="The European Baccalaureate">
-              The European Baccalaureate
-            </option>
+            {validSubjects.map((subject) => (
+              <option key={subject} value={subject}>
+                {subject}
+              </option>
+            ))}
           </Select>
+
+          <Box mt={4}>
+            <Text className={plus_jakarta?.className}>
+              Selected Subjects: {selectedSubjects}
+            </Text>
+          </Box>
         </Box>
         <Box display={"flex"} flexDir={"column"} width={"100%"} gap={2}>
           <Text
@@ -296,8 +384,20 @@ const Settings = () => {
             value={language}
             onChange={handleLanguageChange}
           >
+            <option value="عربي">عربي</option>
+            <option value="繁體中⽂">繁體中⽂</option>
+            <option value="簡體中⽂">簡體中⽂</option>
             <option value="English">English</option>
-            <option value="Spanish">Spanish</option>
+            <option value="le français">le français</option>
+            <option value="Deutsch">Deutsch</option>
+            <option value="हिं दी">हिं दी</option>
+            <option value="Italiano">Italiano</option>
+            <option value="⽇本語">⽇本語</option>
+            <option value="한국인">한국인</option>
+            <option value="Português">Português</option>
+            <option value="Español">Español</option>
+            <option value="اردو">اردو</option>
+            <option value="Tiếng Việt">Tiếng Việt</option>
           </Select>
         </Box>
       </Flex>

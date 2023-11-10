@@ -29,7 +29,7 @@ const TosCard = ({ title, description }) => {
         fontStyle="normal"
         fontWeight="400"
         lineHeight="26px"
-        w={"1200px"}
+        // w={"1200px"}
       >
         {description}
       </Text>

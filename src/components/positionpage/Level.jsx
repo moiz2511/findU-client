@@ -1,6 +1,6 @@
 import useAllLocalStoreValues from "@/hooks/useAllStored";
 import { useLocalStore } from "@/hooks/useLocalStore";
-import { Flex, Input, Select, Text } from "@chakra-ui/react";
+import { Flex, Input, Select, Text, Box } from "@chakra-ui/react";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { useRouter } from "next/router";
@@ -10,25 +10,75 @@ const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
+const validSubjects = [
+  "Accounting and Finance",
+  "Aeronautical and Manufacturing Engineering",
+  "Agriculture and Forestry",
+  "Anatomy and Physiology",
+  "Anthropology",
+  "Archaeology",
+  "Architecture",
+  "Art and Design",
+  "Biological Sciences",
+  "Building",
+  "Business and Management Studies",
+  "Chemical Engineering",
+  "Chemistry",
+  "Civil Engineering",
+  "Classics and Ancient History",
+  "Communication and Media Studies",
+  "Complementary Medicine",
+  "Computer Science",
+  "Counselling",
+  "Creative Writing",
+  "Criminology",
+  "Dentistry",
+  "Drama Dance and Cinematics",
+  "Economics",
+  "Education",
+  "Electrical and Electronic Engineering",
+  "English",
+  "Fashion",
+  "Film Making",
+];
+
+const MAX_SELECTED_SUBJECTS = 5;
+
 const Level = ({ onContinue, onBack }) => {
   const router = useRouter();
   const [academicLevel, setAcademicLevel] = useLocalStore(
     "academicLevel",
     "undergraduate"
   );
-  const [subjectInterest, setSubjectInterest] = useLocalStore(
-    "subjectInterest",
-    "English"
-  );
-  const [clientname, setClientname] = useState('')
+  const [selectedSubjects, setSelectedSubjects] = useState('');
+
+const handleSelectChange = (e) => {
+  const newSubject = e.target.value;
+
+  if (
+    !selectedSubjects.includes(newSubject) &&
+    selectedSubjects.split(',').length < MAX_SELECTED_SUBJECTS
+  ) {
+    setSelectedSubjects((prevSubjects) => {
+      // Use a comma as a delimiter
+      const newSubjects = prevSubjects ? `${prevSubjects},${newSubject}` : newSubject;
+      return newSubjects;
+    });
+  }
+
+  console.log(selectedSubjects)
+};
+
+  console.log(selectedSubjects);
+  const [clientname, setClientname] = useState("");
 
   const allStored = useAllLocalStoreValues();
 
   const handleSubmit = () => {
     console.log("all=>", allStored);
-  
+
     const token = localStorage.getItem("token");
-  
+
     // Check if the token exists
     if (token) {
       // Attach the token to the Authorization header for all requests
@@ -36,24 +86,24 @@ const Level = ({ onContinue, onBack }) => {
     } else {
       console.error("No token found");
     }
-  
+
     instance
       .post("/updateProfile/", {
         position: allStored?.position,
         academicCurriculam: allStored?.curriculum,
         preferredLanguage: allStored?.language,
         academicLevel: allStored?.academicLevel,
-        subjectInterests: allStored?.subjectInterest,
+        subjectInterests: selectedSubjects,
         name: clientname,
       })
       .then((response) => {
         // Check if the response is OK (status code 200)
         if (response.status === 200) {
-          alert('Data added');
+          alert("Data added");
           // Push the router to the "userboard" route
-          router.push('/userboard');
+          router.push("/userboard");
         } else {
-          console.error('Failed to update profile');
+          console.error("Failed to update profile");
         }
       })
       .catch((error) => {
@@ -61,7 +111,7 @@ const Level = ({ onContinue, onBack }) => {
         console.error("Error updating profile:", error);
       });
   };
-  
+
   return (
     <Flex
       padding="30px 341px 53px 308px"
@@ -243,72 +293,33 @@ const Level = ({ onContinue, onBack }) => {
                   fontStyle="normal"
                   fontWeight="400"
                 >
-                  Tell us your Subject Interests
+                  Tell us your Academic Interests
                 </Text>
               </Flex>
 
-              <Flex
-                height="48px"
-                padding="0px 16px"
-                alignItems="center"
-                gap="12px"
-                alignSelf="stretch"
-                borderRadius="8px"
-                border="1px solid var(--Input-Border, #D0px5px)"
-                background="var(--Input-BG, #F9FBFF)"
-              >
-                {/* <Text
-                  color="var(--Input-Text-In-Active, #787878)"
-                  className={plus_jakarta?.className}
-                  fontSize="16px"
-                  fontStyle="normal"
-                  fontWeight="400"
-                  lineHeight="24px"
-                  letterSpacing="0.15px"
-                  flex="1 0 0"
-                  w={"545px"}
-                >
-                  Choose from list
-                </Text> */}
+              <Box width={'500px'} >
                 <Select
-                  value={subjectInterest}
-                  onChange={(e) => setSubjectInterest(e.target.value)}
-                  color="var(--Input-Text-In-Active, #787878)"
+                  value={selectedSubjects}
+                  onChange={handleSelectChange}
                   className={plus_jakarta?.className}
-                  fontSize="16px"
-                  fontStyle="normal"
-                  fontWeight="400"
-                  lineHeight="24px"
-                  letterSpacing="0.15px"
-                  flex="1 0 0"
-                  w={"545px"}
                   placeholder="Choose from List"
+                  isMulti
+                  backgroundColor={'#F0F7FF'}
+                  
                 >
-                  <option value="عربي">عربي</option>
-                  <option value="繁體中⽂">繁體中⽂</option>
-                  <option value="簡體中⽂">簡體中⽂</option>
-                  <option value="English">English</option>
-                  <option value="le français">le français</option>
-                  <option value="The European Baccalaureate">
-                    The European Baccalaureate
-                  </option>
+                  {validSubjects.map((subject) => (
+                    <option key={subject} value={subject}>
+                      {subject}
+                    </option>
+                  ))}
+                  
                 </Select>
-                {/* <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="25"
-                  viewBox="0 0 24 25"
-                  fill="none"
-                >
-                  <path
-                    d="M18 10.9276L12.7071 16.2204C12.3166 16.611 11.6834 16.611 11.2929 16.2204L6 10.9276"
-                    stroke="#686B6E"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg> */}
-              </Flex>
+
+                <Box mt={4}>
+                  <Text className={plus_jakarta?.className} >Selected Subjects: {selectedSubjects}</Text>
+                </Box>
+              </Box>
+
               <Flex>
                 <Text
                   color="var(--Text, #131619)"
@@ -331,8 +342,10 @@ const Level = ({ onContinue, onBack }) => {
                 // border="1px solid var(--Input-Border, #D0px5px)"
                 background="var(--Input-BG, #F9FBFF)"
               >
-                
-                <Input value={clientname} onChange={(e) => setClientname(e.target.value)} />
+                <Input
+                  value={clientname}
+                  onChange={(e) => setClientname(e.target.value)}
+                />
               </Flex>
             </Flex>
           </Flex>
@@ -450,8 +463,8 @@ const Level = ({ onContinue, onBack }) => {
             fontWeight="600"
             lineHeight="24px"
             letterSpacing="0.15px"
-            cursor={'pointer'}
-            onClick={() => router.push('/login')}
+            cursor={"pointer"}
+            onClick={() => router.push("/login")}
           >
             Let’s Login
           </Text>

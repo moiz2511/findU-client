@@ -7,10 +7,13 @@ const plus_jakarta = Plus_Jakarta_Sans({
 });
 
 const TermService = () => {
+  const termService = `This document constitutes the Terms of Service ("Terms") governing the use of the www.findu.io website ("Service") provided by Findu ("us", "we", or "our"). Prior to
+  utilizing the Service, please thoroughly review these Terms.`
+
   return (
     <>
       <Flex
-        padding="24px 120px"
+        p={5}
         flexDirection="column"
         alignItems="flex-start"
         gap="8px"
@@ -18,9 +21,9 @@ const TermService = () => {
       >
         <Flex
           flexDirection="column"
-          alignItems="flex-start"
+          alignItems="center"
           gap="32px"
-          alignSelf="stretch"
+          
         >
           <Flex flexDir={"column"} gap={"17px"}>
             <Text
@@ -52,19 +55,16 @@ const TermService = () => {
             fontStyle="normal"
             fontWeight="400"
             lineHeight="26px"
-            w={"1200px"}
+            // w={"1200px"}
           >
-            This document constitutes the Terms of Service (&quote;Terms&quote;)
-            governing the use of the www.findu.io website
-            (&quote;Service&quote;) provided by Findu (&quote;us&quote;,
-            &quote;we&quote;, or &quote;our&quote;). Prior to utilizing the
-            Service, please thoroughly review these Terms.
+            {termService}
           </Text>
         </Flex>
       </Flex>
 
       <Flex
-        padding="40px 120px"
+      p={5}
+        // padding="40px 120px"
         flexDirection="column"
         alignItems="flex-start"
         gap="8px"

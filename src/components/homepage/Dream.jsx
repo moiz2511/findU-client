@@ -5,8 +5,8 @@ const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
-const Assistant = () => {
-  const router = useRouter()
+const Dream = () => {
+    const router = useRouter()
   return (
     <Flex
       padding="100px 120px"
@@ -24,7 +24,7 @@ const Assistant = () => {
           fontWeight="700"
           lineHeight="74px"
         >
-          The AI Univeristy Course Research Assistant
+        Search your dream schools / courses
         </Text>
         <Text
           color="var(--Input-Text-In-Active, #787878)"
@@ -35,36 +35,9 @@ const Assistant = () => {
           lineHeight="26px"
           letterSpacing="-0.18px"
         >
-          FindU leverages state-of-the-art large language models to streamline
-          and automate complex university course research.
+          Explore 30,000+ courses, offered by 170+ Top UK universities and colleges
         </Text>
-        <Text
-          color="var(--Input-Text-In-Active, #787878)"
-          className={plus_jakarta?.className}
-          fontSize="18px"
-          fontStyle="normal"
-          fontWeight="400"
-          lineHeight="26px"
-          letterSpacing="-0.18px"
-        >
-          By utilizing the latest AI capabilities, FindU can identify relevant
-          courses without requiring perfect keyword matches. It summarizes
-          course descriptions specific to your inquiries and extracts key
-          details from official data sources.
-        </Text>
-        <Text
-          color="var(--Input-Text-In-Active, #787878)"
-          className={plus_jakarta?.className}
-          fontSize="18px"
-          fontStyle="normal"
-          fontWeight="400"
-          lineHeight="26px"
-          letterSpacing="-0.18px"
-        >
-          While answering questions is FindU&apos;s main function, it supports
-          multiple languages and provides source links along with its answers
-          for further research.
-        </Text>
+        
         <Flex
           padding="12px 30px"
           alignItems="center"
@@ -72,8 +45,8 @@ const Assistant = () => {
           borderRadius="12px"
           border="1px solid #277rpx3rpx"
           background="var(--Primary, #277DE3)"
-          cursor={'pointer'}
           onClick={() => router.push('/signup')}
+          cursor={'pointer'}
         >
           <Text
             color="#FDFDFD"
@@ -83,14 +56,12 @@ const Assistant = () => {
             fontWeight="500"
             lineHeight="normal"
           >
-            Sign Up
+            Get Started
           </Text>
         </Flex>
       </Flex>
-      <Flex flex={1}>
-        <Image width={'100%'} height={'100%'} src="/Right Illustration.png" />
-      </Flex>
+      
     </Flex>
   );
 };
-export default Assistant;
+export default Dream;

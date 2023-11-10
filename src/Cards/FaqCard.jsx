@@ -5,7 +5,7 @@ const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
-const FaqCard = ({description}) => {
+const FaqCard = ({description, answer}) => {
   return (
     <Flex
       padding="16px 24px"
@@ -14,7 +14,19 @@ const FaqCard = ({description}) => {
       borderRadius="8px"
       border="1px solid var(--Hover-2, #54575E);"
       justifyContent={"space-between"}
+      width={'500px'}
+      flexDir={'column'}
     >
+      <Text
+        color="#000"
+        className={plus_jakarta?.className}
+        fontSize="16px"
+        fontStyle="normal"
+        fontWeight="700"
+        lineHeight="26px"
+      >
+        {description}
+      </Text>
       <Text
         color="var(--Input-Text-In-Active, #787878)"
         className={plus_jakarta?.className}
@@ -23,9 +35,9 @@ const FaqCard = ({description}) => {
         fontWeight="400"
         lineHeight="26px"
       >
-        {description}
+        {answer}
       </Text>
-      <Flex alignSelf={"center"}>
+      {/* <Flex alignSelf={"center"}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="15"
@@ -38,7 +50,7 @@ const FaqCard = ({description}) => {
             fill="#787878"
           />
         </svg>
-      </Flex>
+      </Flex> */}
     </Flex>
   );
 };

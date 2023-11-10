@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   IconButton,
+  Tooltip,
 } from "@chakra-ui/react";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
@@ -15,6 +16,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useRouter } from "next/router";
 import UserChat from "./UserChat";
 import UserDash from "./UserDash";
+import { AiFillQuestionCircle } from "react-icons/ai";
 import { Router } from "next/router";
 const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -119,7 +121,6 @@ const UserQuery = () => {
     instance
       .post("/StartConversationForNew/", { name: extractedText })
       .then((response) => {
-        alert("Chat Created");
         setSelectedChat(response?.data);
         setConvName("");
         setStartNew(false);
@@ -135,9 +136,14 @@ const UserQuery = () => {
     setSendFromBox(true);
   };
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    router.push("/login");
+  };
+
   return (
     <Flex height="100vh" overflow={"auto"} background="#002045">
-      <Flex flexDir={"column"} justifyContent={"flex-start"} flex={0.2}>
+      <Flex overflow={'auto'} flexDir={"column"} justifyContent={"flex-start"} flex={0.22}>
         <Flex
           padding="16px"
           alignItems="center"
@@ -151,8 +157,8 @@ const UserQuery = () => {
             height="38"
             viewBox="0 0 128 38"
             fill="none"
-            cursor={'pointer'}
-            onClick={() => router.push('/userboard')}
+            cursor={"pointer"}
+            onClick={() => router.push("/userboard")}
           >
             <path
               d="M0 36.9654V5.97629H21.9357C21.9357 9.19686 19.3235 11.7733 16.1387 11.7733H6.62007V18.2861H15.8166C19.0372 18.2861 21.6136 20.8983 21.6136 24.0831H6.62007V30.3453C6.58429 34.0311 3.64999 36.9654 0 36.9654Z"
@@ -230,11 +236,7 @@ const UserQuery = () => {
             cursor={"pointer"}
             onClick={() => setStartNew(!startNew)}
           >
-            <Flex
-              alignItems="center"
-              gap="16px"
-              mr={"50px"}
-            >
+            <Flex alignItems="center" gap="16px" mr={"50px"}>
               <Flex h={"20px"}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -318,7 +320,7 @@ const UserQuery = () => {
                   </defs>
                 </svg>
               </Flex>
-              <Box>
+              <Box width={"68px"}>
                 <Text
                   color="var(--Text, #FFF)"
                   textAlign="center"
@@ -352,6 +354,7 @@ const UserQuery = () => {
                 fontWeight="600"
                 lineHeight="18px"
                 letterSpacing="0.15px"
+                width={"25px"}
               >
                 ⌘ N
               </Text>
@@ -592,6 +595,14 @@ const UserQuery = () => {
             gap="16px"
             alignSelf="stretch"
             borderRadius="8px"
+            _hover={{
+              borderRadius: "8px",
+              borderTop:
+                "1px solid var(--glass-stroke, rgba(255rpx, 255rpx, 255rpx, 0.08px))",
+              background:
+                "var(--glass-fill, linear-gradient(118deg, rgba(215, 237, 237, 0.16) -47.79%, rgba(204, 235, 235, 0.00) 100%))",
+            }}
+            cursor={"pointer"}
           >
             <Flex alignItems="center" gap="16px" flex="1 0 0">
               <Flex h={"20px"}>
@@ -742,6 +753,14 @@ const UserQuery = () => {
             gap="16px"
             alignSelf="stretch"
             borderRadius="8px"
+            onClick={() => logout()}
+            _hover={{
+              borderRadius: "8px",
+              borderTop: "1px solid var(--glass-stroke, rgba(255, 0, 0, 0.08))",
+              background:
+                "var(--glass-fill, linear-gradient(118deg, rgba(255, 0, 0, 0.16) -17.79%, rgba(204, 0, 0, 0.00) 100%))",
+            }}
+            cursor={"pointer"}
           >
             <Flex alignItems="center" gap="16px" flex="1 0 0">
               <Flex h={"20px"}>
@@ -873,6 +892,7 @@ const UserQuery = () => {
                 alignItems="flex-start"
                 gap="4px"
                 mr={"50px"}
+                width={"100%"}
               >
                 <Text
                   color="#FFF"
@@ -883,6 +903,7 @@ const UserQuery = () => {
                   fontWeight="600"
                   lineHeight="24px"
                   letterSpacing="0.15px"
+                  width={"100%"}
                 >
                   {name}
                 </Text>
@@ -901,8 +922,8 @@ const UserQuery = () => {
               </Flex>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="80"
+                height="40"
                 viewBox="0 0 24 24"
                 fill="none"
                 cursor={"pointer"}
@@ -1016,7 +1037,7 @@ const UserQuery = () => {
       <Text>sdjchdscdshcsdhcvdhc</Text>
        </Box>
       </Flex> */}
-      <Flex flex={0.8} justifyContent={"center"} alignItems={"center"}>
+      <Flex flex={0.78} justifyContent={"center"} alignItems={"center"}>
         {selectedChat ? (
           <UserChat
             chat={selectedChat}
@@ -1033,6 +1054,21 @@ const UserQuery = () => {
             SelectApiHandler={SelectApiHandler}
           />
         )}
+        <Tooltip label="Terms and Conditions" fontSize="md" placement="left">
+          <Box
+            position="fixed"
+            bottom="20"
+            right="10"
+            cursor="pointer"
+            p="2"
+            bg="#002045"
+            borderRadius="full"
+            boxShadow="md"
+            onClick={() => router.push('/terms')}
+          >
+            <AiFillQuestionCircle color="white" />
+          </Box>
+        </Tooltip>
       </Flex>
     </Flex>
   );

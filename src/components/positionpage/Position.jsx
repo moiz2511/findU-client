@@ -18,7 +18,7 @@ const Position = ({ onContinue, onBack, actions }) => {
 
   return (
     <Flex
-      padding="30px 341px 53px 308px"
+      
       flexDirection="column"
       justifyContent="flex-end"
       alignItems="center"

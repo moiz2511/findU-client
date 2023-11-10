@@ -26,7 +26,7 @@ const Login = () => {
     if (username && password !== "") {
       const res = await instance?.post("/login/", { username, password });
       localStorage.setItem("token", res?.data?.token);
-      alert('Logged In Successfully!')
+      // alert('Logged In Successfully!')
       router.push('/userboard')
     } else {
       alert('Please Enter Credentials');
@@ -40,7 +40,7 @@ const Login = () => {
           flexDir={"column"}
           justifyContent={"center"}
           alignItems={"center"}
-          gap={10}
+          gap={5}
           p={10}
         >
           <Image src="/Logo.png" alt="Company Logo" />
@@ -143,13 +143,13 @@ const Login = () => {
             </Button>
             <Button
               color={"#686B6E"}
-              leftIcon={<Image src="/images/LinkedIn.png" />}
+              leftIcon={<Image src="/LinkedIn.png" />}
             >
               LinkedIn
             </Button>
             <Button
               color={"#686B6E"}
-              leftIcon={<Image src="/images/Outlook.png" />}
+              leftIcon={<Image src="/Outlook.png" />}
             >
               Outlook
             </Button>
@@ -169,6 +169,31 @@ const Login = () => {
               Sign Up
             </span>{" "}
           </Text>
+          {showLogin && (
+            <Flex
+              flexDir={"column"}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <Text fontFamily={"Plus Jakarta Sans"} fontSize={'14px'} color={"#686B6E"}>
+                By continuing, you are indicating that you accept our
+              </Text>
+              <Text
+                style={{
+                  color: "#277DE3",
+                  fontWeight: "bold",
+                  marginLeft: "7px",
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                }}
+                fontSize={'14px'}
+                onClick={() => router.push('/terms')}
+              >
+                Terms of Service and Privacy Policy.
+              </Text>
+            </Flex>
+          )}
+          
         </Flex>
         <Flex
           flexDir={"column"}
@@ -178,6 +203,7 @@ const Login = () => {
           backgroundColor={"#F5F8FF"}
           flex={0.9}
           p={10}
+          fontSize={'20px'}
           fontFamily={"Plus Jakarta Sans"}
           fontWeight={"500"}
         >

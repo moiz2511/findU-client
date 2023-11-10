@@ -2,13 +2,24 @@ import { useEffect, useState } from "react";
 import { Flex, Text, Image, useToast, Input, Button } from "@chakra-ui/react";
 import { instance } from "../../../instance";
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { HiLightBulb } from "react-icons/hi";
+import { GrStatusWarning } from "react-icons/gr";
+import { FcSettings } from "react-icons/fc";
+
 const plus_jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
-const UserDash = ({ text, setSelectedChat, setChatRefresh, SelectApiHandler }) => {
+const UserDash = ({
+  text,
+  setSelectedChat,
+  setChatRefresh,
+  SelectApiHandler,
+}) => {
   const [selectedBox, setSelectedBox] = useState(null);
   const [selectedText, setSelectedText] = useState("");
+  const [prompt, setPrompt] = useState("");
+
   const toast = useToast();
 
   const handleNewConversation = async () => {
@@ -83,34 +94,17 @@ const UserDash = ({ text, setSelectedChat, setChatRefresh, SelectApiHandler }) =
 
     const extractedText = box.text.slice(0, 20);
 
-    SelectApiHandler(wholeText, extractedText)
-
-
-    // setSelectedBox(box);
-    // setSelectedText(extractedText);
-    // text(wholeText);
+    SelectApiHandler(wholeText, extractedText);
   };
 
-  const handleMiddleBoxSelect = (index) => {
-    const midBox = middleBox[index];
-    const midWholeText = middleBox[index].text;
+  const handleInput = () => {
+    const wholeText = prompt;
 
-    const midExtractedText = midBox.text.slice(0, 20);
+    const extractedText = prompt.slice(0, 20);
 
-    setSelectedBox(midBox);
-    setSelectedText(midExtractedText);
-    text(midWholeText);
-  };
-
-  const handleRightBoxSelect = (index) => {
-    const rightBox = rightBox[index];
-    const rightWholeText = rightBox[index].text;
-
-    const rightExtractedText = rightBox.text.slice(0, 20);
-
-    setSelectedBox(rightBox);
-    setSelectedText(rightWholeText);
-    text(rightExtractedText);
+    console.log(wholeText);
+    console.log(extractedText);
+    SelectApiHandler(wholeText, extractedText);
   };
 
   useEffect(() => {
@@ -132,14 +126,14 @@ const UserDash = ({ text, setSelectedChat, setChatRefresh, SelectApiHandler }) =
     >
       <Flex width="90%" alignItems="flex-start" gap="24px" ml={"70px"}>
         <Flex flexDirection="column" alignItems="center" gap="5px" flex="1 0 0">
-          <Flex
-            width="174px"
-            padding="8.556px 52.841px 23px 52.84px"
-            justifyContent="center"
-            alignItems="center"
+          <HiLightBulb size={60} color="#F5F926" />
+          <Text
+            className={plus_jakarta?.className}
+            fontWeight={700}
+            marginBottom={"10px"}
           >
-            <Image src="cons.png" boxSize="60%" objectFit="fill" />
-          </Flex>
+            Example
+          </Text>
           <Flex
             padding="2px"
             flexDirection="column"
@@ -178,14 +172,14 @@ const UserDash = ({ text, setSelectedChat, setChatRefresh, SelectApiHandler }) =
         </Flex>
 
         <Flex flexDirection="column" alignItems="center" gap="5px" flex="1 0 0">
-          <Flex
-            width="174px"
-            padding="8.556px 52.841px 23px 52.84px"
-            justifyContent="center"
-            alignItems="center"
+          <FcSettings size={60} />
+          <Text
+            className={plus_jakarta?.className}
+            fontWeight={700}
+            marginBottom={"10px"}
           >
-            <Image src="cons.png" boxSize="60%" objectFit="fill" />
-          </Flex>
+            Capabilities
+          </Text>
           <Flex
             padding="2px"
             flexDirection="column"
@@ -204,8 +198,6 @@ const UserDash = ({ text, setSelectedChat, setChatRefresh, SelectApiHandler }) =
                 borderRadius="8px"
                 background="#E8F2FE"
                 flex={"1 0 0"}
-                cursor={"pointer"}
-                onClick={() => handleMiddleBoxSelect(index)}
               >
                 <Text
                   color="var(--Text, #131619)"
@@ -224,14 +216,14 @@ const UserDash = ({ text, setSelectedChat, setChatRefresh, SelectApiHandler }) =
         </Flex>
 
         <Flex flexDirection="column" alignItems="center" gap="5px" flex="1 0 0">
-          <Flex
-            width="174px"
-            padding="8.556px 52.841px 23px 52.84px"
-            justifyContent="center"
-            alignItems="center"
+          <GrStatusWarning size={60} color="#F42B17" />
+          <Text
+            className={plus_jakarta?.className}
+            fontWeight={700}
+            marginBottom={"10px"}
           >
-            <Image src="cons.png" boxSize="60%" objectFit="fill" />
-          </Flex>
+            Limitations
+          </Text>
           <Flex
             padding="2px"
             flexDirection="column"
@@ -250,8 +242,6 @@ const UserDash = ({ text, setSelectedChat, setChatRefresh, SelectApiHandler }) =
                 borderRadius="8px"
                 background="#E8F2FE"
                 flex={"1 0 0"}
-                cursor={"pointer"}
-                onClick={() => handleRightBoxSelect(index)}
               >
                 <Text
                   color="var(--Text, #131619)"
@@ -271,21 +261,21 @@ const UserDash = ({ text, setSelectedChat, setChatRefresh, SelectApiHandler }) =
       </Flex>
       <Flex alignItems="flex-end" gap="16px" flex="1 0 0" alignSelf="stretch">
         <Input
-          // onKeyPress={(e) => {
-          //   if (e.key === "Enter" && prompt.trim() === "") {
-          //     e.preventDefault();
-          //   } else if (e.key === "Enter") {
-          //     handleButtonClick();
-          //   }
-          // }}
-          // className={plus_jakarta?.className}
-          // value={prompt}
-          // onChange={(e) => setPrompt(e.target.value)}
+          onKeyPress={(e) => {
+            if (e.key === "Enter" && prompt.trim() === "") {
+              e.preventDefault();
+            } else if (e.key === "Enter") {
+              handleInput();
+            }
+          }}
+          className={plus_jakarta?.className}
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
           p={5}
           placeholder="Send a message"
         />
         <Button
-          // isDisabled={prompt === ""}
+          isDisabled={prompt === ""}
           p={5}
           border={"1px solid #ccc"}
           backgroundColor={"#fff"}

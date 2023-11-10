@@ -103,7 +103,7 @@ const Navbar = () => {
         </Flex>
       </Flex>
       <Flex alignItems="flex-start" gap="16px">
-        {/* <Flex
+        <Flex
           padding="12px 30px"
           justifyContent="center"
           alignItems="center"
@@ -116,12 +116,12 @@ const Navbar = () => {
             fontStyle="normal"
             fontWeight="500"
             lineHeight="normal"
-            onClick={() => router?.push("/admin")}
+            onClick={() => router?.push("/login")}
             cursor={"pointer"}
           >
             Login
           </Text>
-        </Flex> */}
+        </Flex>
         <Flex
           padding="12px 30px"
           justifyContent="center"

@@ -170,6 +170,39 @@ const Curriculam = ({ onContinue, onBack, actions }) => {
                   <option value="The European Baccalaureate">
                     The European Baccalaureate
                   </option>
+                  <option value="Welsh Baccalaureate Advanced Skills">
+                    Welsh Baccalaureate Advanced Skills
+                  </option>
+                  <option value="Challenge Certificate">
+                    Challenge Certificate
+                  </option>
+                  <option value="BTEC">BTEC</option>
+                  <option value="Australia Senior Secondary School">
+                    Australia Senior Secondary School
+                  </option>
+                  <option value="Diploma">Diploma</option>
+                  <option value="Canada Alberta, British Columbia, Québec, Ontario">
+                    Canada Alberta, British Columbia, Québec, Ontario
+                  </option>
+                  <option value="China–GAOKAO">China – GAOKAO</option>
+                  <option value="Secondary Education (HKDSE)">
+                    Secondary Education (HKDSE)
+                  </option>
+                  <option value="Indian - Standard XII">
+                    Indian - Standard XII
+                  </option>
+                  <option value="Malaysia - Sigjil Tinggi Persekolahan">
+                    Malaysia - Sigjil Tinggi Persekolahan
+                  </option>
+                  <option value="Malaysian (STPM)">Malaysian (STPM)</option>
+                  <option value="Singapore – GCE A levels">
+                    Singapore – GCE A levels
+                  </option>
+                  <option value="Taiwan">Taiwan</option>
+                  <option value="USA – Advanced Placement / ACT / SAT">
+                    USA – Advanced Placement / ACT / SAT
+                  </option>
+                  <option value="Others">Others</option>
                 </Select>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -225,8 +258,20 @@ const Curriculam = ({ onContinue, onBack, actions }) => {
                   w={"545px"}
                   placeholder="Enter Language"
                 >
+                  <option value="عربي">عربي</option>
+                  <option value="繁體中⽂">繁體中⽂</option>
+                  <option value="簡體中⽂">簡體中⽂</option>
                   <option value="English">English</option>
-                  <option value="Spanish">Spanish</option>
+                  <option value="le français">le français</option>
+                  <option value="Deutsch">Deutsch</option>
+                  <option value="हिं दी">हिं दी</option>
+                  <option value="Italiano">Italiano</option>
+                  <option value="⽇本語">⽇本語</option>
+                  <option value="한국인">한국인</option>
+                  <option value="Português">Português</option>
+                  <option value="Español">Español</option>
+                  <option value="اردو">اردو</option>
+                  <option value="Tiếng Việt">Tiếng Việt</option>
                 </Select>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
