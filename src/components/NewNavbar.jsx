@@ -74,6 +74,8 @@ export default function NewNavbar() {
             height="38"
             viewBox="0 0 127 38"
             fill="none"
+            onClick={() => router.push('/')}
+            cursor={'pointer'}
           >
             <path
               d="M0 36.9203V6.40137H21.6029C21.6029 9.57308 19.0303 12.1105 15.8938 12.1105H6.51963V18.5244H15.5766C18.7483 18.5244 21.2857 21.097 21.2857 24.2335H6.51963V30.4007C6.48439 34.0305 3.59461 36.9203 0 36.9203Z"
@@ -167,6 +169,7 @@ export default function NewNavbar() {
 
 const DesktopNav = () => {
 
+    const router = useRouter()
   return (
     <Stack direction={"row"} spacing={4}>
       <Box
