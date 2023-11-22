@@ -9,8 +9,7 @@ const plus_jakarta = Plus_Jakarta_Sans({
 const Faqs = () => {
   return (
     <Flex
-      p={12}
-      // padding="100px 260px"
+      p={{ base: 4, sm: 12 }}
       flexDirection="column"
       alignItems="center"
       gap="48px"

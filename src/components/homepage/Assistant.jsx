@@ -9,10 +9,12 @@ const Assistant = () => {
   const router = useRouter()
   return (
     <Flex
-      padding="100px 120px"
+      p={12}
       justifyContent="space-between"
       alignItems="center"
       background="#FFF"
+      flexWrap={'wrap'}
+      flexDir={{base: 'column', md: 'row'}}
     >
       <Flex flexDirection="column" alignItems="flex-start" gap="16px" flex={1}>
         <Text
@@ -88,7 +90,7 @@ const Assistant = () => {
         </Flex>
       </Flex>
       <Flex flex={1}>
-        <Image width={'100%'} height={'100%'} src="/Right Illustration.png" />
+        <Image src="/Right Illustration.png" />
       </Flex>
     </Flex>
   );

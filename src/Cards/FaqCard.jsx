@@ -14,7 +14,7 @@ const FaqCard = ({description, answer}) => {
       borderRadius="8px"
       border="1px solid var(--Hover-2, #54575E);"
       justifyContent={"space-between"}
-      width={'500px'}
+      maxW={'500px'}
       flexDir={'column'}
     >
       <Text

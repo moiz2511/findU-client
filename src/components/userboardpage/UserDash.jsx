@@ -124,7 +124,13 @@ const UserDash = ({
       flexDirection={"column"}
       mt={"16px"}
     >
-      <Flex width="90%" alignItems="flex-start" gap="24px" ml={"70px"}>
+      <Flex
+        width="100%"
+        flexDir={{ base: "column", md: "row" }}
+        alignItems={{ base: "center", md: "flex-start" }}
+        gap="24px"
+        overflow={"auto"}
+      >
         <Flex flexDirection="column" alignItems="center" gap="5px" flex="1 0 0">
           <HiLightBulb size={60} color="#F5F926" />
           <Text
@@ -137,9 +143,9 @@ const UserDash = ({
           <Flex
             padding="2px"
             flexDirection="column"
-            alignItems="flex-start"
+            alignItems={{ base: "center", md: "flex-start" }}
             gap="16px"
-            alignSelf="stretch"
+            // alignSelf="stretch"
           >
             {leftBox.map((box, index) => (
               <Flex
@@ -154,6 +160,13 @@ const UserDash = ({
                 flex={"1 0 0"}
                 cursor={"pointer"}
                 onClick={() => handleLeftBoxSelect(index)}
+                _hover={{
+                  // backgroundColor: 'rgb(0, 32, 69)',
+                  color: '#fff',
+                  boxShadow: '0 4px 8px rgba(0, 32, 69, 0.2)', // Add the box shadow on hover
+                  transform: 'scale(1.04)'
+                }}
+                transition="background-color 0.3s, color 0.3s, box-shadow 0.3s, transform 0.3s ease-out"
               >
                 <Text
                   color="var(--Text, #131619)"
@@ -163,6 +176,7 @@ const UserDash = ({
                   fontWeight="400"
                   lineHeight="24px"
                   letterSpacing="0.15px"
+                  
                 >
                   {box.text}
                 </Text>

@@ -10,27 +10,25 @@ const plus_jakarta = Plus_Jakarta_Sans({
 const Footer = () => {
   return (
     <Flex
-      
-      height="96px"
-      flexShrink="0"
       background="#FFF"
-      // alignItems={"flex-start"}
+      width={'100%'}
+      flexWrap={'wrap'}
+      flexDir={{base: 'column', sm: 'row'}}
     >
-      <Text
-        color="var(--Input-Text-In-Active, #787878)"
-        className={plus_jakarta?.className}
-        fontSize="12px"
-        fontStyle="normal"
-        fontWeight="400"
-        lineHeight="normal"
-        ml={"120px"}
-        pt={"40px"}
-        pb={"40px"}
-        mr={"279px"}
-      >
-        Copyright © 2023 Open Ai. All rights reserved.
-      </Text>
-      <Flex pt={"26px"} pb={"26px"} mr={"354px"}>
+      <Flex flex={1} p={5} justifyContent={'center'} alignItems={'center'} >
+        <Text
+          color="var(--Input-Text-In-Active, #787878)"
+          className={plus_jakarta?.className}
+          fontSize="12px"
+          fontStyle="normal"
+          fontWeight="400"
+          lineHeight="normal"
+         
+        >
+          Copyright © 2023 Open Ai. All rights reserved.
+        </Text>
+      </Flex>
+      <Flex p={5} flex={1} justifyContent={'center'} >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="127"
@@ -75,17 +73,6 @@ const Footer = () => {
             fill="#277DE3"
           />
         </svg>
-      </Flex>
-
-      <Flex alignItems="flex-start" gap="16px">
-        {/* <Icon
-          aria-label="Play"
-          icon={<FaRegEnvelope />}
-          color={theme.colors.text.primary}
-          fontSize="1.5rem"
-          bg="transparent"
-          mr={2}
-        /> */}
       </Flex>
     </Flex>
   );

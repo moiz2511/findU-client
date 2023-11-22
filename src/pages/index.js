@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import NewNavbar from "@/components/NewNavbar";
 import Assistant from "@/components/homepage/Assistant";
 import Dream from "@/components/homepage/Dream";
 import Faqs from "@/components/homepage/Faqs";
@@ -10,7 +11,8 @@ import { Box } from "@chakra-ui/react";
 export default function Home() {
   return (
     <Box>
-      <Navbar />
+      {/* <Navbar /> */}
+      <NewNavbar/>
       <HomeHeader />
       <Assistant />
       <Dream />

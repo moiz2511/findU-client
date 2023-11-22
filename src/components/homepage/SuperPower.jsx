@@ -50,7 +50,7 @@ const SuperPower = () => {
       >
         {/* first box */}
         <Flex
-          width="350px"
+          // maxW={'350px'}
           padding={5}
           alignItems="flex-start"
           borderRadius="15px"
@@ -58,7 +58,7 @@ const SuperPower = () => {
           boxShadow="0px 0px 22px 0px rgba(0, 0, 0, 0.06)"
           height={'240px'}
         >
-          <Flex flexDirection={"column"}>
+          <Flex flexDirection={"column"} width={'100%'} >
             <Flex
               width="60px"
               height="60px"
@@ -90,7 +90,7 @@ const SuperPower = () => {
               fontStyle="normal"
               fontWeight="700"
               lineHeight="28px"
-              w={"269px"}
+              // w={"269px"}
               mb={"11px"}
             >
               Customize Your Response
@@ -103,7 +103,7 @@ const SuperPower = () => {
                 fontStyle="normal"
                 fontWeight="400"
                 lineHeight="25px"
-                w={"288px"}
+                // w={"288px"}
               >
                 Tell us about your background, and our AI system will reply
                 tailored to your context

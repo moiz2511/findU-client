@@ -9,7 +9,8 @@ const HomeHeader = () => {
   const router = useRouter()
   return (
     <Flex
-      padding="100px 120px"
+      // padding="100px 120px"
+      p={12}
       flexDirection="column"
       alignItems="center"
       gap="52px"
@@ -26,7 +27,7 @@ const HomeHeader = () => {
             color="var(--Text, #131619)"
             textAlign="center"
             className={plus_jakarta?.className}
-            fontSize="68px"
+            fontSize={{base: '50px', sm: '68px'}}
             fontStyle="normal"
             fontWeight="700"
             lineHeight="74px"
@@ -84,8 +85,8 @@ const HomeHeader = () => {
           Get Started
         </Text>
       </Flex>
-      <Flex alignItems="center" gap="14px">
-        <Flex flexDirection="column" alignItems="flex-start" gap="205px">
+      <Flex alignItems="center" gap="14px" flexDir={{base: 'column', md: 'row'}} >
+        <Flex flexDir={{base: 'row', md: 'column'}} alignItems="flex-start" gap="205px">
           <Flex
             width="122px"
             padding="0px 14.46px 10px 14.45px"
@@ -160,7 +161,7 @@ const HomeHeader = () => {
           <Image src="/Hero-Image.png" />
         </Flex>
 
-        <Flex flexDirection="column" alignItems="flex-start" gap="205px">
+        <Flex flexDir={{base: 'row', md: 'column'}}  alignItems="flex-start" gap="205px">
           <Flex
             width="122px"
             padding="0px 14.46px 10px 14.45px"

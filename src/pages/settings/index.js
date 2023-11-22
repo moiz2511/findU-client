@@ -227,7 +227,7 @@ const Settings = () => {
       >
         Your Profile
       </Text>
-      <Flex p={10} gap={12}>
+      <Flex p={10} gap={12} flexDir={{base: 'column', md: 'row'}}  >
         <Box display={"flex"} flexDir={"column"} width={"100%"} gap={2}>
           <Text
             className={plus_jakarta?.className}
@@ -318,7 +318,7 @@ const Settings = () => {
           </Select>
         </Box>
       </Flex>
-      <Flex p={10} gap={12}>
+      <Flex p={10} gap={12} flexDir={{base: 'column', md: 'row'}} >
         <Box display={"flex"} flexDir={"column"} width={"100%"} gap={2}>
           <Text
             className={plus_jakarta?.className}
